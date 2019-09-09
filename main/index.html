@@ -27,6 +27,8 @@
     <link href="css/style6.css" rel='stylesheet' type='text/css' />
 	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" /> <!-- Style-CSS --> 
 	<link rel="stylesheet" href="css/fontawesome-all.css"> <!-- Font-Awesome-Icons-CSS -->
+	<link rel="stylesheet" href="css/font-awesome.min.css"> <!-- Font-Awesome-Icons-CSS -->
+	<link rel="stylesheet" href="css/climacons-font.css"> <!-- Font-Awesome-Icons-CSS -->
 	<!-- //css files -->
 	
 	<!--web font
@@ -167,18 +169,18 @@
 	</div>
 </section>
 
-<script src="js/indexInfo.js"></script>
+
 <!-- 轮播图结束 -->
-<div class="tlinks">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div>
+
 
 <!-- 信息说明 -->
-<section class="Welcome py-5">
+<section class="Welcome py-5" id="app2">
 	<div class="container py-sm-5">
 		<div class="welcome-grids row">
 			<div class="col-lg-6 mb-lg-0 mb-5">
-				<h3 class="mt-lg-4">公司说明</h3>
-				<p class="my-4"></p>
-				<p class="mb-4"></p>
+				<h3 class="mt-lg-4">{{title}}</h3>
+				<p class="my-4">{{paragraph1}}</p>
+				<p class="mb-4">{{paragraph2}}</p>
 				<div class="read">
 					<a href="about.html">Click More <span class="btn ml-2"><i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>
 				</div>	
@@ -192,44 +194,44 @@
 		</div>	
 	</div>	
 </section>
+
 <!-- 信息说明结束 -->
 
-<!-- welcome bottom -->
-<section class="Welcome-bottom">
+<!-- 平台数据 -->
+<section class="Welcome-bottom" id="app3">
 	<div class="bs-slider-overlay">
 		<div class="container">
-			<div class="welcome-bottom-grids row">
-				
+			<div class="welcome-bottom-grids row">			
 				<!-- Counter -->
 				<div class="col-lg-6 p-sm-5 p-4 welcome_left Features-bottom">
 					<div class="layer p-sm-5 p-4 welcome_left_inner agile-info">
 							<div class="agileits_w3layouts_about_counter_left w3-agile-grid">
 								<div class="countericon">
-									<span class="fab fa-algolia" aria-hidden="true"></span>
-									<h3>Projects</h3>
+									<span class="fa fa-eye" aria-hidden="true"></span>
+									<h3>浏览数</h3>
 								</div>
 								<div class="counterinfo agile-info">
-									<p class="counter">436</p> 
+									<p class="counter">{{browse}}</p> 
 								</div>
 								<div class="clearfix"> </div>
 							</div>
 							<div class="mt-sm-5 mt-3 agileits_w3layouts_about_counter_left w3-agile-grid">
 								<div class="countericon">
-									<span class="fab fa-asymmetrik" aria-hidden="true"></span>
-									<h3>Awards Won</h3>
+									<span class="fa fa-user" aria-hidden="true"></span>
+									<h3>用户数</h3>
 								</div>
 								<div class="counterinfo agile-info">
-									<p class="counter">147</p> 
+									<p class="counter">{{user}}</p> 
 								</div>
 								<div class="clearfix"> </div>
 							</div>
 							<div class="mt-sm-5 mt-3 agileits_w3layouts_about_counter_left w3-agile-grid">
 								<div class="countericon">
-									<span class="fas fa-bug" aria-hidden="true"></span>
-									<h3>Professionals</h3>
+									<span class="fa fa-thumbs-o-up" aria-hidden="true"></span>
+									<h3>好评数</h3>
 								</div>
 								<div class="counterinfo agile-info">
-									<p class="counter">218</p>
+									<p class="counter">{{praise}}</p>
 								</div>
 								<div class="clearfix"> </div>
 							</div>
@@ -237,9 +239,8 @@
 				</div>
 				<!-- //Counter -->
 				<div class="col-lg-6 p-sm-5 p-4 mt-lg-5 mt-0 welcome_bottom_right">
-					<h3>Phasellus lacinia id erat eu. Nunc id ipsum</h3>
-					<p class="my-4">Excepteur sint occaecat non proident, sunt in culpa quis. Phasellus lacinia id erat eu ullamcorper. Nunc id ipsum fringilla,
-					gravida felis vitae. Phasellus lacinia id, sunt in culpa quis. Phasellus lacinia. gravida felis vitae. Phasellus lacinia id, sunt in culpa quis.</p>
+					<h3>{{title}}</h3>
+					<p class="my-4">{{info}}</p>
 					<div class="read">
 						<a href="#" data-toggle="modal" data-target="#exampleModalCenter1" role="button">Click More <span class="btn ml-2"><i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>
 					</div>
@@ -247,65 +248,34 @@
 			</div>	
 		</div>	
 	</div>	
-</section>
-<!-- //welcome bottom -->
 
-<!-- Features -->
-<section class="features py-5">
+</section>
+<!-- 用户数据结束 -->
+
+
+
+<!-- 功能特色 -->
+<section class="features py-5" id="app4">
 	<div class="container py-sm-5">
 		<div class="heading pb-4">
-			<h3 class="heading mb-2 text-center"> <span>Our </span> Features </h3>
-			<p class="para mb-5 text-center">Excepteur sint occaecat non proident, sunt in culpa quis. Phasellus lacinia id.</p>
+			<h3 class="heading mb-2 text-center"> <span>功能 </span> 特色 </h3>
+			<p class="para mb-5 text-center">系统更新带来的丰富特色</p>
 		</div>
 		<div class="feature-grids row">
-			<div class="col-lg-4 col-md-6">
+			<div class="col-lg-4 col-md-6 mt-lg-0 mt-sm-5 mt-4" v-for="fun in functions">
 				<div class="f1 p-sm-5 p-4">
 					<i class="fas fa-arrow-right" aria-hidden="true"></i>
-					<h3 class="my-3">Feature 1</h3>
-					<p>Excepteur sint occaecat non proident, sunt in culpa quis. Phasellus lacinia id erat eu ullamcorper. Nunc id ipsum.</p>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 mt-md-0 mt-sm-5 mt-4">
-				<div class="f2-active p-sm-5 p-4">
-					<i class="fas fa-arrow-right" aria-hidden="true"></i>
-					<h3 class="my-3">Feature 2</h3>
-					<p>Excepteur sint occaecat non proident, sunt in culpa quis. Phasellus lacinia id erat eu ullamcorper. Nunc id ipsum.</p>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 mt-lg-0 mt-sm-5 mt-4">
-				<div class="f1 p-sm-5 p-4">
-					<i class="fas fa-arrow-right" aria-hidden="true"></i>
-					<h3 class="my-3">Feature 3</h3>
-					<p>Excepteur sint occaecat non proident, sunt in culpa quis. Phasellus lacinia id erat eu ullamcorper. Nunc id ipsum.</p>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 mt-sm-5 mt-4">
-				<div class="f1 p-sm-5 p-4">
-					<i class="fas fa-arrow-right" aria-hidden="true"></i>
-					<h3 class="my-3">Feature 4</h3>
-					<p>Excepteur sint occaecat non proident, sunt in culpa quis. Phasellus lacinia id erat eu ullamcorper. Nunc id ipsum.</p>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 mt-sm-5 mt-4">
-				<div class="f1 p-sm-5 p-4">
-					<i class="fas fa-arrow-right" aria-hidden="true"></i>
-					<h3 class="my-3">Feature 5</h3>
-					<p>Excepteur sint occaecat non proident, sunt in culpa quis. Phasellus lacinia id erat eu ullamcorper. Nunc id ipsum.</p>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 mt-sm-5 mt-4">
-				<div class="f1 p-sm-5 p-4">
-					<i class="fas fa-arrow-right" aria-hidden="true"></i>
-					<h3 class="my-3">Feature 6</h3>
-					<p>Excepteur sint occaecat non proident, sunt in culpa quis. Phasellus lacinia id erat eu ullamcorper. Nunc id ipsum.</p>
+					<h3 class="my-3">{{fun.title}}</h3>
+					<p>{{fun.info}}</p>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-<!-- //Features -->
+<script src="js/indexInfo.js"></script>
+<!-- 功能特殊结束-->
 
-<!-- Skills -->
+<!-- 没有启用
 <section class="bottom-last">
 	<div class="bottom-bg py-5 bs-slider-overlay text-left">
 		<div class="container py-md-5">
@@ -361,14 +331,15 @@
 		</div>
 	</div>
 </section>
-<!-- //Skills -->
+
+-->
 
 <!-- team -->
 <section id="myteam" class="team py-5">
 	<div class="container py-md-5">
 		<div class="heading pb-4">
-			<h3 class="heading mb-2 text-center"> <span>Our </span> Team </h3>
-			<p class="para mb-5 text-center">Excepteur sint occaecat non proident, sunt in culpa quis. Phasellus lacinia id.</p>
+			<h3 class="heading mb-2 text-center"> <span>我们的</span> 团队 </h3>
+			<p class="para mb-5 text-center">参与本网站制作人员</p>
 		</div>
 		<div class="row team-row">
 			<div class="col-md-4 col-sm-6 team-wrap">
@@ -394,12 +365,12 @@
 							</div>
 						</div>
 					</div>
-					<h6 class="team-title">Mustakim</h6>
-					<span>web devloper</span>
+					<h6 class="team-title">Lumnca</h6>
+					<span>Lumnca公司CEO兼董事长</span>
 				</div>
 			</div>
-			<!-- end team member -->
-
+			<!-- 
+					其他人员
 			<div class="col-md-4 col-sm-6 team-wrap mt-sm-0 mt-5">
 				<div class="team-member text-center">
 					<div class="team-img">
@@ -427,7 +398,7 @@
 					<span>android devloper</span>
 				</div>
 			</div>
-			<!-- end team member -->
+			
 
 			<div class="col-md-4 col-sm-6 team-wrap mt-md-0 mt-5">
 				<div class="team-member last text-center">
@@ -456,13 +427,13 @@
 					<span>Software engineer </span>
 				</div>
 			</div>
-			<!-- end team member -->
 		</div>
+			-->
 	</div>
 </section>
 <!-- //team -->
 
-<!-- brands -->
+<!-- 赞助 不启用
 <section class="partners bg-light py-5">
 	<div class="container">
 		<div class="row partner-grids text-center">
@@ -506,67 +477,66 @@
 	<div class="container py-sm-4">
 		<div class="row">
 			<div class="col-lg-4 col-md-6 footer-top">
-				<h3 class="mb-4 pb-3 w3f_title">Subscribe Us</h3>
-				<p>By subscribing to our mailing list you will always get latest news, offers and updates from us.</p>
+				<h3 class="mb-4 pb-3 w3f_title">订阅我们</h3>
+				<p>订阅我们的邮件列表，您将始终获得我们的最新消息，优惠和更新。</p>
 				<form action="#" method="post">
 					<input type="email" name="Email" placeholder="Enter your email..." required="">
 					<button class="btn1"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
 					<div class="clearfix"> </div>
 				</form>
-
 			</div>
 			<div class="col-lg-2  col-md-6 footv3-left mt-md-0 mt-5">
-				<h3 class="mb-4 pb-3 w3f_title">Navigation</h3>
+				<h3 class="mb-4 pb-3 w3f_title">导航</h3>
 				<ul class="list-agileits">
 					<li>
 						<a href="index.html">
-							Home
-						</a>
-					</li>
-					<li class="my-2">
-						<a href="about.html">
-							About Us
+							主页
 						</a>
 					</li>
 					<li class="my-2">
 						<a href="projects.html">
-							Projects
+							服务
 						</a>
 					</li>
 					<li class="mb-2">
 						<a href="features.html">
-							Features
+							说明
 						</a>
 					</li>
 					<li>
 						<a href="contact.html">
-							Contact Us
+							更多信息
+						</a>
+					</li>
+					<li class="my-2">
+						<a href="about.html">
+							关于我们
 						</a>
 					</li>
 				</ul>
 			</div>
 			<div class="col-lg-3 col-md-6 mt-lg-0 mt-5">
-				<h3 class="mb-4 pb-3 w3f_title">Contact Us</h3>
+				<h3 class="mb-4 pb-3 w3f_title">我们的信息</h3>
 				<div class="fv3-contact">
 					<span class="fas fa-envelope-open mr-2"></span>
 					<p>
-						<a href="mailto:example@email.com">info@example.com</a>
+						<a href="mailto:example@email.com">lumnca@163.com</a>
 					</p>
 				</div>
 				<div class="fv3-contact my-3">
 					<span class="fas fa-phone-volume mr-2"></span>
-					<p>+1(23) 4567 7890</p>
+					<p>13281101201</p>
 				</div>
 				<div class="fv3-contact">
 					<span class="fas fa-home mr-2"></span>
-					<p>321 Block,4th Building,
-						<br>2nd Street State 3489.</p>
+					<p>四川省成都市龙泉驿区
+						<br>成龙大道二段1819号</p>
 				</div>
 			</div>
 
 			<div class="col-lg-3 col-md-6 footerv2-w3ls mt-lg-0 mt-5">
-				<h3 class="mb-4 w3f_title pb-3">Get In Touch</h3>
-				<p>Excepteur sint occaecat non proident, sunt in culpa qui.</p>
+				<h3 class="mb-4 w3f_title pb-3">获取资源</h3>
+				<p>第三方支持</p>
 				<ul class="social-iconsv2 agileinfo mt-4">
 					<li>
 						<a href="#">
@@ -598,7 +568,7 @@
 
 <!-- copyright -->
 <div class="cpy-right text-center">
-	<p>Copyright &copy; 2018.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
+	<p>Copyright &copy; 2019.Company name All rights Lumnca <a href="http://www.cssmoban.com/" target="_blank" >Lumnca教育服务平台</a>
 	</p>
 </div>
 <!-- //copyright -->
