@@ -31,7 +31,6 @@
 	<!-- //Testimonials-slider-css-files -->
 	<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>	
 	<!--web font-->
-	<link href="http://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=latin-ext" rel="stylesheet">
 	<!--//web font-->
 
 </head>
@@ -117,20 +116,19 @@
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								关于
+								产品
 								<i class="fas fa-angle-down"></i>
 							</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="pricing.html"> Default</a>
-								<a class="dropdown-item" href="pricing_light.html"> Light Version</a>
-								<a class="dropdown-item" href="pricing.html"> Dark Version</a>
+								<a class="dropdown-item" href="#"> Default</a>
+								<a class="dropdown-item" href="#"> Light Version</a>
+								<a class="dropdown-item" href="#"> Dark Version</a>
 							</div>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="contact.html">更多</a>
 						</li>
 					</ul>
-	
 				</div>
 			</nav>
 		</header>
@@ -181,38 +179,12 @@
 				</div>
 				<div class="col-md-6 mt-lg-0 mt-5">
 					<div class="progress-one" v-for="item in progress">
-						<h4 class="progress-tittle"> </h4>
+						<h4 class="progress-tittle">{{item.title}} </h4>
 						<div class="progress">
-							<div class="progress-bar progress-bar-striped progress-bar-animated" 
+							<div class="progress-bar progress-bar-striped progress-bar-animated"  v-bind:class="item.color"
 							role="progressbar" :style="{'width' : item.width +'%'}"  aria-valuemin="0" aria-valuemax="100"></div>
 						</div>
 					</div>
-					<!--
-					<div class="progress-one my-4">
-						<h4 class="progress-tittle">PHP Development</h4>
-						<div class="progress">
-							<div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-						</div>
-					</div>
-					<div class="progress-one">
-						<h4 class="progress-tittle">Branding</h4>
-						<div class="progress">
-							<div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-						</div>
-					</div>
-					<div class="progress-one my-4">
-						<h4 class="progress-tittle">Marketing</h4>
-						<div class="progress">
-							<div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-						</div>
-					</div>
-					<div class="progress-one">
-						<h4 class="progress-tittle">Web Features</h4>
-						<div class="progress">
-							<div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-						</div>
-					</div>
-					-->
                 </div>				
 			</div>
 		</div>
@@ -289,7 +261,8 @@
 	</div>
 </div>
 -->
-<!-- brands -->
+
+<!-- 第三方应用
 <section class="partners bg-light py-5">
 	<div class="container">
 		<div class="row partner-grids text-center">
@@ -326,7 +299,8 @@
 		</div>
 	</div>
 </section>
-<!-- //brands -->
+ -->
+
 <!-- footer -->
 <footer class="footer py-5">
 		<div class="container py-sm-4">
@@ -349,7 +323,7 @@
 							</a>
 						</li>
 						<li class="my-2">
-							<a href="projects.html">
+							<a href="features.html">
 								服务
 							</a>
 						</li>
@@ -360,7 +334,7 @@
 						</li>
 						<li>
 							<a href="contact.html">
-								更多信息
+								联系
 							</a>
 						</li>
 						<li class="my-2">

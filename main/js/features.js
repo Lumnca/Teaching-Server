@@ -50,6 +50,11 @@ new Vue({
     }
 })
 
+/*
+*
+* 进度条数据
+*
+*/
 
 new Vue({
     el: '#app2',
@@ -59,9 +64,29 @@ new Vue({
 
         progress : [
             {
-                title : '标题',
+                title : '标题1',
                 width : 25,
+                color : ''
+            },
+            {
+                title : '标题2',
+                width : 45,
+                color : 'bg-success'
+            },
+            {
+                title : '标题3',
+                width : 75,
                 color : 'bg-info'
+            },
+            {
+                title : '标题4',
+                width : 55,
+                color : 'bg-warning'
+            },
+            {
+                title : '标题5',
+                width : 36,
+                color : 'bg-danger'
             }
         ]
     }
