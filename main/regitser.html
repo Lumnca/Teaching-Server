@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>注册</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/minimal-slider.css" rel='stylesheet' type='text/css' />
+<!-- //banner slider css -->
+
+<!-- css files -->
+<link rel="stylesheet" href="css/bootstrap.css"> <!-- Bootstrap-Core-CSS -->
+<link href="css/style6.css" rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all" /> <!-- Style-CSS --> 
+<link rel="stylesheet" href="css/fontawesome-all.css"> <!-- Font-Awesome-Icons-CSS -->
+<link rel="stylesheet" href="css/font-awesome.min.css"> <!-- Font-Awesome-Icons-CSS -->
+<link rel="stylesheet" href="css/climacons-font.css"> <!-- Font-Awesome-Icons-CSS -->
+<link href="css/style2.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+
+<div class="col-lg-6 p-sm-5 p-4 mt-lg-5 mt-0 welcome_bottom_right">
+    <div class="read">
+        <a href="index.html" role="button">返回主页 <span class="btn ml-2"><i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>
+    </div>
+</div>
+<!-- main -->
+<div class="main-w3layouts wrapper" id="app">
+	<div class="main-agileinfo">
+		<div class="agileits-top"> 
+            <div style="color:#e8f3ec;font-size: 29px;text-align: center;"> 注册账号</div>
+                    <form action="index.html" method="post"> 
+                        <input class="text" type="text" name="Username" placeholder="账号ID" required="">
+                        <input class="text" type="password" name="password" placeholder="密码" required="">
+                        <input class="text" type="text" name="password" placeholder="电话" required=""><br>
+                        <button type="button" class="btn btn-info" @click="reDate">获取验证码</button>
+                        <span style="color:#ffffff;font-size:18px;">&nbsp;&nbsp;&nbsp;{{info1}} </span>
+                        <input class="text" type="text" name="password" placeholder="验证码" required="">
+                        <div class="wthree-text"> 
+                            <ul> 
+                                <li>
+                                    <label class="anim">
+                                        <input type="checkbox" class="checkbox" required="">
+                                        <span> 我已同意用户协议</span> 
+                                    </label> 
+                                </li>
+                                <li><a href="#">用户使用须知</a> </li>
+                            </ul>
+                            <div class="clear"> </div>
+                        </div>   
+                        <input type="submit" value="注册">
+                    </form>
+            </div>	 
+	</div>	
+	<!-- //copyright -->
+	<ul class="w3lsg-bubbles">
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+</div>	
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            info1 : '',
+            date: 6,
+            time : null
+        },
+        methods : {
+            show : function(){
+                this.date-=1;
+                this.info1 = '       请在3分钟内完成操作,'+this.date+'s后重新获取验证码';
+
+                if( this.date<=0){
+                    this.info1 = '';
+                    clearInterval(this.time);
+                    this.date = 60;
+                }
+            },
+            reDate : function(){
+                if(this.date>=0){
+                    this.time = setInterval(this.show,1000);
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>
+
