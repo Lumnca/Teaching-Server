@@ -149,7 +149,7 @@ new Vue({
             {
                 title : '功能1',
                 icon  : 'fa-laptop',
-                href : 'index.html',
+                href : '',
                 childen : []
             },
             {
