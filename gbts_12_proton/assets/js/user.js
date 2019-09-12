@@ -3,19 +3,34 @@
 *  用户数据
 *
 */
-new Vue({
+var Main = new Vue({
     el : '#app',
     data : {
+        id  : 'xx',
         name : 'Lumnca',
         address : '四川省成都市',
         followers : 127455111,
         following : 24,
-        posts  : 57,
+        posts  : 57,         //推送
+        active : true,       //动态
+        dialogImageUrl : '', //头像
+        dialogVisible: false,
+        pushMessage : false,
         basicInfo : [
             {
                 title : 'ID',
                 icon  : ' fa-credit-card',
                 info  : 'L123456'
+            },
+            {
+                title : '称昵',
+                icon  : 'fa-user',
+                info  : 'Lumnca'
+            },
+            {
+                title : '地址',
+                icon  : 'fa-hospital-o',
+                info  : '四川省成都市'
             },
             {
                 title : '年龄',
@@ -45,5 +60,20 @@ new Vue({
                 info  : '四川省达州市'
             }
         ]
-    }
+    },
+    methods: {
+        handleRemove : function(file, fileList) {
+          console.log(file, fileList);
+        },
+        handlePictureCardPreview : function(file) {
+          this.dialogImageUrl = file.url;
+          this.dialogVisible = true;
+        }
+      }
 })
+/*
+*
+*
+*
+*
+*/

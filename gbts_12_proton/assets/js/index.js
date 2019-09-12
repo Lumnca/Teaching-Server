@@ -106,17 +106,17 @@ new Vue({
         name : 'Lumnca',
         appInfo : [
             {
-                title : '好友列表',
-                icon : ' fa-users',
-                href : 'https://lumnca.github.io/my-zhuye/',
-                number : 15,
+                title : '个人信息',
+                icon : 'fa-heart',
+                href : 'file:///D:/GitHub%20warehouse%202/teaching/Teaching-Server/gbts_12_proton/user/userInfo.html',
+                number : '0',
                 style : 'label-default'
             },
             {
                 title : '设置',
                 icon : 'fa-wrench',
-                href : '',
-                number : 41,
+                href : 'file:///D:/GitHub%20warehouse%202/teaching/Teaching-Server/gbts_12_proton/user/setting.html',
+                number : 11,
                 style : 'label-danger'
             },
             {

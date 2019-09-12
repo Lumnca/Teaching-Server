@@ -15,12 +15,34 @@
 		<link href="../assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">	   
 	    <link href="../assets/css/style.min.css" rel="stylesheet">
 		<link href="../assets/css/add-ons.min.css" rel="stylesheet">	
-		<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
-		<script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
-		
-		<style>
-			@import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
-		</style>
+        <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+        <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+        <style>
+            @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
+            .line{
+                border-top-width: 0px;
+                border-right-width: 0px;
+                border-left-width: 0px;
+                width: 150px;
+            }
+            .line:focus{
+                border-top-width: 0px;
+                border-right-width: 0px;
+                border-left-width: 0px;
+                border-bottom-width: 1;
+                border-bottom-color: #b96f19ad;
+                width: 200px;
+                outline: none;
+                transition:border-color .5s ease-in .1s, width .5s ease-in .1s, color .5s ease-in .1s;
+            }
+            .show input{
+                display: none;
+                
+            }
+        </style>
+
 	</head>
 </head>
 <body>
@@ -105,7 +127,7 @@
 				<div class="sidebar-collapse" id="app5">
 					<div class="sidebar-header t-center">
                         <span><img class="text-logo" src="../assets/img/logo1.png"><i class="fa fa-space-shuttle fa-3x blue"></i></span>
-                    </div>										
+                    </div>									
 					<div class="sidebar-menu">						
 						<ul class="nav nav-sidebar">
 							<li v-for="item in functions">
@@ -134,78 +156,91 @@
 		<div class="main ">
 			<div class="row">
 				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa-heart-o"></i>基本信息
+					<h3 class="page-header"><i class="fa fa-wrench"></i>用户设置
 					</h3>
 					<ol class="breadcrumb">
 						<li><i class="fa fa-home"></i><a href="../index.html">主页</a></li>
 						<li><i class="fa  fa-user"></i><a href="#">用户</a></li>
-						<li><i class="fa fa-heart-o"></i>基本信息</li>				
+						<li><i class="fa  fa-wrench"></i>用户设置</li>				
 					</ol>
 				</div>
 			</div>
-			<div class="row profile" id="app">	
+			<div class="row profile" id="app">	 
+                <form action="" method="">         
 				<div class="col-md-12">		
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<div class="text-center">
-								<img class="img-profile" src="../assets/img/avatar.jpg">
-							</div>							
-							<h3 class="text-center"><strong>{{name}}</strong></h3>
-							<h4 class="text-center"><small><i class="fa fa-map-marker"></i>{{address}}</small></h4>
-							<hr>		
-								<div class="text-center">								
-									<li><a href="" class="fa fa-facebook facebook-bg"></a></li>
-									<li><a href="" class="fa fa-twitter twitter-bg"></a></li>
-									<li><a href="" class="fa fa-linkedin linkedin-bg"></a></li>						
-								</div>
-							<hr>
-							<div class="row text-center">
-								<div class="col-xs-4">
-									<div><strong>{{followers}}</strong></div>
-									<div><small>粉丝</small></div> 
-								</div><!--/.col-->
-								<div class="col-xs-4">
-									<div><strong>{{following}}</strong></div>
-									<div><small>关注</small></div>
-								</div><!--/.col-->
-								<div class="col-xs-4">
-									<div><strong>{{posts}}</strong></div>
-									<div><small>动态</small></div>
-								</div><!--/.col-->
-							</div><!--/.row-->					
+							
 							
 							<hr>
 							<h4><strong>基本信息</strong></h4>
-							
+							<div>
+                                <h4>头像</h4>
+                                <img class="img-profile" src="../assets/img/avatar.jpg">
+                               
+                                <div>
+                                        <br><span style="color:blue;">上传头像</span></span><br>
+                                        <el-upload class="show"
+                                             action="https://jsonplaceholder.typicode.com/posts/"
+                                             list-type="picture-card"
+                                             :on-preview="handlePictureCardPreview"
+                                             :on-remove="handleRemove">
+                                         <i class="el-icon-plus"></i>
+                                       </el-upload>
+                                       <el-dialog :visible.sync="dialogVisible">
+                                         <img width="80" :src="dialogImageUrl" alt="">
+                                       </el-dialog>
+                                </div>
+                                 <br>
+                            </div>				
+
 							<ul class="profile-details">
 								<li v-for="item in basicInfo">
+                                    
 									<div><i class="fa" v-bind:class="item.icon"></i>{{item.title}}</div>
-									{{item.info}}
+                                    <input v-bind:value="item.info" class="line" v-if="item.title!='生日'">
+                                    <el-date-picker v-else  type="date" placeholder="选择日期" v-model="item.info" style="width: 15%;"></el-date-picker>
 								</li>
 							</ul>
 							
 							<hr>		
-
+                           
 							<h4><strong>联系方式</strong></h4>
 
 							<ul class="profile-details">
 								<li v-for="item in contactInfo">
-									<div><i class="fa" v-bind:class="item.icon"></i> {{item.title}}</div>
-									{{item.info}}
+                                    <div><i class="fa" v-bind:class="item.icon"></i> {{item.title}}</div>
+                                    <input v-bind:value="item.info" class="line">
 								</li>
+                            </ul>	
+                            
+                            <hr>	
+							<h4><strong>消息设置</strong></h4>
+							<ul class="profile-details">
+                                <span>接受推送   &nbsp;</span>
+								<el-switch
+									v-model="pushMessage"
+									active-color="#13ce66"
+									inactive-color="#ff4949">
+                                </el-switch>
+                                <br><br>
+                                <span>动态显示   &nbsp;</span>
+								<el-switch
+									v-model="active"
+									active-color="#13ce66"
+									inactive-color="#ff4949">
+								</el-switch>
 							</ul>	
-
-
 						</div>		
 					</div>
 				</div><!--/.col-->
-				<!--/.col-->
+                <!--/.col-->
+                    <input type="submit" class="btn btn-success" value="保存设置" style="width:100px;float: right;">
+                </form>
 			</div><!--/.row profile-->			
-		</div>
+        </div>
 		<!-- end: Content -->
 		<br><br><br>
-
-		
 	
 	<div class="clearfix"></div>
 	
