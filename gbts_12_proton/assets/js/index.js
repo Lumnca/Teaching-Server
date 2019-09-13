@@ -81,11 +81,6 @@ new Vue({
                 href : '#'
             },
             {
-                title : '钱包',
-                icon : 'fa-credit-card',
-                href : '#'
-            },
-            {
                 title : '文件管理',
                 icon : 'fa-folder',
                 href : '#'
@@ -120,9 +115,9 @@ new Vue({
                 style : 'label-danger'
             },
             {
-                title : '费用',
-                icon : ' fa-usd',
-                href : '#',
+                title : '钱包',
+                icon : ' fa-credit-card',
+                href : 'file:///D:/GitHub%20warehouse%202/teaching/Teaching-Server/gbts_12_proton/user/cost.html',
                 number : 23,
                 style : 'label-info'
             },
