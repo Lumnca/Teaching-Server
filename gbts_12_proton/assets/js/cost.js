@@ -26,7 +26,29 @@ new Vue({
                 number : 7,
                 color : 'background: #21D56C'
             }
-        ]
+        ],
+        //表格数据
+        tableData: [{
+            type: '充值余额',
+            number: '15000',
+            other: ''
+          }, {
+            type: '赠送费用',
+            number: '3500',
+            other: '每月/+20'
+          }, {
+            type: '优惠券',
+            number: '1500',
+            other: '折扣抵押'
+          },
+          {
+            type: '总计',
+            number: '20000',
+            other: ''      
+          }
+        ],
+        addMouth : 20,
+        addBalance : 0
     }
 })
 

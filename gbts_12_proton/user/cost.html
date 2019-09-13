@@ -22,26 +22,6 @@
         <script src="../assets/echarts.js"></script>
         <style>
             @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
-            .line{
-                border-top-width: 0px;
-                border-right-width: 0px;
-                border-left-width: 0px;
-                width: 150px;
-            }
-            .line:focus{
-                border-top-width: 0px;
-                border-right-width: 0px;
-                border-left-width: 0px;
-                border-bottom-width: 1;
-                border-bottom-color: #b96f19ad;
-                width: 200px;
-                outline: none;
-                transition:border-color .5s ease-in .1s, width .5s ease-in .1s, color .5s ease-in .1s;
-            }
-            .show input{
-                display: none;
-                
-            }
         </style>
 
 	</head>
@@ -189,29 +169,52 @@
 							</div>
 						</div>
 						<div class="panel-body">
-						
 							<div style="float: right; margin-bottom: 10px">
-				            <label style="display: inline-block; margin-right: 50px"><input type="checkbox" id="autoopen" style="vertical-align: baseline">&nbsp;Auto-open next field</label>
 				            <button id="enable" class="btn btn-primary">Enable / Disable</button>
 				            </div>
 							<div class="col-lg-6">
-								<table id="user" class="table table-bordered table-striped" style="clear: both">
-									<tbody> 
-										<tr>         
-											<td width="35%">分类</td>
-											<td width="65%"><a href="form-x-editable.html#" id="username" data-type="text" data-pk="1" data-original-title="Enter username">余额</a></td>
-										</tr>
-										<tr>         
-											<td>实时余额</td>
-											<td>555</td>
-										</tr>  
-										<tr>         
-											<td>返现</td>
-											<td>744</td>
-										</tr>
-									</tbody>
-								</table>									
+								<template>
+									<el-table
+									  :data="tableData"
+									  style="width: 100%">
+									  <el-table-column
+										prop="type"
+										label="类别"
+										width="180">
+									  </el-table-column>
+									  <el-table-column
+										prop="number"
+										label="余额"
+										width="180">
+									  </el-table-column>
+									  <el-table-column
+										prop="other"
+										label="说明">
+									  </el-table-column>
+									</el-table>
+								  </template>	
+								  <hr>
+								  <template>
+									<div class="block">
+									<span class="demonstration">充值余额</span>
+									  <el-slider
+									   max= 10000  
+										v-model="addBalance"
+										show-input>
+									  </el-slider>
+									</div>
+									<div class="block">
+										<span class="demonstration">每月增长</span>
+										<el-slider
+										  v-model="addMouth"
+										  :step="10"
+										  show-stops>
+										</el-slider>
+									  </div>
+								  </template>	
+								  <button class="btn btn-danger">修改</button>							
 							</div>
+
 			            	<div class="col-lg-6">
 								<div id="balance" style="width: 600px;height:400px;"></div>
 							</div>								  
