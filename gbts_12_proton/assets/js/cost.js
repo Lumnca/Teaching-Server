@@ -11,7 +11,7 @@ new Vue({
             {
                 title : '产品',
                 icon  : 'fa-cubes',
-                number : 17,
+                number : 3,
                 color : 'background: #A766A4'
             },
             {
@@ -46,6 +46,38 @@ new Vue({
             number: '20000',
             other: ''      
           }
+        ],
+        spendData : [
+            {
+                type : '包年VIP',
+                number : '20000',
+                date : '2017/9/12',
+                info : ''
+            },
+            {
+                type : '包年VIP',
+                number : '20000',
+                date : '2018/9/12',
+                info : ''
+            },
+            {
+                type : '包年VIP',
+                number : '20000',
+                date : '2019/9/12',
+                info : ''
+            },
+            {
+                type : '押金',
+                number : '18500',
+                date : '2019/9/14',
+                info : ''
+            },
+            {
+                type : '总计',
+                number : '78500',
+                date : '',
+                info :  ''          
+            }
         ],
         addMouth : 20,
         addBalance : 0

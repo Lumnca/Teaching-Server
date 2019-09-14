@@ -124,7 +124,7 @@ new Vue({
             {
                 title : '文件',
                 icon : ' fa-file',
-                href : '#',
+                href : 'file:///D:/GitHub%20warehouse%202/teaching/Teaching-Server/gbts_12_proton/user/file.html',
                 number : 36,
                 style : 'label-primary'
             }

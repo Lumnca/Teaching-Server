@@ -4,7 +4,7 @@
     	<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <title>用户设置</title>			
+	    <title>用户文件</title>			
 		<!-- Import google fonts - Heading first/ text second -->
 		<!-- Favicon and touch icons -->
 		<link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" /> 
@@ -21,25 +21,13 @@
         <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
         <style>
             @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
-            .line{
-                border-top-width: 0px;
-                border-right-width: 0px;
-                border-left-width: 0px;
-                width: 150px;
-            }
-            .line:focus{
-                border-top-width: 0px;
-                border-right-width: 0px;
-                border-left-width: 0px;
-                border-bottom-width: 1;
-                border-bottom-color: #b96f19ad;
-                width: 200px;
-                outline: none;
-                transition:border-color .5s ease-in .1s, width .5s ease-in .1s, color .5s ease-in .1s;
-            }
-            .show input{
-                display: none;
-                
+            .custom-tree-node {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 14px;
+                padding-right: 8px;
             }
         </style>
 
@@ -156,87 +144,51 @@
 		<div class="main ">
 			<div class="row">
 				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa-wrench"></i>用户设置
+					<h3 class="page-header"><i class="fa  fa-folder"></i>文件
 					</h3>
 					<ol class="breadcrumb">
 						<li><i class="fa fa-home"></i><a href="../index.html">主页</a></li>
 						<li><i class="fa  fa-user"></i><a href="#">用户</a></li>
-						<li><i class="fa  fa-wrench"></i>用户设置</li>				
+						<li><i class="fa   fa-folder"></i>文件</li>				
 					</ol>
 				</div>
 			</div>
 			<div class="row profile" id="app">	 
-                <form action="" method="">         
-				<div class="col-md-12">		
-					<div class="panel panel-default">
-						<div class="panel-body">
-							
-							
-							<hr>
-							<h4><strong>基本信息</strong></h4>
-							<div>
-                                <h4>头像</h4>
-                                <img class="img-profile" src="../assets/img/avatar.jpg">
-                               
-                                <div>
-                                        <br><span style="color:blue;">上传头像</span></span><br>
-                                        <el-upload class="show"
-                                             action="https://jsonplaceholder.typicode.com/posts/"
-                                             list-type="picture-card"
-                                             :on-preview="handlePictureCardPreview"
-                                             :on-remove="handleRemove">
-                                         <i class="el-icon-plus"></i>
-                                       </el-upload>
-                                       <el-dialog :visible.sync="dialogVisible">
-                                         <img width="80" :src="dialogImageUrl" alt="">
-                                       </el-dialog>
-                                </div>
-                                 <br>
-                            </div>				
-
-							<ul class="profile-details">
-								<li v-for="item in basicInfo">
-                                    
-									<div><i class="fa" v-bind:class="item.icon"></i>{{item.title}}</div>
-                                    <input v-bind:value="item.info" class="line" v-if="item.title!='生日'">
-                                    <el-date-picker v-else  type="date" placeholder="选择日期" v-model="item.info" style="width: 15%;"></el-date-picker>
-								</li>
-							</ul>
-							
-							<hr>		
-                           
-							<h4><strong>联系方式</strong></h4>
-
-							<ul class="profile-details">
-								<li v-for="item in contactInfo">
-                                    <div><i class="fa" v-bind:class="item.icon"></i> {{item.title}}</div>
-                                    <input v-bind:value="item.info" class="line">
-								</li>
-                            </ul>	
-                            
-                            <hr>	
-							<h4><strong>消息设置</strong></h4>
-							<ul class="profile-details">
-                                <span>接受推送   &nbsp;</span>
-								<el-switch
-									v-model="pushMessage"
-									active-color="#13ce66"
-									inactive-color="#ff4949">
-                                </el-switch>
-                                <br><br>
-                                <span>动态显示   &nbsp;</span>
-								<el-switch
-									v-model="active"
-									active-color="#13ce66"
-									inactive-color="#ff4949">
-								</el-switch>
-							</ul>	
-						</div>		
-					</div>
-				</div><!--/.col-->
-                <!--/.col-->
-                    <input type="submit" class="btn btn-success" value="保存设置" style="width:100px;float: right;">
-                </form>
+                <div class="custom-tree-container">
+                        <div class="block">
+                            <p>使用 scoped slot</p>
+                                <el-tree
+                                    :data="data"
+                                    show-checkbox
+                                    node-key="id"
+                                    default-expand-all
+                                    :expand-on-click-node="false">
+                                <span class="custom-tree-node" slot-scope="{ node, data }">
+                                <span>{{ node.label }}</span>
+                                <span>
+                                <el-button
+                                    type="text"
+                                    size="mini"
+                                    @click="() => append(data)">
+                                    新建
+                                </el-button>
+                                <el-button
+                                    type="text"
+                                    size="mini"
+                                    @click="() => remove(node, data)">
+                                    删除
+                                </el-button>
+                                <el-button
+                                    type="text"
+                                    size="mini"
+                                    @click="() =>setCheckedNodes(node)">
+                                    修改
+                                </el-button>
+                                </span>
+                                </span>
+                            </el-tree>
+                        </div>
+                    </div>
 			</div><!--/.row profile-->			
         </div>
 		<!-- end: Content -->
@@ -291,6 +243,6 @@
 	
 	<!-- 自定义脚本-->
 	<script src="../assets/js/index.js"></script>
-	<script src="../assets/js/user.js"></script>
+	<script src="../assets/js/file.js"></script>
 </body>
 </html>

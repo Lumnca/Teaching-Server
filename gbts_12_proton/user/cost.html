@@ -4,7 +4,7 @@
     	<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <title>用户信息</title>			
+	    <title>用户钱包</title>			
 		<!-- Import google fonts - Heading first/ text second -->
 		<!-- Favicon and touch icons -->
 		<link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" /> 
@@ -93,7 +93,7 @@
 						</li>						
 						<li v-for="item in appInfo"><a v-bind:href="item.href"><i class="fa" v-bind:class="item.icon"></i> {{item.title}} <span class="label" v-bind:class="item.style">{{item.number}}</span></a></li>
 						<li class="divider"></li>						
-						<li><a href="index.html"><i class="fa fa-sign-out"></i>返回主界面</a></li>	
+						<li><a href="../index.html"><i class="fa fa-sign-out"></i>返回主界面</a></li>	
 	        		</ul>
 	      		</li>
 				<li><a href="index.html"><i class="fa fa-power-off"></i></a></li>
@@ -147,21 +147,21 @@
 				</div>
 			</div>
 			<div class="row profile" id="app">	 
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" v-for="item in main">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" v-for="item in main">
 					<div class="info-box" v-bind:style="item.color">
 						<i class="fa" v-bind:class="item.icon"></i>
 						<div class="count">{{item.number}}</div>
 						<div style="font-size:19px;">{{item.title}}</div>						
 					</div><!--/.info-box-->			
-                </div><!--/.col-->
+        </div><!--/.col-->
                 
 
-                <!--余额-->
+         <!--余额-->
 
-                <div class="col-lg-12">
+         <div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h2><i class="fa fa-pencil red"></i><strong>余额</strong></h2>
+							<h2><i class="fa fa-credit-card red"></i><strong>余额</strong></h2>
 							<div class="panel-actions">
 								<a href="form-x-editable.html#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
 								<a href="form-x-editable.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
@@ -214,16 +214,132 @@
 								  </template>	
 								  <button class="btn btn-danger">修改</button>							
 							</div>
-
-			            	<div class="col-lg-6">
+			        <div class="col-lg-6">
 								<div id="balance" style="width: 600px;height:400px;"></div>
-							</div>								  
-                            
+							</div>								            
 						</div>
 					</div>
 				</div><!--/col-->
+
+
+				<!--产品-->
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h2><i class="fa fa-cubes red"></i><strong>产品</strong></h2>
+							<div class="panel-actions">
+								<a href="form-x-editable.html#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
+								<a href="form-x-editable.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+								<a href="form-x-editable.html#" class="btn-close"><i class="fa fa-times"></i></a>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div style="float: right; margin-bottom: 10px">
+				            <button id="enable" class="btn btn-primary">Enable / Disable</button>
+							</div>
+							
+							<div class="col-lg-3 col-md-6">
+								<div class="panel panel-default">
+									<div class="panel-body text-center" style="height:230px">
+
+									</div>														
+								</div>		
+							</div><!--/.col-->
+			
+							<div class="col-lg-3 col-md-6">
+								<div class="panel panel-default">
+									<div class="panel-body text-center" style="height:230px">
+
+									</div>														
+								</div>		
+							</div><!--/.col-->
+
+							<div class="col-lg-3 col-md-6">
+								<div class="panel panel-default">
+									<div class="panel-body text-center" style="height:230px">
+
+									</div>														
+								</div>		
+							</div><!--/.col-->
+						</div>
+					</div>
 			</div><!--/.row profile-->			
-        </div>
+
+			
+
+				<!--花费-->
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h2><i class="fa fa-shopping-cart red"></i><strong>花费</strong></h2>
+							<div class="panel-actions">
+								<a href="form-x-editable.html#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
+								<a href="form-x-editable.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+								<a href="form-x-editable.html#" class="btn-close"><i class="fa fa-times"></i></a>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div style="float: right; margin-bottom: 10px">
+				            <button id="enable" class="btn btn-primary">Enable / Disable</button>
+							</div>
+						
+							<template>
+								<el-table :data="spendData" style="width: 100%">
+									<el-table-column prop="type" label="类别" width="180"></el-table-column>
+									<el-table-column prop="number" label="数值" width="180"></el-table-column>
+									<el-table-column prop="date" label="日期"></el-table-column>
+									<el-table-column prop="info" label="备注"></el-table-column>
+								</el-table>
+							</template>	
+					</div>
+					</div>
+					</div>
+					<!--优惠-->
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h2><i class="fa fa-ticket  red"></i><strong>优惠券</strong></h2>
+							<div class="panel-actions">
+								<a href="form-x-editable.html#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
+								<a href="form-x-editable.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+								<a href="form-x-editable.html#" class="btn-close"><i class="fa fa-times"></i></a>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div style="float: right; margin-bottom: 10px">
+				            <button id="enable" class="btn btn-primary">Enable / Disable</button>
+							</div>
+							
+							<div class="col-lg-3 col-md-6">
+								<div class="panel panel-default">
+									<div class="panel-body text-center" style="height:230px">
+
+									</div>														
+								</div>		
+							</div><!--/.col-->
+			
+							<div class="col-lg-3 col-md-6">
+								<div class="panel panel-default">
+									<div class="panel-body text-center" style="height:230px">
+
+									</div>														
+								</div>		
+							</div><!--/.col-->
+
+							<div class="col-lg-3 col-md-6">
+								<div class="panel panel-default">
+									<div class="panel-body text-center" style="height:230px">
+
+									</div>														
+								</div>		
+							</div><!--/.col-->
+						</div>
+					</div>
+			</div><!--/.row profile-->			
+					</div>
+					</div>
+					</div>
+    </div>
 		<!-- end: Content -->
 		<br><br><br>
 	
