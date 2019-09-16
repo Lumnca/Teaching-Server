@@ -47,7 +47,7 @@
 							<strong>信息</strong>
 						</li>
 						<li class="avatar" v-for="item in message">
-							<a href="#">
+							<a href="message/inbox.html">
 								<img class="avatar" src="assets/img/avatar1.jpg">
 								<div>{{item.title}}</div>
 								<small>{{item.date}}</small>
@@ -55,7 +55,7 @@
 							</a>
 						</li>
 						<li class="dropdown-menu-footer text-center">
-							<a href="#">查看所有信息</a>
+							<a href="message/inbox.html">查看所有信息</a>
 						</li>	
 	        		</ul>
                   </li>
@@ -68,12 +68,12 @@
 						</li>							
                         <li class="clearfix" v-for="item in message">
 							<i class="fa" v-bind:class="item.icon"></i> 
-                            <a href="page-activity.html" class="notification-user"> {{item.title}} </a> 
+                            <a href="message/system.html" class="notification-user"> {{item.title}} </a> 
                             <span class="notification-action"> 详细查看 </span> 
-                            <a href="page-activity.html" class="notification-link"> {{item.info}}</a>
+                            <a href="message/system.html" class="notification-link"> {{item.info}}</a>
                         </li>
 						<li class="dropdown-menu-footer text-center">
-							<a href="page-activity.html">查看所有信息</a>
+							<a href="message/system.html">查看所有信息</a>
 						</li>
 	        		</ul>
                   </li>
