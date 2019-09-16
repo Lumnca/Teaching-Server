@@ -111,7 +111,17 @@ new Vue({
         message : message,
         start : 1,
         end : 5,
-        pageLength : 5
+        pageLength : 5,
+        compose : {
+            to : '接收者',
+            title : '主题',
+            info : '在此添加文本',
+            fontStyle : '',
+            textAlign : 'left',
+            fontWeight : '',
+            textLine : ''
+        },
+        fileList: []
     },
     methods : {
         fullbackPage : function(){
@@ -141,6 +151,40 @@ new Vue({
             if(this.pageLength<10){
                 this.pageLength++;
             }
+        },
+        isBolder : function(){
+            if(this.compose.fontWeight === ''){
+                this.compose.fontWeight = 'bolder';
+            }
+            else{
+                this.compose.fontWeight = '';
+            }
+        },
+        fontStyle : function(){
+            if( this.compose.fontStyle === ''){
+                this.compose.fontStyle =  'italic';
+            }
+            else{
+                this.compose.fontStyle = '';
+            }   
+        },
+        textLine : function(){
+            if(this.compose.textLine === ''){
+                this.compose.textLine = 'underline';
+            }
+            else{
+                this.compose.textLine = '';
+            }
+           
+        },
+        remove : function(){
+            document.getElementById('message').value = '';
+        },
+        handleRemove(file, fileList) {
+            console.log(file, fileList);
+        },
+         handlePreview(file) {
+            console.log(file);
         }
     }
 })
