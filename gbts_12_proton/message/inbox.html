@@ -217,11 +217,11 @@
 							<ul class="messages-list">
 
 								<li class="unread" v-for="(item,index) in message" v-if="index <= (end-1) && index >= (start-1)">
-									<a href="message.html">
+									<a href="message.html" @click="isRead(index)">
 										<div class="header">
 											<span class="action"><i class="fa  fa-user"></i></span> 
 											<span class="from">{{item.name}}</span>
-											<span class="date"><span class="fa" v-bind:class="item.icon"></span> {{item.date}}</span>
+											<span class="date"><span class="fa" v-bind:class="item.icon"><span class="badge" v-if="item.isRead===false">new</span></span> {{item.date}}</span>
 										</div>
 										<div class="title">
 											<span class="action"><i class="fa fa-star-o"></i></span>
@@ -309,13 +309,10 @@
 	<!-- theme scripts -->
 	<script src="../assets/js/SmoothScroll.js"></script>
 	<script src="../assets/js/jquery.mmenu.min.js"></script>
-	<script src="../assets/js/core.min.js"></script>
 	
 	<!-- inline scripts related to this page -->
-	<script src="../assets/js/pages/page-inbox.js"></script>
 	<script src="../assets/js/index.js"></script>
 	<script src="../assets/js/message.js"></script>
 	<!-- end: JavaScript-->
-	
 </body>
 </html>

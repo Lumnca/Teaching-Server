@@ -5,27 +5,78 @@
 *用户信息装配
 *
 */
+var userMessage = [
+    {
+        name : '李华',
+        date : '2019/8/12 12:23',
+        icon : ' fa-paper-clip',
+        title : '关于系统使用问题',
+        info : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.....  ',
+        flag : '',
+        isRead : false
+    },
+    {
+        name : '李华',
+        date : '2019/8/11 06:07',
+        icon : ' fa-paper-clip',
+        title : '关于系统使用问题',
+        info : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.....  ',
+        flag : '',
+        isRead : false
+    },
+    {
+        name : '李华',
+        date : '2019/8/10 22:45',
+        icon : ' fa-paper-clip',
+        title : '关于系统使用问题',
+        info : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.....  ',
+        flag : '',
+        isRead : false
+    },
+    {
+        name : '李华',
+        date : '2019/8/9 15:03',
+        icon : ' fa-paper-clip',
+        title : '关于系统使用问题',
+        info : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.....  ',
+        flag : '',
+        isRead : false
+    },
+    {
+        name : '李华',
+        date : '2019/8/8 14:03',
+        icon : ' fa-paper-clip',
+        title : '关于系统使用问题',
+        info : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.....  ',
+        flag : '',
+        isRead : false
+    }, 
+    {
+        name : '李华',
+        date : '2019/8/4 14:03',
+        icon : ' fa-paper-clip',
+        title : '关于系统使用问题',
+        info : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.....  ',
+        flag : '',
+        isRead : true
+    }, 
+]
+
 new Vue({
     el : '#app1',
     data : {
-        message : [
-            {
-                title : '新消息',
-                date : '2019/9/10 22:14'
-            },
-            {
-                title : '新消息',
-                date : '2019/9/10 23:04'
-            },
-            {
-                title : '新消息',
-                date : '2019/9/11 06:08'
-            },
-            {
-                title : '新消息',
-                date : '2019/9/10 10:09'
-            },
-        ]
+        message : userMessage
+    },
+    computed : {
+        isRead : function(){
+            var number = 0;
+            for(var i=0;i<this.message.length;i++){
+                if(this.message[i].isRead===false){
+                    number++;
+                }
+            }
+           return number;
+        }
     }
 })
 

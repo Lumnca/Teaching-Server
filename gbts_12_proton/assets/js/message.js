@@ -10,8 +10,25 @@ var message = [
         date : '2019/8/12 12:23',
         icon : ' fa-paper-clip',
         title : '关于系统使用问题',
-        info : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.....  ',
-        flag : ''
+        info : 'Hello ,Im Li Hua ，Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.....  ',
+        flag : '',
+        isRead : false,
+        files : [
+            {
+                title : 'new.png',
+                format : 'PNG',
+                size : '144KB',
+                style : 'label-danger',
+                path : '../assets/img/avatar.jpg'
+            },
+            {
+                title : 'new.jpg',
+                format : 'PNG',
+                size : '164KB',
+                style : 'label-primary',
+                path : '../assets/img/avatar.jpg'
+            }
+        ]
     },
     {
         name : '李华',
@@ -19,7 +36,8 @@ var message = [
         icon : ' fa-paper-clip',
         title : '关于系统使用问题',
         info : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.....  ',
-        flag : ''
+        flag : '',
+        isRead : false
     },
     {
         name : '李华',
@@ -27,7 +45,8 @@ var message = [
         icon : ' fa-paper-clip',
         title : '关于系统使用问题',
         info : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.....  ',
-        flag : ''
+        flag : '',
+        isRead : false
     },
     {
         name : '李华',
@@ -35,7 +54,8 @@ var message = [
         icon : ' fa-paper-clip',
         title : '关于系统使用问题',
         info : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.....  ',
-        flag : ''
+        flag : '',
+        isRead : false
     },
     {
         name : '李华',
@@ -43,7 +63,8 @@ var message = [
         icon : ' fa-paper-clip',
         title : '关于系统使用问题',
         info : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.....  ',
-        flag : ''
+        flag : '',
+        isRead : false
     }, 
     {
         name : '李华',
@@ -51,7 +72,8 @@ var message = [
         icon : ' fa-paper-clip',
         title : '关于系统使用问题',
         info : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.....  ',
-        flag : ''
+        flag : '',
+        isRead : true
     }, 
 ]
 
@@ -63,27 +85,27 @@ new Vue({
         inbox : [
             {
                 title : '收件箱',
-                href : '#',
+                href : 'inbox.html',
                 label : 'label-danger',
                 number : 0
             },
             {
                 title : '发送邮件',
-                href : '#',
-                label : '',
-                number : 0
+                href : 'compose.html',
+                label : 'label-info',
+                number : 4
             },
             {
                 title : '垃圾箱',
                 href : '#',
-                label : '',
-                number : 0
+                label : 'label-default',
+                number : 1
             },
             {
                 title : '草案',
                 href : '#',
                 label : 'label-warning',
-                number : 0
+                number : 2
             },
         ],
         button : [
@@ -122,6 +144,15 @@ new Vue({
             textLine : ''
         },
         fileList: []
+    },
+    created : function(){
+            var number = 0;
+            for(var i=0;i<message.length;i++){
+                if(message[i].isRead===false){
+                    number++;
+                }
+            }
+            this.inbox[0].number = number;
     },
     methods : {
         fullbackPage : function(){
@@ -185,6 +216,13 @@ new Vue({
         },
          handlePreview(file) {
             console.log(file);
+        },
+        isRead(index){
+            if(!message[index].isRead){
+                this.inbox[0].number--;
+                message[index].isRead = true;
+            }
+
         }
     }
 })

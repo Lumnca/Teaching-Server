@@ -54,7 +54,7 @@
 									<strong>信息</strong>
 								</li>
 								<li class="avatar" v-for="item in message">
-									<a href="#">
+									<a href="inbox.html">
 										<img class="avatar" src="../assets/img/avatar1.jpg">
 										<div>{{item.title}}</div>
 										<small>{{item.date}}</small>
@@ -62,7 +62,7 @@
 									</a>
 								</li>
 								<li class="dropdown-menu-footer text-center">
-									<a href="#">查看所有信息</a>
+									<a href="inbox.html">查看所有信息</a>
 								</li>	
 							</ul>
 						  </li>
@@ -75,12 +75,12 @@
 								</li>							
 								<li class="clearfix" v-for="item in message">
 									<i class="fa" v-bind:class="item.icon"></i> 
-									<a href="page-activity.html" class="notification-user"> {{item.title}} </a> 
+									<a href="../message/system.html" class="notification-user"> {{item.title}} </a> 
 									<span class="notification-action"> 详细查看 </span> 
-									<a href="page-activity.html" class="notification-link"> {{item.info}}</a>
+									<a href="../message/system.html" class="notification-link"> {{item.info}}</a>
 								</li>
 								<li class="dropdown-menu-footer text-center">
-									<a href="page-activity.html">查看所有信息</a>
+									<a href="../message/system.html">查看所有信息</a>
 								</li>
 							</ul>
 						  </li>
@@ -166,7 +166,11 @@
 						<a href="#" class="btn btn-danger btn-block">Compose</a>
 							<ul>
 								<li v-for="item in inbox">
-									<a v-bind:href="item.href">{{item.title}}<span class="label"  v-bind:class="item.label">{{item.number}}</span></a>
+									<a v-bind:href="item.href">{{item.title}}
+										<span class="label"  v-bind:class="item.label">
+											{{item.number}}
+										</span>								
+									</a>
 								</li>		
 							</ul>
 						</div>	
@@ -174,7 +178,7 @@
 					
 					<div class="panel panel-default">
 						<div class="panel-body contacts">
-							<a href="page-inbox-compose.html#" class="btn btn-primary btn-block"> + Contact</a>
+							<a href="#" class="btn btn-primary btn-block"> + Contact</a>
 							<ul>
 								<li><span class="label label-danger"></span> Sarah Hiltser</li>
 								<li><span class="label label-default"></span> Stephano Odo</li>
@@ -294,10 +298,7 @@
 	<!-- theme scripts -->
 	<script src="../assets/js/SmoothScroll.js"></script>
 	<script src="../assets/js/jquery.mmenu.min.js"></script>
-	<script src="../assets/js/core.min.js"></script>
 	
-	<!-- inline scripts related to this page -->
-	<script src="../assets/js/pages/page-inbox.js"></script>
 	<script src="../assets/js/index.js"></script>
 	<script src="../assets/js/message.js"></script>
 	<!-- end: JavaScript-->
