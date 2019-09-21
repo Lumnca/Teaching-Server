@@ -4,7 +4,7 @@
     	<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <title>收件箱</title>		
+	    <title>垃圾箱</title>		
 		<!-- Import google fonts - Heading first/ text second -->
         <!--[if lt IE 9]>
 			<link href="http://fonts.useso.com/css?family=Open+Sans:400" rel="stylesheet" type="text/css" />
@@ -155,11 +155,11 @@
 		
 			<div class="row">
 				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa-inbox"></i>用户信息</h3>
+					<h3 class="page-header"><i class="fa fa-trash-o"></i>垃圾箱</h3>
 					<ol class="breadcrumb">
 						<li><i class="fa fa-home"></i><a href="../index.html">主页</a></li>
 						<li><i class="fa fa-inbox"></i>信息</li>
-						<li><i class="fa fa-envelope"></i><a href="#">收件箱</a></li>					
+						<li><i class="fa fa-trash-o"></i><a href="#">垃圾箱</a></li>					
 					</ol>
 				</div>
 			</div>		
@@ -198,7 +198,7 @@
 						<div class="panel-body">
 							<!--按钮组定义-->
 							<span class="btn-group">
-							  	<button v-for="(item,index) in button" class="btn" v-bind:class="item.style" @click="showChose(index)">
+							  	<button v-for="(item,index) in button" class="btn" v-bind:class="item.style"  v-if="index>2" @click="showChose(index)" >
 									<span class="fa" v-bind:class="item.icon"></span>
 								</button>
 							</span>
@@ -207,7 +207,7 @@
 								<button @click="fullbackPage" class="btn btn-default"><span class="fa fa-chevron-left"></span></button>
 								<button class="btn btn-default"> {{start}}  ~  {{end}}</button>
 							  	<button @click="forwardPage" class="btn btn-default"><span class="fa fa-chevron-right"></span></button>
-								<button class="btn btn-default"><span class="fa"> 总数:{{message.length}}</span></button>
+								<button class="btn btn-default"><span class="fa"> 总数:{{trashMessafe.length}}</span></button>
 								<button class="btn btn-default" @click="minus"><span class="fa  fa-minus"> </span></button>
 								<button class="btn btn-default"><span> 每页大小:{{pageLength}}</span></button>
 								<button class="btn btn-default" @click="plus"><span class="fa  fa-plus"> </span></button>
@@ -216,12 +216,12 @@
 
 							<ul class="messages-list">
 
-								<li class="unread" v-for="(item,index) in message" v-if="(index <= (end-1) && index >= (start-1))&&item.flag===true">
-									<a href="message.html" @click="isRead(index)">
+								<li class="unread" v-for="(item,index) in trashMessafe" v-if="(index <= (end-1) && index >= (start-1))&&item.flag===true">
+									<a href="message.html">
 										<div class="header">
 											<span class="action"><i class="fa  fa-user"></i></span> 
 											<span class="from">{{item.name}}</span>
-											<span class="date"><span class="fa" v-bind:class="item.icon"><span class="badge" v-if="item.isRead===false">new</span></span> {{item.date}}</span>
+											<span class="date"><span class="fa" v-bind:class="item.icon">{{item.date}}</span>
 										</div>
 										<div class="title">
 											<span class="action"><i class="fa " v-bind:class="item.type"></i></span>

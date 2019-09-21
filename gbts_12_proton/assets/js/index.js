@@ -114,7 +114,7 @@ new Vue({
             {
                 title : '好友列表',
                 icon : ' fa-users',
-                href : 'https://lumnca.github.io/my-zhuye/'
+                href : 'file:///D:/GitHub%20warehouse%202/teaching/Teaching-Server/gbts_12_proton/user/colleague.html'
             },
             {
                 title : '排名表',

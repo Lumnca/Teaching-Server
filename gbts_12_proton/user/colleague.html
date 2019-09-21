@@ -4,7 +4,7 @@
     	<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <title>收件箱</title>		
+	    <title>好友列表</title>		
 		<!-- Import google fonts - Heading first/ text second -->
         <!--[if lt IE 9]>
 			<link href="http://fonts.useso.com/css?family=Open+Sans:400" rel="stylesheet" type="text/css" />
@@ -57,7 +57,7 @@
 							<strong>信息</strong>
 						</li>
 						<li class="avatar" v-for="item in message">
-							<a href="#">
+							<a href="../message/message.html">
 								<img class="avatar" src="../assets/img/avatar1.jpg">
 								<div>{{item.title}}</div>
 								<small>{{item.date}}</small>
@@ -65,7 +65,7 @@
 							</a>
 						</li>
 						<li class="dropdown-menu-footer text-center">
-							<a href="#">查看所有信息</a>
+							<a href="../message/message.html">查看所有信息</a>
 						</li>	
 	        		</ul>
                   </li>
@@ -78,12 +78,12 @@
 						</li>							
                         <li class="clearfix" v-for="item in message">
 							<i class="fa" v-bind:class="item.icon"></i> 
-                            <a href="page-activity.html" class="notification-user"> {{item.title}} </a> 
+                            <a href="../message/system.html" class="notification-user"> {{item.title}} </a> 
                             <span class="notification-action"> 详细查看 </span> 
-                            <a href="page-activity.html" class="notification-link"> {{item.info}}</a>
+                            <a href="../message/system.html" class="notification-link"> {{item.info}}</a>
                         </li>
 						<li class="dropdown-menu-footer text-center">
-							<a href="page-activity.html">查看所有信息</a>
+							<a href="../message/system.html">查看所有信息</a>
 						</li>
 	        		</ul>
                   </li>
@@ -106,7 +106,7 @@
 						<li><a href="../index.html"><i class="fa fa-sign-out"></i>返回主界面</a></li>	
 	        		</ul>
 	      		</li>
-				<li><a href="index.html"><i class="fa fa-power-off"></i></a></li>
+				<li><a><i class="fa fa-power-off"></i></a></li>
 			</ul>	
 		</div>		
 	</div>
@@ -155,92 +155,97 @@
 		
 			<div class="row">
 				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa-inbox"></i>用户信息</h3>
+					<h3 class="page-header"><i class="fa fa-users"></i>好友列表</h3>
 					<ol class="breadcrumb">
 						<li><i class="fa fa-home"></i><a href="../index.html">主页</a></li>
-						<li><i class="fa fa-inbox"></i>信息</li>
-						<li><i class="fa fa-envelope"></i><a href="#">收件箱</a></li>					
+						<li><i class="fa fa-user"></i><a href="#">用户</a></li>
+						<li><i class="fa fa-users"></i><a href="#">好友列表</a></li>					
 					</ol>
 				</div>
 			</div>		
 			<div class="row inbox">		
-				<div class="col-md-3">	
-					<div class="panel panel-default">                                                                                                                           				<div class="panel-body inbox-menu">			
-							<a href="compose.html" class="btn btn-danger btn-block">Compose</a>
-							<ul>
-								<li v-for="item in inbox">
-									<a   v-bind:href="item.href">{{item.title}}<span class="label"  v-bind:class="item.label">{{item.number}}</span></a>
-								</li>		
-							</ul>
-						</div>	
-					</div>
-					<div class="panel panel-default">
-						<div class="panel-body contacts">
-							<a href="page-inbox.html#" class="btn btn-primary btn-block"> + Contact</a>
-							<ul>
-								<li><span class="label label-danger"></span> Sarah Hiltser</li>
-								<li><span class="label label-default"></span> Stephano Odo</li>
-								<li><span class="label label-success"></span> Malras</li>
-								<li><span class="label label-success"></span> Derbi Mondro</li>
-								<li><span class="label label-warning"></span> Jessy Doe</li>
-								<li><span class="label label-default"></span> Gerry</li>
-								<li><span class="label label-success"></span> Kevin</li>
-								<li><span class="label label-danger"></span> Carlina Minfa</li>
-							</ul>
-						</div>
-					</div>			
+				<div class="col-md-12">	
+					<el-tabs type="border-card">
+                        <el-tab-pane label="关注列表">
+                            <ul class="messages-list">  
+                                <li class="unread" v-for="item in following">  
+                                    <template>
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <el-avatar :size="60" v-bind:src="item.img" @error="errorHandler">
+                                                    <img src="../assets/img/default.png"/>
+                                                </el-avatar>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div>
+                                                    <span style="font-size:20px;color:#181717;">{{item.name}}</span>
+                                                </div><br>
+                                                <div>
+                                                    <span style="font-size:18px;color:#7e7979;">ID:{{item.ID}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8" style="text-align:right;">
+                                                <span style="font-size:18px;color:#b38edd;">{{item.newInfo}} 发表了动态</span>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </li>
+                            </ul>
+                        </el-tab-pane>
+                        <el-tab-pane label="粉丝列表">
+                                <ul class="messages-list">  
+                                        <li class="unread" v-for="item in followers">  
+                                            <template>
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <el-avatar :size="60" v-bind:src="item.img" @error="errorHandler">
+                                                            <img src="../assets/img/default.png"/>
+                                                        </el-avatar>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div>
+                                                            <span style="font-size:20px;color:#181717;">{{item.name}}</span>
+                                                        </div><br>
+                                                        <div>
+                                                            <span style="font-size:18px;color:#7e7979;">ID:{{item.ID}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8" style="text-align:right;">
+                                                        <span style="font-size:18px;color:#b38edd;">{{item.newInfo}} 发表了动态</span>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </li>
+                                    </ul>
+                        </el-tab-pane>
+                        <el-tab-pane label="动态信息">
+                                <ul class="messages-list">  
+                                        <li class="unread" v-for="item in dynamic">  
+                                            <template>
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <el-avatar :size="60" v-bind:src="item.img" @error="errorHandler">
+                                                            <img src="../assets/img/default.png"/>
+                                                        </el-avatar>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div>
+                                                            <span style="font-size:20px;color:#181717;">{{item.name}}</span>
+                                                        </div><br>
+                                                        <div>
+                                                            <span style="font-size:18px;color:#b38edd;">{{item.date}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8" >
+                                                        {{item.info}}
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </li>
+                                    </ul>    
+                        </el-tab-pane>
+                      </el-tabs>
 				</div><!--/.col-->
-				
-				<div class="col-md-9">
-					
-					<div class="panel panel-default">
-						
-						<div class="panel-body">
-							<!--按钮组定义-->
-							<span class="btn-group">
-							  	<button v-for="(item,index) in button" class="btn" v-bind:class="item.style" @click="showChose(index)">
-									<span class="fa" v-bind:class="item.icon"></span>
-								</button>
-							</span>
-
-							<span class="btn-group pull-right">
-								<button @click="fullbackPage" class="btn btn-default"><span class="fa fa-chevron-left"></span></button>
-								<button class="btn btn-default"> {{start}}  ~  {{end}}</button>
-							  	<button @click="forwardPage" class="btn btn-default"><span class="fa fa-chevron-right"></span></button>
-								<button class="btn btn-default"><span class="fa"> 总数:{{message.length}}</span></button>
-								<button class="btn btn-default" @click="minus"><span class="fa  fa-minus"> </span></button>
-								<button class="btn btn-default"><span> 每页大小:{{pageLength}}</span></button>
-								<button class="btn btn-default" @click="plus"><span class="fa  fa-plus"> </span></button>
-								
-							</span>
-
-							<ul class="messages-list">
-
-								<li class="unread" v-for="(item,index) in message" v-if="(index <= (end-1) && index >= (start-1))&&item.flag===true">
-									<a href="message.html" @click="isRead(index)">
-										<div class="header">
-											<span class="action"><i class="fa  fa-user"></i></span> 
-											<span class="from">{{item.name}}</span>
-											<span class="date"><span class="fa" v-bind:class="item.icon"><span class="badge" v-if="item.isRead===false">new</span></span> {{item.date}}</span>
-										</div>
-										<div class="title">
-											<span class="action"><i class="fa " v-bind:class="item.type"></i></span>
-											{{item.title}}
-										</div>	
-										<div class="description">
-											{{item.info}}
-										</div>
-									</a>		
-								</li>
-
-							</ul>
-							
-						</div>	
-						
-					</div>	
-					
-				</div><!--/.col-->	
-						
 			</div><!--/row-->
 					
 		</div>
@@ -295,7 +300,7 @@
 	
 	<!-- inline scripts related to this page -->
 	<script src="../assets/js/index.js"></script>
-	<script src="../assets/js/message.js"></script>
+	<script src="../assets/js/friend.js"></script>
 	<!-- end: JavaScript-->
 </body>
 </html>
