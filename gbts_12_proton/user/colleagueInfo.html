@@ -4,7 +4,7 @@
     	<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <title>好友列表</title>		
+	    <title>好友信息</title>		
 		<!-- Import google fonts - Heading first/ text second -->
         <!--[if lt IE 9]>
 			<link href="http://fonts.useso.com/css?family=Open+Sans:400" rel="stylesheet" type="text/css" />
@@ -155,108 +155,38 @@
 		
 			<div class="row">
 				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa-users"></i>好友列表</h3>
+					<h3 class="page-header"><i class="fa fa-users"></i>好友信息</h3>
 					<ol class="breadcrumb">
 						<li><i class="fa fa-home"></i><a href="../index.html">主页</a></li>
 						<li><i class="fa fa-user"></i><a href="#">用户</a></li>
-						<li><i class="fa fa-users"></i><a href="#">好友列表</a></li>					
+						<li><i class="fa fa-users"></i><a href="#">好友信息</a></li>					
 					</ol>
 				</div>
 			</div>		
 			<div class="row inbox">		
-				<div class="col-md-12">	
-					<el-tabs type="border-card">
-                        <el-tab-pane label="关注列表">
-                            <ul class="messages-list">  
-                                <li class="unread" v-for="item in following">  
-                                    <template>
-                                        <div class="row">
-                                            <div class="col-md-1">
-                                                <el-avatar :size="60" v-bind:src="item.img" @error="errorHandler">
-                                                    <img src="../assets/img/default.png"/>
-                                                </el-avatar>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div>
-                                                    <span style="font-size:20px;color:#181717;">{{item.name}}</span>
-                                                </div><br>
-                                                <div>
-                                                    <span style="font-size:18px;color:#7e7979;">ID:{{item.ID}}</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8" style="text-align:right;">
-                                                <span style="font-size:18px;color:#b38edd;">{{item.newInfo}} 发表了动态</span>
-                                            </div>
+				<div class="col-md-12 ">	
+                    <div class="col-md-12 panel panel-default">
+                        <template>
+                            <div class="demo-type row">
+                                <div class="col-md-3 ">
+                                    <div class="block"  :key="fit">
+                                        <span class="demonstration">{{ fit }}</span>
+                                        <el-image
+                                                style="width: 100px; height: 100px"
+                                                :src="url"
+                                                :fit="fit"></el-image>
                                         </div>
-                                    </template>
-                                </li>
-                            </ul>
-                        </el-tab-pane>
-                        <el-tab-pane label="粉丝列表">
-                                <ul class="messages-list">  
-                                        <li class="unread" v-for="item in followers">  
-                                            <template>
-                                                <div class="row">
-                                                    <div class="col-md-1">
-                                                        <el-avatar :size="60" v-bind:src="item.img" @error="errorHandler">
-                                                            <img src="../assets/img/default.png"/>
-                                                        </el-avatar>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div>
-                                                            <span style="font-size:20px;color:#181717;">{{item.name}}</span>
-                                                        </div><br>
-                                                        <div>
-                                                            <span style="font-size:18px;color:#7e7979;">ID:{{item.ID}}</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-8" style="text-align:right;">
-                                                        <span style="font-size:18px;color:#b38edd;">{{item.newInfo}} 发表了动态</span>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                        </li>
-                                    </ul>
-                        </el-tab-pane>
-                        <el-tab-pane label="动态信息">
-                                <ul class="messages-list">  
-                                        <li class="unread" v-for="item in dynamic">  
-                                            <template>
-                                                <div class="row">
-                                                    <div class="col-md-1">
-                                                        <el-avatar :size="60" v-bind:src="item.img" @error="errorHandler">
-                                                            <img src="../assets/img/default.png"/>
-                                                        </el-avatar>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div>
-                                                            <span style="font-size:20px;color:#181717;">{{item.name}}</span>
-                                                        </div><br>
-                                                        <div>
-                                                            <span style="font-size:18px;color:#b38edd;">{{item.date}}</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-8" >
-                                                        {{item.info}}
-                                                    </div>
-                                                </div>
-                                            </template>
-                                        </li>
-									</ul>   
-									<el-button @click="drawer = true" type="primary" style="margin-left: 16px;">
-											点我打开
-										  </el-button>
-										  
-										  <el-drawer
-											title="我是标题"
-											:visible.sync="drawer"
-											:direction="direction"
-											:before-close="handleClose">
-											<span>我来啦!</span>
-										  </el-drawer> 
-                        </el-tab-pane>
-                      </el-tabs>
-				</div><!--/.col-->
+                                    </div>
+                                <div class="col-md-3 ">
+                                        <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <el-avatar> user </el-avatar>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div><!--/.col-->
 			</div><!--/row-->
 					
 		</div>
@@ -282,9 +212,21 @@
 
 	<!--[if !IE]>-->
 
-		<script type="text/javascript">
+	<script type="text/javascript">
 			window.jQuery || document.write("<script src='assets/js/jquery-2.1.1.min.js'>"+"<"+"/script>");
-		</script>
+                
+            /*
+            *用户详细信息
+            */
+           var user = new Vue({
+                el : '#app',
+                data : {
+                    use : {
+                        id : '12222',
+                    }
+                }
+           });
+    </script>
 
 	<!--<![endif]-->
 
@@ -311,7 +253,6 @@
 	
 	<!-- inline scripts related to this page -->
 	<script src="../assets/js/index.js"></script>
-	<script src="../assets/js/friend.js"></script>
 	<!-- end: JavaScript-->
 </body>
 </html>
