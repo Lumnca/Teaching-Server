@@ -168,7 +168,7 @@
 					<el-tabs type="border-card">
                         <el-tab-pane label="关注列表">
                             <ul class="messages-list">  
-                                <li class="unread" v-for="item in following">  
+                                <li class="unread" v-for="(item,index) in following" @click="choseFollowing(index)">  
                                     <template>
                                         <div class="row">
                                             <div class="col-md-1">
@@ -190,7 +190,22 @@
                                         </div>
                                     </template>
                                 </li>
-                            </ul>
+							</ul>
+							<el-drawer
+							title="详细信息"
+							:visible.sync="drawer"
+							:direction="direction"
+							:before-close="handleClose">
+							<div class="text-center">
+								<div class="demo-image">
+										<span class="demonstration">{{lookUpUser.name}}</span>
+										<el-image
+											style="width: 100px; height: 100px"
+											:src="lookUpUser.img"
+										>
+										</el-image>
+								</div>
+							</div>
                         </el-tab-pane>
                         <el-tab-pane label="粉丝列表">
                                 <ul class="messages-list">  
@@ -243,17 +258,6 @@
                                             </template>
                                         </li>
 									</ul>   
-									<el-button @click="drawer = true" type="primary" style="margin-left: 16px;">
-											点我打开
-										  </el-button>
-										  
-										  <el-drawer
-											title="我是标题"
-											:visible.sync="drawer"
-											:direction="direction"
-											:before-close="handleClose">
-											<span>我来啦!</span>
-										  </el-drawer> 
                         </el-tab-pane>
                       </el-tabs>
 				</div><!--/.col-->
@@ -262,7 +266,8 @@
 		</div>
 		<!-- end: Content -->
 		<br><br><br>
-		
+
+		</el-drawer>
 	
 	<div class="clearfix"></div>
 	
