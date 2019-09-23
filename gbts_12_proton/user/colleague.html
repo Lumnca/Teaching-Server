@@ -33,6 +33,10 @@
         <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
         <style>
             @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
+			.info-text{
+				font-size: 18px;
+				color: #0f97b9;
+			}
         </style>
 	</head>
 </head>
@@ -198,12 +202,24 @@
 							:before-close="handleClose">
 							<div class="text-center">
 								<div class="demo-image">
-										<span class="demonstration">{{lookUpUser.name}}</span>
 										<el-image
 											style="width: 100px; height: 100px"
 											:src="lookUpUser.img"
 										>
 										</el-image>
+										<hr>
+										<template>
+											<div class="info-text">
+												<span>ID : {{lookUpUser.ID}}</span>
+											  	<el-divider></el-divider>
+												<span>Name : {{lookUpUser.name}}</span>
+												<el-divider></el-divider>
+												<span>INFO: 其余信息自行添加</span>
+												<el-divider></el-divider>
+											</div>
+										</template>
+										<hr>
+
 								</div>
 							</div>
                         </el-tab-pane>
