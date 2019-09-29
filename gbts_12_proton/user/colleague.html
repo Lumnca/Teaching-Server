@@ -37,6 +37,12 @@
 				font-size: 18px;
 				color: #0f97b9;
 			}
+			.activeInfo{
+				margin-top: 6px;
+				padding: 2px 4px;
+				border: 3px solid #d6d0d0;
+				border-radius: 5px;
+			}
         </style>
 	</head>
 </head>
@@ -215,17 +221,38 @@
 												<span>Name : {{lookUpUser.name}}</span>
 												<el-divider></el-divider>
 												<span>INFO: 其余信息自行添加</span>
-												<el-divider></el-divider>
+												
 											</div>
 										</template>
 										<hr>
+										<span style="color:#80447d;font-size: 19px;">动态信息</span>
+										<div class="activeInfo row" v-for="item in lookUpUser.active">
+											<div class="col-md-8"></div>
+											<div class="col-md-4"><i><h4>{{item.date}}</h4></i></div>
+											<div  style="font-size:17px;color:#423c3e;">
+												{{item.info}}
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-md-9">
+
+												</div>
+												<div class="col-md-3">
+														<el-row>
+															<el-button size="mini" type="success" icon="el-icon-refresh-left" circle></el-button>
+															<el-button size="mini" type="warning" icon="el-icon-star-off" circle></el-button>
+														</el-row>
+												</div>
+											</div>
+										</div>
 
 								</div>
 							</div>
+							</el-drawer>
                         </el-tab-pane>
                         <el-tab-pane label="粉丝列表">
                                 <ul class="messages-list">  
-                                        <li class="unread" v-for="item in followers">  
+                                        <li class="unread" v-for="(item,index) in followers" @click="choseFollowers(index)">  
                                             <template>
                                                 <div class="row">
                                                     <div class="col-md-1">
@@ -249,7 +276,7 @@
                                         </li>
                                     </ul>
                         </el-tab-pane>
-                        <el-tab-pane label="动态信息">
+                        <el-tab-pane label="个人动态信息">
                                 <ul class="messages-list">  
                                         <li class="unread" v-for="item in dynamic">  
                                             <template>
@@ -264,12 +291,17 @@
                                                             <span style="font-size:20px;color:#181717;">{{item.name}}</span>
                                                         </div><br>
                                                         <div>
-                                                            <span style="font-size:18px;color:#b38edd;">{{item.date}}</span>
+                                                            <span style="font-size:18px;color:#b38edd;">{{item.newInfo}}</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-8" >
-                                                        {{item.info}}
-                                                    </div>
+                                                        <div>
+															<span style="font-size:20px;color:#181717;">{{item.info}}</span>
+														</div>
+														<div>
+															<span style="font-size:18px;color:#b38edd;">{{item.date}}</span>
+														</div>														
+													</div>
                                                 </div>
                                             </template>
                                         </li>

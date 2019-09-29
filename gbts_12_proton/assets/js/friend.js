@@ -6,13 +6,43 @@ new Vue({
                 name : 'Tom',
                 ID : '48515',
                 newInfo : '2019/9/21',
-                img : '../assets/img/avatar4.jpg'
+                img : '../assets/img/avatar4.jpg',
+                active : [
+                    {
+                        date : '2019/5/26 14:22',
+                        info : 'Hello This my active Info 2  HA Ha Ha HA HA HA ha ha ha ha ha AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                    },
+                    {
+                        date : '2019/5/21 14:22',
+                        info : 'Hello This my active Info 1'
+                    }
+                ]
             },
             {
                 name : 'Marry',
                 ID : '74449',
                 newInfo : '2019/9/20',
-                img : '../assets/img/avatar3.jpg'
+                img : '../assets/img/avatar3.jpg',
+                active : [
+                    {
+                        date : '2019/7/26 14:22',
+                        info : 'Hello This my active Info 2'
+                    },
+                    {
+                        date : '2019/6/12 14:22',
+                        info : 'Hello This my active Info 1'
+                    }                        
+                ],
+                active : [
+                    {
+                        date : '2019/5/26 14:22',
+                        info : 'Hello This my active Info 2  HA Ha Ha HA HA HA ha ha ha ha ha AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                    },
+                    {
+                        date : '2019/5/21 14:22',
+                        info : 'Hello This my active Info 1'
+                    }
+                ]
             }
         ],
         followers : [
@@ -20,22 +50,37 @@ new Vue({
                 name : 'Bob',
                 ID : '74426',
                 newInfo : '2019/7/11',
-                img : '../assets/img/avatar2.jpg'
+                img : '../assets/img/avatar2.jpg',
+                active : [
+                    {
+                        date : '2019/5/26 14:22',
+                        info : 'Hello This my active Info 2  HA Ha Ha HA HA HA ha ha ha ha ha AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                    },
+                    {
+                        date : '2019/5/21 14:22',
+                        info : 'Hello This my active Info 1'
+                    }
+                ]
             },
             {
                 name : 'Key',
                 ID : '96931',
                 newInfo : '2019/9/27',
-                img : '../assets/img/avatar5.jpg'
+                img : '../assets/img/avatar5.jpg',
+                active : [
+                    {
+                        date : '2019/5/26 14:22',
+                        info : 'Hello This my active Info 2  HA Ha Ha HA HA HA ha ha ha ha ha AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                    },
+                    {
+                        date : '2019/5/21 14:22',
+                        info : 'Hello This my active Info 1'
+                    }
+                ]
             }
         ],
         dynamic : [
-            {
-                name : 'Key',
-                img : '../assets/img/avatar5.jpg',
-                date : '2019/9/27',
-                info : 'On another level, many in the medical community acknowledge that the ssisted--suicide debate has been fueled in part by the despair of patients for whom noderm medicine has prolonged the physical agony of dying.…'
-            }
+
         ],
         drawer : false,
         direction  : 'rtl',
@@ -44,8 +89,17 @@ new Vue({
             ID : '74449',
             newInfo : '2019/9/20',
             img : '../assets/img/avatar3.jpg'
-        }
+        },
     },
+    mounted : function(){
+        this.followers.forEach(element => {
+            this.dynamic.push(element);
+        });
+        this.following.forEach(element => {
+            this.dynamic.push(element);
+        });
+    }
+    ,
     methods: {
         errorHandler() {
           return true
@@ -60,6 +114,14 @@ new Vue({
             this.lookUpUser = this.following[index];
             this.drawer = true;
             console.log(this.lookUpUser);
+        },
+        choseFollowers(index){
+            this.lookUpUser = this.followers[index];
+            this.drawer = true;
+            console.log(this.lookUpUser);
+        },
+        addActive(){
+
         }
     }
 })

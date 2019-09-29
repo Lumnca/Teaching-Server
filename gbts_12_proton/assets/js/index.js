@@ -191,27 +191,32 @@ new Vue({
 new Vue({
     el : '#app5',
     data : {
+
+        user : {
+            iden : 'teacher'
+        },
+
         functions : [
             {
-                title : '功能1',
+                title : '主页',
                 icon  : 'fa-laptop',
-                href : '',
+                href : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\gbts_12_proton\\index.html',
                 childen : []
             },
             {
-                title : '功能2',
-                icon  : 'fa-file-text',
+                title : '课程管理',
+                icon  : 'fa-book',
                 href : '#',
                 childen : [
                     {
-                        title : '子模块1',
-                        icon  : 'fa-car',
-                        href  : 'https://www.baidu.com/'
+                        title : '查看已有课程',
+                        icon  : ' fa-search',
+                        href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\gbts_12_proton\\course\\lookUpCourse.html'
                     },
                     {
-                        title : '子模块2',
-                        icon  : 'fa-envelope',
-                        href  : '#'
+                        title : '添加新有课程',
+                        icon  : 'fa-plus',
+                        href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\gbts_12_proton\\course\\addNewCourse.html'
                     }
                 ]              
             },
