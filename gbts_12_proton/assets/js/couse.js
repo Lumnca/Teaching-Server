@@ -17,7 +17,7 @@ new Vue({
                 numbers : 77,
                 teacher : '张三',
                 level : 3.8,
-                src : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\gbts_12_proton\\assets\\img\\chrom.png',
+                src : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\gbts_12_proton\\assets\\img\\avatar.jpg',
                 value : '#SO8552',
                 display : false
             }
@@ -25,7 +25,8 @@ new Vue({
         state : '',
         restaurants: [],
         timeout:  null,
-        sourchDisplay : false
+        sourchDisplay : false,
+        fit : 'scale-down'
     },
     methods: {
         loadAll() {
