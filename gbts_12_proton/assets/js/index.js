@@ -217,6 +217,11 @@ new Vue({
                         title : '添加新有课程',
                         icon  : 'fa-plus',
                         href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\gbts_12_proton\\course\\addNewCourse.html'
+                    },
+                    {
+                        title : '删除已有课程',
+                        icon  : 'fa-minus',
+                        href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\gbts_12_proton\\course\\deleteCourse.html'
                     }
                 ]              
             },

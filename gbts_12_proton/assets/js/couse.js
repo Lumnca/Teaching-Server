@@ -17,7 +17,7 @@ new Vue({
                 numbers : 77,
                 teacher : '张三',
                 level : 3.8,
-                src : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\gbts_12_proton\\assets\\img\\avatar.jpg',
+                src : 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
                 value : '#SO8552',
                 display : false
             }
