@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>添加课程</title>
+    <!-- Import google fonts - Heading first/ text second -->
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
+    <!-- Css files -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/jquery.mmenu.css" rel="stylesheet">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+    <link href="../assets/css/style.min.css" rel="stylesheet">
+    <link href="../assets/css/add-ons.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <style>
+        @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
+
+        .el-header {
+            background-color: #B3C0D1;
+            color: #333;
+            line-height: 60px;
+        }
+
+        .el-aside {
+            color: #3c1dca;
+        }
+        .noline:hover{
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+</head>
+
+<body>
+    <div id="app">
+        <el-container  style=" border: 1px solid #eee">
+                <el-header style="text-align: right; font-size: 12px">
+                        <el-dropdown>
+                            <i class="el-icon-setting" style="margin-right: 15px"></i>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item>查看</el-dropdown-item>
+                                <el-dropdown-item>新增</el-dropdown-item>
+                                <el-dropdown-item>删除</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                        <span>王小虎</span>
+                    </el-header>
+        </el-container>
+        <el-container style="height: 800px; border: 1px solid #eee">
+            <el-aside width="300px" style="background-color: rgb(238, 241, 246)">
+                <img src="https://edu-image.nosdn.127.net/E60240E3F15C33023E8BE744985C91D3.jpg?imageView&thumbnail=510y288&quality=100"
+                width="296">
+                <el-menu :default-openeds="['1']"  >
+                    <el-submenu index="1">
+                        <template slot="title"><i class="el-icon-bell"></i>公告</template>
+                        <el-menu-item-group v-for="(item,index) in course.notice">
+                            <a class="noline" href="courseNotice.html"><el-menu-item :index=item>{{item}}</el-menu-item></a>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <el-submenu index="2">
+                        <template slot="title"><i class="el-icon-reading"></i>课件</template>
+                        <el-menu-item-group v-for="(item,index) in course.courseware">
+                            <a class="noline" href="#"><el-menu-item :index='item'>{{item}}</el-menu-item></a>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <el-submenu index="3">
+                        <template slot="title"><i class="el-icon-edit"></i>测试与作业</template>
+                        <el-menu-item-group v-for="(item,index) in course.test">
+                            <a class="noline" href="#"><el-menu-item :index='item'>{{item}}</el-menu-item></a>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <el-submenu index="4">
+                        <template slot="title"><i class="el-icon-eleme"></i>考试</template>
+                        <el-menu-item-group v-for="(item,index) in course.exam">
+                            <a class="noline" href="#"><el-menu-item :index='item'>{{item}}</el-menu-item></a>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <el-submenu index="5">
+                        <template slot="title"><i class="el-icon-chat-dot-square"></i>讨论区</template>
+                        <el-menu-item-group v-for="(item,index) in course.talk">
+                            <a class="noline" href="#"><el-menu-item :index='item'>{{item}}</el-menu-item></a>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <el-submenu index="6">
+                        <template slot="title"><i class="el-icon-medal"></i>评价</template>
+                        <el-menu-item-group v-for="(item,index) in course.evaluate">
+                            <a class="noline" href="#"><el-menu-item :index='item'>{{item}}</el-menu-item></a>
+                        </el-menu-item-group>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
+            <el-container>
+                <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;">
+                    <span><i class="el-icon-bell"></i> 公告</span>
+                </el-header>
+                <hr>
+                <el-main>
+                    <div style=" background-color: rgb(228, 231, 238); font-size: 18px; padding: 10px 20px">
+                            <div>
+                                    欢迎大家选修算法设计与分析MOOC课程！
+                                    屈老师的算法设计与分析课程深受学生喜爱。本课程是算法设计与分析对基础篇。通过十周的课程，介绍算法设计与分析的基础知识，并为大家详细讲解分治策略、动态规划、贪心法、以及回溯与分支限界法等算法设计方法以及相应的算法分析技术。相信大家经过学习一定会受益匪浅！
+                            </div>
+                            <div style="text-align:right">
+                                    2018年03月01日 19:41   
+                            </div>
+                    </div>
+
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+    <script src="../assets/js/courseDatas/courseInfo.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data : {
+                course : course
+            }
+        });
+    </script>
+</body>
+
+</html>

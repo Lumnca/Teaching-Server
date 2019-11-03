@@ -56,6 +56,11 @@ new Vue({
         },
         remove(index){
             this.course[index].display = false;
+        },
+        //课程
+        openCourse(course){
+            window.localStorage.setItem('courseName',course);
+            window.location.href="showCourse.html";
         }
       },
       mounted() {
