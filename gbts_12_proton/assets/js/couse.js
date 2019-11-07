@@ -1,7 +1,6 @@
 new Vue({
     el : '#app',
     data : {
-       
         course : [
             {
                 name : 'XXX',
@@ -20,7 +19,16 @@ new Vue({
                 src : 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
                 value : '#SO8552',
                 display : false
-            }
+            },
+            {
+              name : 'XXX',
+              numbers : 77,
+              teacher : '张三',
+              level : 3.8,
+              src : 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
+              value : '#SO8552',
+              display : false
+          }
         ],
         state : '',
         restaurants: [],
