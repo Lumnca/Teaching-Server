@@ -33,11 +33,11 @@ var course = {
             children: [
                 {
                     title: '作业',
-                    href: ''
+                    href: 'workAndTest.html'
                 },
                 {
                     title: '测试',
-                    href: ''
+                    href: 'workAndTest.html'
                 }
             ],
         },
@@ -326,14 +326,30 @@ var userOptions = {
         }
     ]
 }
-
+var danxuan = [
+    {
+        title : '那艘if阿富豪我好是欧式花是你OA深？',
+        options:['12','17','13','20']
+    },
+    {
+        title : '部分可微波古尔沟我顾伟UI我还？',
+        options:['14','10','13','22']
+    }
+]
 var app = new Vue({
     el: '#app',
     data: {
         user: '刘麻子',
         course: course,
         userOptions: userOptions,
-        name: window.localStorage.getItem('courseName')
+        name: window.localStorage.getItem('courseName'),
+        activeNames : ['1'],
+        test : [
+           {  title : '第一章测试',works : [{title:'作业一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :-1,score:0},{title:'作业二',start:'2019-8-7',end:'2019-12-7',info:'其他',state :1,score:10}]},
+           { title : '第二章测试',works : [{title:'作业一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :0,score:0}]}
+        ],
+        radio : '1',
+        danxuan : danxuan
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -341,6 +357,9 @@ var app = new Vue({
         },
         handleClose(key, keyPath) {
             console.log(key, keyPath);
+        },
+        handleChange(val){
+
         }
     }
 });
