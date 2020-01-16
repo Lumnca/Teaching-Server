@@ -334,8 +334,46 @@ var danxuan = [
     {
         title : '部分可微波古尔沟我顾伟UI我还？',
         options:['14','10','13','22']
+    },
+    {
+        title : '放水后is后我换个问过我无比股市公司规划升级版素',
+        options:['24','12','45','74']
+    },
+    {
+        title : '放水后is后我换个问过我无比股市公司规划升级版素',
+        options:['24','12','45','74']
+    },
+    {
+        title : '放水后is后我换个问过我无比股市公司规划升级版素',
+        options:['24','12','45','74']
+    },
+    {
+        title : '放水后is后我换个问过我无比股市公司规划升级版素',
+        options:['24','12','45','74']
+    },
+    {
+        title : '放水后is后我换个问过我无比股市公司规划升级版素',
+        options:['24','12','45','74']
+    },
+    {
+        title : '放水后is后我换个问过我无比股市公司规划升级版素',
+        options:['24','12','45','74']
+    }
+];
+var duoxuan = [
+    {
+        title : '阿Ivan哦我AV你哦是AV噶大V11成本法牛初步',
+        options : ['1','2','3','4','5']
     }
 ]
+danxuan.forEach((item)=>{
+    item.select = 'default';
+    item.isWrited = false;
+});
+duoxuan.forEach((item)=>{
+    item.select = [];
+    item.isWrited = false;
+});
 var app = new Vue({
     el: '#app',
     data: {
@@ -349,7 +387,8 @@ var app = new Vue({
            { title : '第二章测试',works : [{title:'作业一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :0,score:0}]}
         ],
         radio : '1',
-        danxuan : danxuan
+        danxuan : danxuan,
+        duoxuan : duoxuan
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -361,5 +400,20 @@ var app = new Vue({
         handleChange(val){
 
         }
-    }
+    },
+    computed: {
+        write : function(){
+            let i = 0;
+            this.danxuan.forEach((item)=>{
+                if(item.select!='default'){
+                    item.isWrited = true;
+                    i++;
+                }
+                else{
+                    item.isWrited = false;
+                }
+            });
+            return "完成度:"+i+"/"+this.danxuan.length;
+        }
+    },
 });
