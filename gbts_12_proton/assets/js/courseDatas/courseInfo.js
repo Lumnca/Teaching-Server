@@ -365,6 +365,16 @@ var duoxuan = [
         title : '阿Ivan哦我AV你哦是AV噶大V11成本法牛初步',
         options : ['1','2','3','4','5']
     }
+];
+var tiankong = [
+    {
+        title : '中国的直辖市有那个_______',
+        input : ''
+    },
+    {
+        title : '你的_______是核心',
+        input : ''
+    }
 ]
 danxuan.forEach((item)=>{
     item.select = 'default';
@@ -388,7 +398,8 @@ var app = new Vue({
         ],
         radio : '1',
         danxuan : danxuan,
-        duoxuan : duoxuan
+        duoxuan : duoxuan,
+        tiankong : tiankong
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -413,6 +424,15 @@ var app = new Vue({
                     item.isWrited = false;
                 }
             });
+            this.duoxuan.forEach((item)=>{
+                if(item.select.length!=0){
+                    item.isWrited = true;                                                                                                                                                                                                                                                                                   
+                    i++;
+                }
+                else{
+                    item.isWrited = false;
+                }
+            })
             return "完成度:"+i+"/"+this.danxuan.length;
         }
     },
