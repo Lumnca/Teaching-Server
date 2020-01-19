@@ -375,7 +375,36 @@ var tiankong = [
         title : '你的_______是核心',
         input : ''
     }
-]
+];
+var zhuguan = [
+    {
+        title : '你的感想是什么？',
+        input : ''
+    }
+];
+//请求得到
+var answer = [
+    {
+        type : 'dx',
+        value : [1,1,2,2,3,3,4,4],
+        score : 5
+    },
+    {
+        type : 'sx',
+        value : [['1','2']],
+        score : 10
+    },
+    {
+        type : 'tk',
+        value : ['123456','654321'],
+        score : 10
+    },
+    {
+        type : 'zg',
+        value : ['123456'],
+        score : 30
+    }
+];
 danxuan.forEach((item)=>{
     item.select = 'default';
     item.isWrited = false;
@@ -384,10 +413,16 @@ duoxuan.forEach((item)=>{
     item.select = [];
     item.isWrited = false;
 });
+tiankong.forEach((item)=>{
+    item.isWrited = false;
+});
+zhuguan.forEach((item)=>{
+    item.isWrited = false;
+});
 var app = new Vue({
     el: '#app',
     data: {
-        user: '刘麻子',
+        user: 'XXX',
         course: course,
         userOptions: userOptions,
         name: window.localStorage.getItem('courseName'),
@@ -399,7 +434,9 @@ var app = new Vue({
         radio : '1',
         danxuan : danxuan,
         duoxuan : duoxuan,
-        tiankong : tiankong
+        tiankong : tiankong,
+        zhuguan : zhuguan,
+        answer : answer
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -410,6 +447,52 @@ var app = new Vue({
         },
         handleChange(val){
 
+        },
+        computedScore(){
+            var score = 0;
+            this.answer.forEach((item)=>{
+                if(item.type=='dx'){
+                    for (let index = 0; index < this.danxuan.length; index++) {
+
+                        if(app.danxuan[index].select==item.value[index]){
+                            score += item.score;
+                            console.log( "d YES");
+                        }   
+                    }
+                }
+                else if(item.type=='sx'){
+                    for (let index = 0; index < this.duoxuan.length; index++) {
+                        if(app.duoxuan[index].select.toString()==item.value[index].toString()){
+                            score += item.score;
+                            console.log( "s YES");
+                        }
+                        
+                    }
+                }
+                else if(item.type=='tk'){
+                    for (let index = 0; index < this.tiankong.length; index++) {
+                        if(app.tiankong[index].input.trim()==item.value[index]){
+                            score += item.score;
+                            console.log("t YES");
+                        }
+                        
+                    }
+                }
+                else{
+                    for (let index = 0; index < this.zhuguan.length; index++) {
+                        if(app.zhuguan[index].input.trim()==item.value[index]){
+                            score += item.score;
+                            console.log("z YES");
+                        }
+                        
+                    }
+                }
+            });
+            this.$notify({
+                title: '提示',
+                message: '最后得分:'+score,
+                duration: 0
+            });
         }
     },
     computed: {
@@ -432,8 +515,26 @@ var app = new Vue({
                 else{
                     item.isWrited = false;
                 }
-            })
-            return "完成度:"+i+"/"+this.danxuan.length;
+            });
+            this.tiankong.forEach((item)=>{
+                if(item.input.length>0){
+                    item.isWrited = true;
+                    i++;
+                }
+                else{
+                    item.isWrited = false;
+                }
+            });
+            this.zhuguan.forEach((item)=>{
+                if(item.input.length>0){
+                    item.isWrited = true;
+                    i++;
+                }
+                else{
+                    item.isWrited = false;
+                }
+            });
+            return "完成度:"+i+"/"+(this.danxuan.length+this.tiankong.length+this.duoxuan.length+this.zhuguan.length);
         }
     },
 });

@@ -36,10 +36,12 @@
         .noline:hover {
             text-decoration: none;
         }
-        .grid-content{
+
+        .grid-content {
             height: 48px;
             margin: 4px;
-            background: #ffffff;;
+            background: #ffffff;
+            ;
             color: #000000;
             padding: 13px;
             font-size: 20px;
@@ -69,24 +71,45 @@
         <el-container style="height: 1000px; border: 1px solid #eee">
             <el-aside width="300px" style="background-color: rgb(136, 151, 177)">
                 <p>单选</p>
-                <el-row >
+                <el-row>
                     <el-col v-for="(item,i) in danxuan" :span="4">
                         <div v-if="!item.isWrited" class="grid-content ">{{i+1}}</div>
-                        <div  v-else class="grid-content" style="color: green"><span><i class="fa fa-check"></i></span></div>
+                        <div v-else class="grid-content" style="color: green"><span><i class="fa fa-check"></i></span>
+                        </div>
                     </el-col>
                 </el-row>
                 <el-divider></el-divider>
                 <p>多选</p>
-                <el-row >
-                        <el-col v-for="(item,i) in duoxuan" :span="4">
-                            <div v-if="!item.isWrited" class="grid-content ">{{i+1}}</div>
-                            <div  v-else class="grid-content" style="color: green"><span><i class="fa fa-check"></i></span></div>
-                        </el-col>
-                    </el-row>
-                    <el-divider></el-divider>
+                <el-row>
+                    <el-col v-for="(item,i) in duoxuan" :span="4">
+                        <div v-if="!item.isWrited" class="grid-content ">{{i+1}}</div>
+                        <div v-else class="grid-content" style="color: green"><span><i class="fa fa-check"></i></span>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+                <p>填空</p>
+                <el-row>
+                    <el-col v-for="(item,i) in tiankong" :span="4">
+                        <div v-if="!item.isWrited" class="grid-content ">{{i+1}}</div>
+                        <div v-else class="grid-content" style="color: green"><span><i class="fa fa-check"></i></span>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+                <p>主观</p>
+                <el-row>
+                    <el-col v-for="(item,i) in zhuguan" :span="4">
+                        <div v-if="!item.isWrited" class="grid-content ">{{i+1}}</div>
+                        <div v-else class="grid-content" style="color: green"><span><i class="fa fa-check"></i></span>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
                 <div>
                     {{write}}
                 </div>
+                
             </el-aside>
             <el-container>
                 <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;text-align: center">
@@ -95,33 +118,40 @@
                 <hr>
                 <el-main>
                     <div v-if="danxuan.length>0">
-                            <div style="margin: 16px;"><h4><b>单选题</b> </h4></div>
-                            <el-divider></el-divider>
-                            <div v-for="(item,i) in danxuan" >
-                                <div><span>{{i+1}}.</span>{{item.title}}</div>
-                                <div style="margin-top: 16px">
-                                    <el-radio  v-for="(option,j) in item.options"   v-model="item.select" :label="j" >{{option}}</el-radio>
-                                </div>
-                                <el-divider></el-divider>
+                        <div style="margin: 16px;">
+                            <h4><b>单选题</b> </h4>
+                        </div>
+                        <el-divider></el-divider>
+                        <div v-for="(item,i) in danxuan">
+                            <div><span>{{i+1}}.</span>{{item.title}}</div>
+                            <div style="margin-top: 16px">
+                                <el-radio v-for="(option,j) in item.options" v-model="item.select" :label="j">{{option}}
+                                </el-radio>
                             </div>
-                </div>
-                    <div v-if="duoxuan.length>0">
-                            <div style="margin: 16px;"><h4><b>多选题</b> </h4></div>
                             <el-divider></el-divider>
-                            <div v-for="(item,i) in duoxuan" >
-                                <div><span>{{i+1}}.</span>{{item.title}}</div>
-                                <div style="margin-top: 16px">
-                                        <el-checkbox-group v-model="item.select">
-                                              <el-checkbox v-for="option in item.options" :label="option"></el-checkbox>
-                                        </el-checkbox-group>
-                                </div>
-                                <el-divider></el-divider>
-                            </div>
+                        </div>
                     </div>
                     <div v-if="duoxuan.length>0">
-                        <div style="margin: 16px;"><h4><b>填空题</b> </h4></div>
+                        <div style="margin: 16px;">
+                            <h4><b>多选题</b> </h4>
+                        </div>
                         <el-divider></el-divider>
-                        <div v-for="(item,i) in tiankong" >
+                        <div v-for="(item,i) in duoxuan">
+                            <div><span>{{i+1}}.</span>{{item.title}}</div>
+                            <div style="margin-top: 16px">
+                                <el-checkbox-group v-model="item.select">
+                                    <el-checkbox v-for="option in item.options" :label="option"></el-checkbox>
+                                </el-checkbox-group>
+                            </div>
+                            <el-divider></el-divider>
+                        </div>
+                    </div>
+                    <div v-if="duoxuan.length>0">
+                        <div style="margin: 16px;">
+                            <h4><b>填空题</b> </h4>
+                        </div>
+                        <el-divider></el-divider>
+                        <div v-for="(item,i) in tiankong">
                             <div><span>{{i+1}}.</span>{{item.title}}</div>
                             <div style="margin-top: 16px">
                                 <el-input v-model="item.input" placeholder="请输入内容"></el-input>
@@ -129,24 +159,29 @@
                             <el-divider></el-divider>
                         </div>
                         <div v-if="zhuguan.length>0">
-                            <div style="margin: 16px;"><h4><b>主观题</b> </h4></div>
+                            <div style="margin: 16px;">
+                                <h4><b>主观题</b> </h4>
+                            </div>
                             <el-divider></el-divider>
-                            <div v-for="(item,i) in zhuguan" >
+                            <div v-for="(item,i) in zhuguan">
                                 <div><span>{{i+1}}.</span>{{item.title}}</div>
                                 <div style="margin-top: 16px">
-                                    <el-input v-model="item.input" placeholder="请输入内容"></el-input>
+                                    <el-input
+                                    type="textarea"
+                                    :rows="3"
+                                    placeholder="请输入内容"
+                                    v-model="item.input">
+                                  </el-input>
                                 </div>
                                 <el-divider></el-divider>
                             </div>
-                </div>
+                        </div>
+                        <el-button type="primary" @click="computedScore()">提交</el-button>
                 </el-main>
             </el-container>
         </el-container>
     </div>
-    <script src="../assets/js/courseDatas/courseInfo.js"></script>
-    <script>
 
-    </script>
 </body>
-
+<script src="../assets/js/courseDatas/courseInfo.js"></script>
 </html>
