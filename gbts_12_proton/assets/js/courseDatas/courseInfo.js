@@ -450,6 +450,10 @@ var app = new Vue({
         },
         computedScore(){
             var score = 0;
+            var tkMistake = 0;
+            var dxMistake = 0;
+            var zgMistake = 0;
+            var sxMistake = 0;
             this.answer.forEach((item)=>{
                 if(item.type=='dx'){
                     for (let index = 0; index < this.danxuan.length; index++) {
@@ -457,7 +461,10 @@ var app = new Vue({
                         if(app.danxuan[index].select==item.value[index]){
                             score += item.score;
                             console.log( "d YES");
-                        }   
+                        }
+                        else{
+                            dxMistake++;
+                        }
                     }
                 }
                 else if(item.type=='sx'){
@@ -466,7 +473,9 @@ var app = new Vue({
                             score += item.score;
                             console.log( "s YES");
                         }
-                        
+                        else{
+                            sxMistake++;
+                        }
                     }
                 }
                 else if(item.type=='tk'){
@@ -475,7 +484,9 @@ var app = new Vue({
                             score += item.score;
                             console.log("t YES");
                         }
-                        
+                        else{
+                            tkMistake++;
+                        }
                     }
                 }
                 else{
@@ -484,13 +495,17 @@ var app = new Vue({
                             score += item.score;
                             console.log("z YES");
                         }
-                        
+                        else{
+                            zgMistake++;
+                        }
                     }
                 }
             });
+
+
             this.$notify({
                 title: '提示',
-                message: '最后得分:'+score,
+                message:  '选择题错误个数: '+(dxMistake+sxMistake)+'  填空题错误个数: '+tkMistake+' 主观题错误个数: '+zgMistake+'  最后得分:'+score,
                 duration: 0
             });
         }
