@@ -407,17 +407,17 @@ var answer = [
 ];
 danxuan.forEach((item)=>{
     item.select = 'default';
-    item.isWrited = false;
+    item.type = -1;
 });
 duoxuan.forEach((item)=>{
     item.select = [];
-    item.isWrited = false;
+    item.type = -1;
 });
 tiankong.forEach((item)=>{
-    item.isWrited = false;
+    item.type = -1;
 });
 zhuguan.forEach((item)=>{
-    item.isWrited = false;
+    item.type = -1;
 });
 var app = new Vue({
     el: '#app',
@@ -436,7 +436,8 @@ var app = new Vue({
         duoxuan : duoxuan,
         tiankong : tiankong,
         zhuguan : zhuguan,
-        answer : answer
+        answer : answer,
+        disabled : false
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -464,6 +465,7 @@ var app = new Vue({
                         }
                         else{
                             dxMistake++;
+                            app.danxuan[index].type = 1;
                         }
                     }
                 }
@@ -475,6 +477,7 @@ var app = new Vue({
                         }
                         else{
                             sxMistake++;
+                            app.duoxuan[index].type = 1;
                         }
                     }
                 }
@@ -486,6 +489,7 @@ var app = new Vue({
                         }
                         else{
                             tkMistake++;
+                            app.tiankong[index].type = 1;
                         }
                     }
                 }
@@ -497,11 +501,13 @@ var app = new Vue({
                         }
                         else{
                             zgMistake++;
+                            app.zhuguan[index].type = 1;
                         }
                     }
                 }
             });
 
+            app.disabled = true;
 
             this.$notify({
                 title: '提示',
@@ -515,38 +521,38 @@ var app = new Vue({
             let i = 0;
             this.danxuan.forEach((item)=>{
                 if(item.select!='default'){
-                    item.isWrited = true;
+                    item.type = 0;
                     i++;
                 }
                 else{
-                    item.isWrited = false;
+                    item.type = -1;
                 }
             });
             this.duoxuan.forEach((item)=>{
                 if(item.select.length!=0){
-                    item.isWrited = true;                                                                                                                                                                                                                                                                                   
+                    item.type = 0;                                                                                                                                                                                                                                                                                   
                     i++;
                 }
                 else{
-                    item.isWrited = false;
+                    item.type = -1;
                 }
             });
             this.tiankong.forEach((item)=>{
                 if(item.input.length>0){
-                    item.isWrited = true;
+                    item.type = 0;
                     i++;
                 }
                 else{
-                    item.isWrited = false;
+                    item.type = -1;
                 }
             });
             this.zhuguan.forEach((item)=>{
                 if(item.input.length>0){
-                    item.isWrited = true;
+                    item.type = 0;
                     i++;
                 }
                 else{
-                    item.isWrited = false;
+                    item.type = -1;
                 }
             });
             return "完成度:"+i+"/"+(this.danxuan.length+this.tiankong.length+this.duoxuan.length+this.zhuguan.length);
