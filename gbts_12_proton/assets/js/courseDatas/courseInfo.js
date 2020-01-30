@@ -437,7 +437,8 @@ var app = new Vue({
         tiankong : tiankong,
         zhuguan : zhuguan,
         answer : answer,
-        disabled : false
+        disabled : false,
+        time : '00:00:10'
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -514,6 +515,13 @@ var app = new Vue({
                 message:  '选择题错误个数: '+(dxMistake+sxMistake)+'  填空题错误个数: '+tkMistake+' 主观题错误个数: '+zgMistake+'  最后得分:'+score,
                 duration: 0
             });
+        },
+        write_work(work){
+            window.location.href = "workShow.html";
+            console.log(JSON.stringify(work))
+        },
+        edit_work(work){
+            console.log(JSON.stringify(work));
         }
     },
     computed: {
@@ -556,6 +564,58 @@ var app = new Vue({
                 }
             });
             return "完成度:"+i+"/"+(this.danxuan.length+this.tiankong.length+this.duoxuan.length+this.zhuguan.length);
+        },
+        countDown : function(){
+           
+
         }
     },
 });
+
+
+var time = app.time;
+var hh =   parseInt(time.split(':')[0]);
+var mm =   parseInt(time.split(':')[1]);
+var ss =   parseInt(time.split(':')[2]);
+var timer = setInterval(() => {
+    var hh =   parseInt(time.split(':')[0]);
+    var mm =   parseInt(time.split(':')[1]);
+    var ss =   parseInt(time.split(':')[2]);
+    if(ss>0){
+        ss-=1;
+    }
+    else{
+        if(mm>0){
+            ss = 59;
+            mm -= 1;
+            
+        }
+        else{
+            if(hh>0){
+                ss = 59;
+                mm = 59;
+                hh -= 1;
+            }
+        }
+    }
+    if(mm<10){
+        mm = '0'+mm;
+    }
+    if(ss<10){
+        ss = '0'+ss;
+    }
+    if(hh<10){
+        hh = '0'+hh;
+    }
+    app.time = hh+':'+mm+':'+ss;
+    time =  app.time;
+    console.log(time);
+    if(hh==0&&mm==0&&ss==0){
+        app.time = '- -:- -:- -';
+        clearInterval(timer);
+        app.disabled = true;
+    }
+}, 1000);
+
+
+
