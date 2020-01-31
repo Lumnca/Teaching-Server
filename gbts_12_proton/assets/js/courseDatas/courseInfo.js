@@ -386,7 +386,7 @@ var zhuguan = [
 var answer = [
     {
         type : 'dx',
-        value : [1,1,2,2,3,3,4,4],
+        value : [0,0,2,2,3,3,3,3],
         score : 5
     },
     {
@@ -431,6 +431,10 @@ var app = new Vue({
            {  title : '第一章测试',works : [{title:'作业一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :-1,score:0},{title:'作业二',start:'2019-8-7',end:'2019-12-7',info:'其他',state :1,score:10}]},
            { title : '第二章测试',works : [{title:'作业一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :0,score:0}]}
         ],
+        exam : [
+            { title : '第一章',exams : [{title:'考试一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :0,score:0}]},
+            { title : '第二章',exams : [{title:'考试一',start:'2019-9-7',end:'2019-12-7',info:'其他',state :0,score:0}]}
+        ],
         radio : '1',
         danxuan : danxuan,
         duoxuan : duoxuan,
@@ -438,7 +442,11 @@ var app = new Vue({
         zhuguan : zhuguan,
         answer : answer,
         disabled : false,
-        time : '00:00:10'
+        time : '00:10:10',
+        current : {
+            test : '',
+            work : ''
+        }
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -517,10 +525,19 @@ var app = new Vue({
             });
         },
         write_work(work){
+            window.localStorage.setItem("work",work.title);
             window.location.href = "workShow.html";
             console.log(JSON.stringify(work))
         },
         edit_work(work){
+            console.log(JSON.stringify(work));
+        },
+        write_exam(work){
+            window.localStorage.setItem("exam",work.title);
+            window.location.href = "testShow.html";
+            console.log(JSON.stringify(work))
+        },
+        edit_exam(work){
             console.log(JSON.stringify(work));
         }
     },
@@ -571,6 +588,8 @@ var app = new Vue({
         }
     },
 });
+app.current.work = window.localStorage.getItem('work');
+app.current.test = window.localStorage.getItem('exam');
 
 
 var time = app.time;
