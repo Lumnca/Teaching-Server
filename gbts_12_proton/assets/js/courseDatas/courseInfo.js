@@ -47,7 +47,7 @@ var course = {
             children: [
                 {
                     title: '考试',
-                    href: 'courseNotice.html'
+                    href: 'testInfo.html'
                 }
             ],
         },

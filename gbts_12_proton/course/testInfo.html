@@ -74,13 +74,13 @@
             </el-aside>
             <el-container>
                 <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;">
-                    <span><i class="el-icon-edit"></i> 测试与作业</span>
+                    <span><i class="el-icon-edit"></i> 考试</span>
                 </el-header>
                 <hr>
                 <el-main>
                     <el-collapse v-model="activeNames" @change="handleChange">
                         <el-collapse-item v-for="(item,index) in exam" :title="item.title" :name="index">
-                            <el-table :data="item.works" border style="width: 100%">
+                            <el-table :data="item.exams" border style="width: 100%">
                                 <el-table-column prop="title" label="名称" width="250">
                                 </el-table-column>
                                 <el-table-column prop="start" label="起始日期" width="250">
