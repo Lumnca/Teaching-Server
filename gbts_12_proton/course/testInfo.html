@@ -78,30 +78,32 @@
                 </el-header>
                 <hr>
                 <el-main>
-                    <el-collapse v-model="activeNames" @change="handleChange">
-                        <el-collapse-item v-for="(item,index) in exam" :title="item.title" :name="index">
-                            <el-table :data="item.exams" border style="width: 100%">
-                                <el-table-column prop="title" label="名称" width="250">
-                                </el-table-column>
-                                <el-table-column prop="start" label="起始日期" width="250">
-                                </el-table-column>
-                                <el-table-column prop="end" label="结束日期" width="250">
-                                </el-table-column>
-                                <el-table-column prop="score" label="分数" width="200">
-                                    </el-table-column>
-                                <el-table-column prop="info" label="备注" width="200">
-                                </el-table-column>
-                                <el-table-column prop="state" label="状态" width="200">
-                                </el-table-column>
-                                <el-table-column label="操作" width="250">
-                                    <template slot-scope="scope">
-                                        <el-button type="button" size="small" @click="write_exam(item)">查看</el-button>
-                                        <el-button type="button" size="small" @click="edit_exam(item)">编辑</el-button>
-                                    </template>
-                                </el-table-column>
-                            </el-table>
-                        </el-collapse-item>
-                    </el-collapse>
+
+                    <el-table :data="exam" border style="width: 100%">
+                        <el-table-column prop="title" label="名称" width="250">
+                        </el-table-column>
+                        <el-table-column prop="start" label="起始日期" width="250">
+                        </el-table-column>
+                        <el-table-column prop="end" label="结束日期" width="250">
+                        </el-table-column>
+                        <el-table-column prop="score" label="分数" width="200">
+                        </el-table-column>
+                        <el-table-column prop="info" label="备注" width="200">
+                        </el-table-column>
+                        <el-table-column prop="tag" label="状态" width="100">
+                            <template slot-scope="scope">
+                                <el-tag v-if="scope.row.state==1" type="success" disable-transitions >可&nbsp;&nbsp;&nbsp;用</el-tag>
+                                <el-tag v-else-if="scope.row.state==0" type="primary" disable-transitions >已完成</el-tag>
+                                <el-tag v-else type="danger" disable-transitions >不可用</el-tag>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="操作" width="250">
+                            <template slot-scope="scope">
+                                <el-button type="button" size="small" @click="write_exam(scope.row)">查看</el-button>
+                                <el-button type="button" size="small" @click="edit_exam(item)">编辑</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
                 </el-main>
             </el-container>
         </el-container>

