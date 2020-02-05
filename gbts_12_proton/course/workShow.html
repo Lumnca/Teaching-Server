@@ -74,7 +74,8 @@
                 <el-row>
                     <el-col v-for="(item,i) in danxuan" :span="4">
                         <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
-                        <div v-else-if="item.type==0"  class="grid-content" style="color: green"><span><i class="fa fa-check"></i></span>
+                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
+                                    class="fa fa-check"></i></span>
                         </div>
                         <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
                         </div>
@@ -85,7 +86,8 @@
                 <el-row>
                     <el-col v-for="(item,i) in duoxuan" :span="4">
                         <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
-                        <div v-else-if="item.type==0"  class="grid-content" style="color: green"><span><i class="fa fa-check"></i></span>
+                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
+                                    class="fa fa-check"></i></span>
                         </div>
                         <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
                         </div>
@@ -96,7 +98,8 @@
                 <el-row>
                     <el-col v-for="(item,i) in tiankong" :span="4">
                         <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
-                        <div v-else-if="item.type==0"  class="grid-content" style="color: green"><span><i class="fa fa-check"></i></span>
+                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
+                                    class="fa fa-check"></i></span>
                         </div>
                         <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
                         </div>
@@ -107,7 +110,8 @@
                 <el-row>
                     <el-col v-for="(item,i) in zhuguan" :span="4">
                         <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
-                        <div v-else-if="item.type==0"  class="grid-content" style="color: green"><span><i class="fa fa-check"></i></span>
+                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
+                                    class="fa fa-check"></i></span>
                         </div>
                         <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
                         </div>
@@ -133,7 +137,8 @@
                         <div v-for="(item,i) in danxuan">
                             <div><span>{{i+1}}.</span>{{item.title}}</div>
                             <div style="margin-top: 16px">
-                                <el-radio  :disabled="disabled" v-for="(option,j) in item.options" v-model="item.select" :label="j">{{option}}
+                                <el-radio :disabled="disabled" v-for="(option,j) in item.options" v-model="item.select"
+                                    :label="j">{{option}}
                                 </el-radio>
                             </div>
                             <el-divider></el-divider>
@@ -174,18 +179,15 @@
                             <div v-for="(item,i) in zhuguan">
                                 <div><span>{{i+1}}.</span>{{item.title}}</div>
                                 <div style="margin-top: 16px">
-                                    <el-input
-                                    type="textarea"
-                                    :rows="3"
-                                    placeholder="请输入内容"
-                                    :disabled="disabled"
-                                    v-model="item.input">
-                                  </el-input>
+                                    <el-input type="textarea" :rows="3" placeholder="请输入内容" :disabled="disabled"
+                                        v-model="item.input">
+                                    </el-input>
                                 </div>
                                 <el-divider></el-divider>
                             </div>
                         </div>
-                        <el-button type="primary" @click="computedScore()">提交</el-button>
+                    </div>
+                    <el-button type="primary" @click="computedScore()">提交</el-button>
                 </el-main>
             </el-container>
         </el-container>
@@ -193,4 +195,5 @@
 
 </body>
 <script src="../assets/js/courseDatas/courseInfo.js"></script>
+
 </html>

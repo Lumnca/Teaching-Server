@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>作业和测试</title>
+    <title>评价</title>
     <!-- Import google fonts - Heading first/ text second -->
     <!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
@@ -31,10 +31,14 @@
 
         .el-aside {
             color: #3c1dca;
+
         }
 
         .noline:hover {
             text-decoration: none;
+        }
+        .active:hover{
+            color: red;
         }
     </style>
 
@@ -74,43 +78,22 @@
             </el-aside>
             <el-container>
                 <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;">
-                    <span><i class="el-icon-edit"></i> 考试</span>
+                    <span><i class="el-icon-medal"></i> 评价</span>
                 </el-header>
                 <hr>
                 <el-main>
-
-                    <el-table :data="exam" border style="width: 100%">
-                        <el-table-column prop="title" label="名称" width="250">
-                        </el-table-column>
-                        <el-table-column prop="start" label="起始日期" width="250">
-                        </el-table-column>
-                        <el-table-column prop="end" label="结束日期" width="250">
-                        </el-table-column>
-                        <el-table-column prop="score" label="分数" width="200">
-                        </el-table-column>
-                        <el-table-column prop="info" label="备注" width="200">
-                        </el-table-column>
-                        <el-table-column prop="tag" label="状态" width="100">
-                            <template slot-scope="scope">
-                                <el-tag v-if="scope.row.state==1" type="success" disable-transitions >可&nbsp;&nbsp;&nbsp;用</el-tag>
-                                <el-tag v-else-if="scope.row.state==0" type="primary" disable-transitions >已完成</el-tag>
-                                <el-tag v-else type="danger" disable-transitions >不可用</el-tag>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="操作" width="250">
-                            <template slot-scope="scope">
-                                <el-button type="button" size="small" @click="write_exam(scope.row)" :disabled="scope.row.state!=-1? false : true">查看</el-button>
-                                <el-button type="button" size="small" @click="edit_exam(item)">编辑</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
+                        <div class="block">
+                                <span class="demonstration">课程评分:{{evaluate.number}}</span>
+                                <br>
+                                <el-rate v-model="evaluate.number"></el-rate>
+                              </div>
                 </el-main>
             </el-container>
         </el-container>
     </div>
     <script src="../assets/js/courseDatas/courseInfo.js"></script>
     <script>
-
+        console.log("开始请求数据！");
     </script>
 </body>
 

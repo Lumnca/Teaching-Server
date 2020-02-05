@@ -57,7 +57,7 @@ var course = {
             children: [
                 {
                     title: '讨论区',
-                    href: ''
+                    href: 'talk.html'
                 }
             ],
         },
@@ -67,7 +67,7 @@ var course = {
             children: [
                 {
                     title: '评价',
-                    href: ''
+                    href: 'evaluate.html'
                 }
             ],
         },
@@ -446,7 +446,17 @@ var app = new Vue({
         time : '00:10:10',
         current : {
             test : '',
-            work : ''
+            work : '',
+            state : 0
+        },
+        talk : [
+            {name:'Lumnca',info: '抗击疫情，我们每个人都有责任，社会还需要继续发展，我们需要做的，就是注意好个人卫生，待在家里！等春天到来，万物复苏！',number:84,date:'2019/12/21 20:12'},
+            {name:'Kay',info: '抗击疫情，我们每个人都有责任，社会还需要继续发展，我们需要做的，就是注意好个人卫生，待在家里！等春天到来，万物复苏！',number:45,date:'2019/12/24 04:23'},
+            {name:'May',info: '抗击疫情，我们每个人都有责任，社会还需要继续发展，我们需要做的，就是注意好个人卫生，待在家里！等春天到来，万物复苏！',number:233,date:'2019/12/29 11:58'}
+        ],
+        evaluate : {
+            number : 3.9,
+            infor : ''
         }
     },
     methods: {
@@ -535,12 +545,16 @@ var app = new Vue({
         },
         write_exam(work){
             window.localStorage.setItem("exam",work.title);
-           window.location.href = "testShow.html";
+            window.localStorage.setItem("state",work.state);
+            window.location.href = "testShow.html";
             console.log(JSON.stringify(work))
         },
         edit_exam(work){
             console.log(JSON.stringify(work));
-        }
+        },
+        addZ(item){
+            item.number += 1;
+        },
     },
     computed: {
         write : function(){
@@ -591,7 +605,7 @@ var app = new Vue({
 });
 app.current.work = window.localStorage.getItem('work');
 app.current.test = window.localStorage.getItem('exam');
-
+app.current.state = window.localStorage.getItem('state');
 
 var time = app.time;
 var hh =   parseInt(time.split(':')[0]);

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>作业和测试</title>
+    <title>课程进度</title>
     <!-- Import google fonts - Heading first/ text second -->
     <!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
@@ -31,10 +31,15 @@
 
         .el-aside {
             color: #3c1dca;
+
         }
 
         .noline:hover {
             text-decoration: none;
+        }
+
+        .active:hover {
+            color: red;
         }
     </style>
 
@@ -74,43 +79,52 @@
             </el-aside>
             <el-container>
                 <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;">
-                    <span><i class="el-icon-edit"></i> 考试</span>
+                    <span><i class=" el-icon-d-arrow-right"></i> 课程进度</span>
                 </el-header>
                 <hr>
                 <el-main>
+                    <el-row style="text-align: center;">
+                        <el-col :span="6">
+                            <div class="grid-content bg-purple">
+                                <div>
+                                    <el-progress type="circle" :percentage="0"></el-progress><br><br>
+                                    <span style="color:#8c7cd3;font-size: 17px;"> 课程进度</span>
+                                </div>
+                            </div>
+                        </el-col>
+                        <el-col :span="6">
+                            <div class="grid-content bg-purple-light">
+                                <div>
+                                    <el-progress type="circle" :percentage="25"></el-progress><br><br>
+                                    <span style="color:#c244ad;font-size: 17px;"> 作业进度</span>
+                                </div>
+                            </div>
+                        </el-col>
+                        <el-col :span="6">
+                            <div class="grid-content bg-purple">
+                                <div>
+                                    <el-progress type="circle" :percentage="50"></el-progress><br> <br> 
+                                    <span style="color:#55e742;font-size: 17px;"> 考试进度</span>
+                                </div>
+                            </div>
+                        </el-col>
+                        <el-col :span="6">
+                            <div class="grid-content bg-purple-light">
+                                <div>
+                                    <el-progress type="circle" :percentage="100" status="success"></el-progress><br> <br> 
+                                    <span style="color:#c8d333;font-size: 17px;"> 总进度</span>
+                                </div>
+                            </div>
+                        </el-col>
+                    </el-row>
 
-                    <el-table :data="exam" border style="width: 100%">
-                        <el-table-column prop="title" label="名称" width="250">
-                        </el-table-column>
-                        <el-table-column prop="start" label="起始日期" width="250">
-                        </el-table-column>
-                        <el-table-column prop="end" label="结束日期" width="250">
-                        </el-table-column>
-                        <el-table-column prop="score" label="分数" width="200">
-                        </el-table-column>
-                        <el-table-column prop="info" label="备注" width="200">
-                        </el-table-column>
-                        <el-table-column prop="tag" label="状态" width="100">
-                            <template slot-scope="scope">
-                                <el-tag v-if="scope.row.state==1" type="success" disable-transitions >可&nbsp;&nbsp;&nbsp;用</el-tag>
-                                <el-tag v-else-if="scope.row.state==0" type="primary" disable-transitions >已完成</el-tag>
-                                <el-tag v-else type="danger" disable-transitions >不可用</el-tag>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="操作" width="250">
-                            <template slot-scope="scope">
-                                <el-button type="button" size="small" @click="write_exam(scope.row)" :disabled="scope.row.state!=-1? false : true">查看</el-button>
-                                <el-button type="button" size="small" @click="edit_exam(item)">编辑</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
                 </el-main>
             </el-container>
         </el-container>
     </div>
     <script src="../assets/js/courseDatas/courseInfo.js"></script>
     <script>
-
+        console.log("开始请求数据！");
     </script>
 </body>
 
