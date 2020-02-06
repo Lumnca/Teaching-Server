@@ -79,7 +79,7 @@
 				<li class="dropdown visible-md visible-lg"id="app3" >
 					 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-th"></i></a>					
 					<ul class="dropdown-menu update-menu" role="menu">
-						<li v-for="item in appInfo"><a v-bind:href="item.href" ><i class="fa" v-bind:class="item.icon"></i> {{item.title}} </a></li>
+						<li v-for="item in appInfo"><a :href="item.href" ><i class="fa" v-bind:class="item.icon"></i> {{item.title}} </a></li>
 					</ul>
                 </li>
                 <!--用户信息模块-->

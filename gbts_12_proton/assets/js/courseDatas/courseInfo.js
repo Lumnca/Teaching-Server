@@ -312,7 +312,7 @@ var userOptions = {
         {
             title: '查看进度',
             icon: 'el-icon-collection',
-            href: '#'
+            href: 'courseLoading.html'
         },
         {
             title: '课内消息',
