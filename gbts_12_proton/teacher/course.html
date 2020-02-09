@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>课程信息</title>
+    <!-- Import google fonts - Heading first/ text second -->
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
+    <!-- Css files -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/jquery.mmenu.css" rel="stylesheet">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+    <link href="../assets/css/style.min.css" rel="stylesheet">
+    <link href="../assets/css/add-ons.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <style>
+        @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
+
+        .el-header {
+            background-color: #B3C0D1;
+            color: #333;
+            line-height: 60px;
+        }
+
+        .el-aside {
+            color: #3c1dca;
+        }
+
+        .noline:hover {
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+</head>
+
+<body>
+    <div id="app">
+        <el-container style=" border: 1px solid #eee">
+            <el-header style="text-align: right; font-size: 12px">
+                <el-dropdown>
+                    <span style="margin-right: 15px;font-size: 20px;"><i class="el-icon-user"></i> {{user}}</span>
+
+                    <el-dropdown-menu slot="dropdown">
+                        <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                            <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                        </a>
+                    </el-dropdown-menu>
+                </el-dropdown>
+
+            </el-header>
+        </el-container>
+        <el-container style="height: 800px; border: 1px solid #eee">
+            <el-aside width="300px" style="background-color: rgb(238, 241, 246)">
+                <img src="https://edu-image.nosdn.127.net/E60240E3F15C33023E8BE744985C91D3.jpg?imageView&thumbnail=510y288&quality=100"
+                    width="296">
+                <el-menu :default-openeds="['']">
+                    <el-submenu v-for="(list,i) in course.infoList" :index="i.toString()">
+                        <template slot="title"><i :class="list.icon"></i>{{list.title}}</template>
+                        <el-menu-item-group v-for="(item,index) in list.children">
+                            <a class="noline" :href="item.href">
+                                <el-menu-item :index="item.title">{{item.title}}</el-menu-item>
+                            </a>
+                        </el-menu-item-group>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
+
+            <el-container>
+
+
+                <el-main>
+                    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px"
+                        class="demo-ruleForm">
+                        <el-form-item label="课堂名称" prop="name">
+                            <el-input v-model="ruleForm.name"></el-input>
+                        </el-form-item>
+                        <el-form-item label="类型" prop="region">
+                            <el-select v-model="ruleForm.region" placeholder="请选择课堂类型">
+                                <el-option label="公共" value="shanghai"></el-option>
+                                <el-option label="私人" value="beijing"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="是否付费" prop="delivery">
+                            <el-switch v-model="ruleForm.delivery"></el-switch>
+
+                        </el-form-item>
+                        <el-form-item label="价格" prop="price">
+                            <el-input v-model="ruleForm.price" :disabled="!ruleForm.delivery"></el-input>
+                        </el-form-item>
+                        <el-form-item label="开课时间" required>
+                            <el-col :span="11">
+                                <el-form-item prop="date1">
+                                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1"
+                                        style="width: 100%;"></el-date-picker>
+                                </el-form-item>
+                            </el-col>
+                            <el-col class="line" :span="2">-</el-col>
+                            <el-col :span="11">
+                                <el-form-item prop="date2">
+                                    <el-time-picker placeholder="选择时间" v-model="ruleForm.date2" style="width: 100%;">
+                                    </el-time-picker>
+                                </el-form-item>
+                            </el-col>
+                        </el-form-item>
+
+                        <el-form-item label="课堂标签" prop="type">
+                            <el-checkbox-group v-model="ruleForm.type">
+                                <el-checkbox label="生活" name="type"></el-checkbox>
+                                <el-checkbox label="科技" name="type"></el-checkbox>
+                                <el-checkbox label="艺术" name="type"></el-checkbox>
+                                <el-checkbox label="教育" name="type"></el-checkbox>
+                                <el-checkbox label="自然" name="type"></el-checkbox>
+                                <el-checkbox label="文学" name="type"></el-checkbox>
+                                <el-checkbox label="技术" name="type"></el-checkbox>
+                                <el-checkbox label="理工" name="type"></el-checkbox>
+                            </el-checkbox-group>
+                        </el-form-item>
+                        <el-form-item label="特殊资源" prop="resource">
+                            <el-radio-group v-model="ruleForm.resource">
+                                <el-radio label="基本"></el-radio>
+                                <el-radio label="监控"></el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item label="课堂介绍" prop="desc">
+                            <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="submitForm('ruleForm')">保存设置</el-button>
+                            <el-button @click="resetForm('ruleForm')">重置</el-button>
+                        </el-form-item>
+                    </el-form>
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+    <script src="../assets/js/courseDatas/teacourse.js"></script>
+</body>
+
+</html>

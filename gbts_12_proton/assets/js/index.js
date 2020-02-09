@@ -226,18 +226,18 @@ new Vue({
                 ]              
             },
             {
-                title : '功能3',
+                title : '我的课堂',
                 icon  : 'fa-briefcase',
                 href : '#',
                 childen : [
                     {
-                        title : '子模块1',
-                        icon  : 'fa-align-left',
+                        title : '新设课堂',
+                        icon  : 'fa-plus',
                         href  : '#'
                     },
                     {
-                        title : '子模块2',
-                        icon  : ' fa-outdent',
+                        title : '编辑课堂',
+                        icon  : '  fa-edit',
                         href  : '#'
                     }
                 ]              
