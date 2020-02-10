@@ -22,22 +22,18 @@
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <style>
         @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
-
         .el-header {
             background-color: #B3C0D1;
             color: #333;
             line-height: 60px;
         }
-
         .el-aside {
             color: #3c1dca;
         }
-
         .noline:hover {
             text-decoration: none;
         }
     </style>
-
 </head>
 </head>
 
@@ -79,7 +75,12 @@
                 <hr>
                 <el-main>
                     <el-collapse v-model="activeNames" @change="handleChange">
-                        <el-collapse-item v-for="(item,index) in test" :title="item.title" :name="index">
+                        <el-collapse-item v-for="(item,index) in test"  :name="index">
+                            <div slot="title">
+                                <span> {{item.title}}</span>&nbsp;&nbsp;
+                                <span> <el-button type="button" size="small" @click="rename(this,item)"><span class="el-icon-delete"></span> 重命名</el-button></span>&nbsp;&nbsp;
+                                <span> <el-button type="button" size="small" @click="delTest(this,item)"><span class="el-icon-delete"></span> 删除</el-button></span>&nbsp;&nbsp;
+                            </div>
                             <el-table :data="item.works" border style="width: 100%">
                                 <el-table-column prop="title" label="名称" width="250">
                                 </el-table-column>
@@ -87,25 +88,26 @@
                                 </el-table-column>
                                 <el-table-column prop="end" label="结束日期" width="250">
                                 </el-table-column>
-                                <el-table-column prop="score" label="分数" width="200">
+                                <el-table-column prop="score" label="分数" width="150">
                                 </el-table-column>
-                                <el-table-column prop="info" label="备注" width="200">
+                                <el-table-column prop="info" label="备注" width="150">
                                 </el-table-column>
-                                <el-table-column prop="state" label="状态" width="200">
+                                <el-table-column prop="state" label="状态" width="150">
                                 </el-table-column>
-                                <el-table-column label="操作" width="250">
+                                <el-table-column label="操作" width="300">
                                     <template slot-scope="scope">
-                                        <el-button type="button" size="small" @click="write_work(item)">查看</el-button>
-                                        <el-button type="button" size="small" @click="edit_work(item)">编辑</el-button>
+                                        <el-button type="button" size="small" @click=""><span class="el-icon-eleme"></span> 查看</el-button>
+                                        <el-button type="button" size="small" @click=""><span class="el-icon-edit-outline"></span> 编辑</el-button>
+                                        <el-button type="button" size="small" @click=""><span class="el-icon-delete"></span> 删除</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
                         </el-collapse-item>
                     </el-collapse>
-
-
-
-
+                    <div style="margin-top:20px;">
+                        <el-button type="button" size="small" @click="addTest()"><span class="el-icon-plus"></span> 添加章节</el-button>
+                    </div> 
+                   
                     <el-collapse accordion style="margin-top:40px">
                         <el-collapse-item>
                             <template slot="title">
@@ -116,18 +118,20 @@
                                     label-width="100px" class="demo-ruleForm">
                                     <el-form-item label="章节">
                                         <el-select v-model="ruleForm2.test" placeholder="请选择课堂类型">
-                                            <el-option v-for="(item,index) in test" :label="item.title" :value="index"></el-option>
+                                            <el-option v-for="(item,index) in test" :label="item.title" :value="index">
+                                            </el-option>
                                         </el-select>
                                     </el-form-item>
                                     <el-form-item label="作业名称" prop="pass">
-                                        <el-input type="text" v-model="ruleForm.pass" autocomplete="off"></el-input>
+                                        <el-input type="text" v-model="ruleForm2.name"></el-input>
                                     </el-form-item>
                                     <el-form-item label="起始时间">
                                         <el-col :span="11">
                                             <el-date-picker type="date" placeholder="选择日期"
                                                 v-model="ruleForm2.startdate1" style="width: 100%;"></el-date-picker>
                                         </el-col>
-                                        <el-col class="line" :span="2" style="text-align:center">---------------------</el-col>
+                                        <el-col class="line" :span="2" style="text-align:center">---------------------
+                                        </el-col>
                                         <el-col :span="11">
                                             <el-time-picker placeholder="选择时间" v-model="ruleForm2.startdate2"
                                                 style="width: 100%;"></el-time-picker>
@@ -138,7 +142,8 @@
                                             <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm2.enddate1"
                                                 style="width: 100%;"></el-date-picker>
                                         </el-col>
-                                        <el-col class="line" :span="2" style="text-align:center">---------------------</el-col>
+                                        <el-col class="line" :span="2" style="text-align:center">---------------------
+                                        </el-col>
                                         <el-col :span="11">
                                             <el-time-picker placeholder="选择时间" v-model="ruleForm2.enddate2"
                                                 style="width: 100%;"></el-time-picker>
@@ -158,15 +163,13 @@
                             </div>
                         </el-collapse-item>
                     </el-collapse>
-
-
                 </el-main>
             </el-container>
         </el-container>
     </div>
     <script src="../assets/js/courseDatas/teacourse.js"></script>
     <script>
-
+        
     </script>
 </body>
 

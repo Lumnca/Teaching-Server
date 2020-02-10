@@ -536,18 +536,16 @@ var app = new Vue({
             }]
         }],
         ruleForm2: {
-            pass: '',
+            name: '',
             startdate1: '',
             startdate2: '',
             enddate1: '',
             enddate2: '',
-            disabled : true,
-            info : '',
-            test: '',
+            disabled: true,
+            info: '',
+            test: 0,
         },
-        rules2: {
-        }
-
+        rules2: {}
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -574,8 +572,8 @@ var app = new Vue({
         },
         submitForm2(form) {
             var success = false;
-
-            if(form.startdate1!=''&&form.startdate2!=''&&form.enddate1!=''&&form.enddate2!=''){
+            console.log(form);
+            if (form.startdate1 != '' && form.startdate2 != '' && form.enddate1 != '' && form.enddate2 != '') {
                 if (form.startdate1.getTime() <= form.enddate1.getTime()) {
                     if (form.startdate1.getTime() == form.enddate1.getTime()) {
                         if (form.startdate2.getTime() <= form.enddate2.getTime()) {
@@ -591,21 +589,47 @@ var app = new Vue({
                         message: '设置成功！',
                         type: 'success'
                     });
-                    form.test.works.push({title:form.pass.trim(),start:form.startdate1.toString(),end:form.enddate1.toString(),info:form.info,state:form.state});
+
+                    this.test[form.test].works.push({
+                        title: form.name.trim(),
+                        start: form.startdate1.toString(),
+                        end: form.enddate1.toString(),
+                        info: form.info,
+                        state: form.disabled? '可用':'不可用'
+                    });
                 }
                 else {
                     this.$message.error('起始日期应该比结束日期小！');
                 }
             }
-            else{
+            else {
                 this.$message.error('请将日期信息填写完整！');
             }
-          
-
-
         },
         resetForm2(formName) {
             this.$refs[formName].resetFields();
+        },
+        rename(e,data){
+            window.event? window.event.cancelBubble = true : e.stopPropagation();
+            this.$prompt('请输入邮箱', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                inputValue : data.title
+              }).then(({ value }) => {
+                data.title = value;
+                this.$message({
+                  type: 'success',
+                  message: '已命名为' + value
+                });
+              }).catch(() => {
+                this.$message({
+                  type: 'info',
+                  message: '取消输入'
+                });       
+              });
+        },
+        delTest(e,data){
+
         },
         append(data) {
             var id = data.id;
@@ -666,6 +690,9 @@ var app = new Vue({
                     message: '取消输入'
                 });
             });
+        },
+        addTest(){
+            this.test.push({ title: '新章节', works: []});
         },
         computedScore() {
             var score = 0;
