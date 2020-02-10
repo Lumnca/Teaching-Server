@@ -333,57 +333,69 @@ var userOptions = {
 var danxuan = [
     {
         title: '那艘if阿富豪我好是欧式花是你OA深？',
-        options: ['12', '17', '13', '20']
+        options: ['12', '17', '13', '20'],
+        score : 4
     },
     {
         title: '部分可微波古尔沟我顾伟UI我还？',
-        options: ['14', '10', '13', '22']
+        options: ['14', '10', '13', '22'],
+        score : 4
     },
     {
         title: '放水后is后我换个问过我无比股市公司规划升级版素',
-        options: ['24', '12', '45', '74']
+        options: ['24', '12', '45', '74'],
+        score : 4
     },
     {
         title: '放水后is后我换个问过我无比股市公司规划升级版素',
-        options: ['24', '12', '45', '74']
+        options: ['24', '12', '45', '74'],
+        score : 4
     },
     {
         title: '放水后is后我换个问过我无比股市公司规划升级版素',
-        options: ['24', '12', '45', '74']
+        options: ['24', '12', '45', '74'],
+        score : 4
     },
     {
         title: '放水后is后我换个问过我无比股市公司规划升级版素',
-        options: ['24', '12', '45', '74']
+        options: ['24', '12', '45', '74'],
+        score : 4
     },
     {
         title: '放水后is后我换个问过我无比股市公司规划升级版素',
-        options: ['24', '12', '45', '74']
+        options: ['24', '12', '45', '74'],
+        score : 4
     },
     {
         title: '放水后is后我换个问过我无比股市公司规划升级版素',
-        options: ['24', '12', '45', '74']
+        options: ['24', '12', '45', '74'],
+        score : 4
     }
 ];
 var duoxuan = [
     {
         title: '阿Ivan哦我AV你哦是AV噶大V11成本法牛初步',
-        options: ['1', '2', '3', '4', '5']
+        options: ['1', '2', '3', '4', '5'],
+        score : 4
     }
 ];
 var tiankong = [
     {
         title: '中国的直辖市有那个_______',
-        input: ''
+        input: '',
+        score : 4
     },
     {
         title: '你的_______是核心',
-        input: ''
+        input: '',
+        score : 4
     }
 ];
 var zhuguan = [
     {
         title: '你的感想是什么？',
-        input: ''
+        input: '',
+        score : 4
     }
 ];
 //请求得到
@@ -545,7 +557,14 @@ var app = new Vue({
             info: '',
             test: 0,
         },
-        rules2: {}
+        rules2: {},
+        dialogFormVisible: false,
+        selectTest : {
+            title : '',
+            options : [],
+            answer : '',
+            score : 0
+        }
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -586,14 +605,24 @@ var app = new Vue({
                 }
                 if (success) {
                     this.$message({
-                        message: '设置成功！',
+                        message: '添加成功！',
                         type: 'success'
                     });
+                    var data1 = form.startdate1.getFullYear()+'/'+form.startdate1.getMonth()+'/'+form.startdate1.getDate()+' '+
+                    (form.startdate2.getHours()>9? form.startdate2.getHours():'0'+form.startdate2.getHours())+':'+
+                    (form.startdate2.getMinutes()>9? form.startdate2.getMinutes():'0'+form.startdate2.getMinutes())+':'+
+                    (form.startdate2.getSeconds()>9? form.startdate2.getSeconds():'0'+form.startdate2.getSeconds());
+
+                    var data2 = form.enddate1.getFullYear()+'/'+form.enddate1.getMonth()+'/'+form.enddate1.getDate()+' '+
+                    (form.enddate2.getHours()>9? form.enddate2.getHours():'0'+form.enddate2.getHours())+':'+
+                    (form.enddate2.getMinutes()>9? form.enddate2.getMinutes():'0'+form.enddate2.getMinutes())+':'+
+                    (form.enddate2.getSeconds()>9? form.enddate2.getSeconds():'0'+form.enddate2.getSeconds());
+
 
                     this.test[form.test].works.push({
                         title: form.name.trim(),
-                        start: form.startdate1.toString(),
-                        end: form.enddate1.toString(),
+                        start: data1,
+                        end: data2,
                         info: form.info,
                         state: form.disabled? '可用':'不可用'
                     });
@@ -611,7 +640,7 @@ var app = new Vue({
         },
         rename(e,data){
             window.event? window.event.cancelBubble = true : e.stopPropagation();
-            this.$prompt('请输入邮箱', '提示', {
+            this.$prompt('请输入', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 inputValue : data.title
@@ -629,7 +658,14 @@ var app = new Vue({
               });
         },
         delTest(e,data){
+            window.event? window.event.cancelBubble = true : e.stopPropagation();
+            //
+            this.test.splice(this.test.indexOf(data),1);
 
+        },
+        editTest(data){
+            this.dialogFormVisible = true;
+            this.selectTest= data;
         },
         append(data) {
             var id = data.id;
@@ -693,6 +729,9 @@ var app = new Vue({
         },
         addTest(){
             this.test.push({ title: '新章节', works: []});
+        },
+        setTest(){
+            this.dialogFormVisible = false;
         },
         computedScore() {
             var score = 0;
