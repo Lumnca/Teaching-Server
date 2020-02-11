@@ -376,7 +376,8 @@ var duoxuan = [
     {
         title: '阿Ivan哦我AV你哦是AV噶大V11成本法牛初步',
         options: ['1', '2', '3', '4', '5'],
-        score : 4
+        score : 4,
+        answer : []
     }
 ];
 var tiankong = [
@@ -431,9 +432,13 @@ duoxuan.forEach((item) => {
 });
 tiankong.forEach((item) => {
     item.type = -1;
+    item.standard = [];
+    item.auto = false;
 });
 zhuguan.forEach((item) => {
     item.type = -1;
+    item.standard = [];
+    item.auto = false;
 });
 //================================================================================
 
@@ -559,11 +564,30 @@ var app = new Vue({
         },
         rules2: {},
         dialogFormVisible: false,
+        dialogFormVisible2: false,
+        dialogFormVisible3: false,
+        dialogFormVisible4: false,
         selectTest : {
             title : '',
             options : [],
             answer : '',
             score : 0
+        },
+        selectTestTianKong : {
+            title: '题目主干信息',
+            input: '',
+            score : 4,
+            type: -1, 
+            standard : [],
+            auto : false
+        },
+        selectTestZhuGuan : {
+            title: '题目主干信息',
+            input: '',
+            score : 4,
+            type: -1, 
+            standard : [],
+            auto : false
         }
     },
     methods: {
@@ -663,9 +687,20 @@ var app = new Vue({
             this.test.splice(this.test.indexOf(data),1);
 
         },
-        editTest(data){
+        editTestDanXuan(data){
             this.dialogFormVisible = true;
             this.selectTest= data;
+        },
+        editTestDuoXuan(data){
+            this.dialogFormVisible2 = true;
+        },
+        editTestTianKong(data){
+            this.dialogFormVisible3 = true;
+            this.selectTestTianKong = data;
+        },
+        editTestZhuGuan(data){
+            this.dialogFormVisible4 = true;
+            this.selectTestZhuGuan = data;
         },
         append(data) {
             var id = data.id;
@@ -732,6 +767,28 @@ var app = new Vue({
         },
         setTest(){
             this.dialogFormVisible = false;
+        },
+        addTestDanXuan(){
+            this.danxuan.push(    {
+                title: '题目主体',
+                options: ['A', 'B', 'C', 'D'],
+                score : 4,
+                type : -1,
+                select : 'default'
+            });
+        },
+        addTestDuoXuan(){
+            this.duoxuan.push(    {
+                title: '题目主体',
+                options: ['A', 'B', 'C', 'D','E'],
+                score : 4,
+                type : -1,
+                select : [],
+                answer : []
+            });
+        },
+        delDanXuan(index){
+            this.danxuan.splice(index,1);
         },
         computedScore() {
             var score = 0;
@@ -864,6 +921,38 @@ var app = new Vue({
         countDown: function () {
 
 
+        },
+        danxuanAllScore : function(){
+            var sum = 0;
+            this.danxuan.forEach((item) => {
+               sum+=item.score;
+            });
+            return sum;
+        },
+        duoxuanAllScore : function(){
+            var sum = 0;
+            this.duoxuan.forEach((item) => {
+               sum+=item.score;
+            });
+            return sum;
+        },
+        tiankongAllScore : function(){
+            var sum = 0;
+            this.tiankong.forEach((item) => {
+               sum+=item.score;
+            });
+            return sum;
+        },
+        zhuguanAllScore : function(){
+            var sum = 0;
+            this.zhuguan.forEach((item) => {
+               sum+=item.score;
+            });
+            return sum;
+        },
+        AllScore : function(){
+           
+            return this.danxuanAllScore+this.duoxuanAllScore+this.tiankongAllScore+this.zhuguanAllScore;
         }
     },
 });
