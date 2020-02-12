@@ -22,14 +22,17 @@
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <style>
         @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
+
         .el-header {
             background-color: #B3C0D1;
             color: #333;
             line-height: 60px;
         }
+
         .el-aside {
             color: #3c1dca;
         }
+
         .noline:hover {
             text-decoration: none;
         }
@@ -75,11 +78,17 @@
                 <hr>
                 <el-main>
                     <el-collapse v-model="activeNames" @change="handleChange">
-                        <el-collapse-item v-for="(item,index) in test"  :name="index">
+                        <el-collapse-item v-for="(item,index) in test" :name="index">
                             <div slot="title">
                                 <span> {{item.title}}</span>&nbsp;&nbsp;
-                                <span> <el-button type="button" size="small" @click="rename(this,item)"><span class="el-icon-delete"></span> 重命名</el-button></span>&nbsp;&nbsp;
-                                <span> <el-button type="button" size="small" @click="delTest(this,item)"><span class="el-icon-delete"></span> 删除</el-button></span>&nbsp;&nbsp;
+                                <span>
+                                    <el-button type="button" size="small" @click="rename(this,item)"><span
+                                            class="el-icon-delete"></span> 重命名</el-button>
+                                </span>&nbsp;&nbsp;
+                                <span>
+                                    <el-button type="button" size="small" @click="delTest(this,item)"><span
+                                            class="el-icon-delete"></span> 删除</el-button>
+                                </span>&nbsp;&nbsp;
                             </div>
                             <el-table :data="item.works" border style="width: 100%">
                                 <el-table-column prop="title" label="名称" width="250">
@@ -96,18 +105,69 @@
                                 </el-table-column>
                                 <el-table-column label="操作" width="300">
                                     <template slot-scope="scope">
-                                        <el-button type="button" size="small" @click=""><span class="el-icon-eleme"></span> 查看</el-button>
-                                        <el-button type="button" size="small" @click=""><span class="el-icon-edit-outline"></span> 编辑</el-button>
-                                        <el-button type="button" size="small" @click=""><span class="el-icon-delete"></span> 删除</el-button>
+                                        <el-button type="button" size="small" @click="showWork(scope)"><span
+                                                class="el-icon-eleme"></span> 查看</el-button>
+                                        <el-button type="button" size="small" @click="editWork(scope)"><span
+                                                class="el-icon-edit-outline"></span> 编辑</el-button>
+                                        <el-button type="button" size="small" @click=""><span
+                                                class="el-icon-delete"></span> 删除</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
                         </el-collapse-item>
                     </el-collapse>
+
+
+                    <el-dialog title="题目修改" :visible.sync="dialogFormVisible5">
+                        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px"
+                            class="demo-ruleForm">
+                        
+                            <el-form-item label="作业名称" prop="pass">
+                                <el-input type="text" v-model="ruleForm2.title"></el-input>
+                            </el-form-item>
+                            <el-form-item label="起始时间">
+                                <el-col :span="11">
+                                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm2.startdate1"
+                                        style="width: 100%;"></el-date-picker>
+                                </el-col>
+                                <el-col class="line" :span="2" style="text-align:center">-------
+                                </el-col>
+                                <el-col :span="11">
+                                    <el-time-picker placeholder="选择时间" v-model="ruleForm2.startdate2"
+                                        style="width: 100%;"></el-time-picker>
+                                </el-col>
+                            </el-form-item>
+                            <el-form-item label="结束时间">
+                                <el-col :span="11">
+                                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm2.enddate1"
+                                        style="width: 100%;"></el-date-picker>
+                                </el-col>
+                                <el-col class="line" :span="2" style="text-align:center">--------
+                                </el-col>
+                                <el-col :span="11">
+                                    <el-time-picker placeholder="选择时间" v-model="ruleForm2.enddate2"
+                                        style="width: 100%;"></el-time-picker>
+                                </el-col>
+                            </el-form-item>
+                            <el-form-item :label="ruleForm2.disabled? '可用':'不可用'" prop="disabled">
+                                <el-switch v-model="ruleForm2.disabled"></el-switch>
+                            </el-form-item>
+                            <el-form-item label="备注" prop="info">
+                                <el-input v-model.number="ruleForm2.info"></el-input>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button type="primary" @click="dialogFormVisible5 = false">提交</el-button>
+                                <el-button @click="resetForm2('ruleForm2')">重置</el-button>
+                            </el-form-item>
+                        </el-form>
+                    </el-dialog>
+
+
                     <div style="margin-top:20px;">
-                        <el-button type="button" size="small" @click="addTest()"><span class="el-icon-plus"></span> 添加章节</el-button>
-                    </div> 
-                   
+                        <el-button type="button" size="small" @click="addTest()"><span class="el-icon-plus"></span> 添加章节
+                        </el-button>
+                    </div>
+
                     <el-collapse accordion style="margin-top:40px">
                         <el-collapse-item>
                             <template slot="title">
@@ -169,7 +229,7 @@
     </div>
     <script src="../assets/js/courseDatas/teacourse.js"></script>
     <script>
-        
+
     </script>
 </body>
 

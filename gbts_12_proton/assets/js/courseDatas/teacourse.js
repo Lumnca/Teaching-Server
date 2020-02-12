@@ -37,11 +37,11 @@ var course = {
             children: [
                 {
                     title: '作业',
-                    href: 'workAndTest.html'
+                    href: 'courseWork.html'
                 },
                 {
-                    title: '测试',
-                    href: 'workAndTest.html'
+                    title: '查看提交',
+                    href: 'workInfo.html'
                 }
             ],
         },
@@ -334,69 +334,69 @@ var danxuan = [
     {
         title: '那艘if阿富豪我好是欧式花是你OA深？',
         options: ['12', '17', '13', '20'],
-        score : 4
+        score: 4
     },
     {
         title: '部分可微波古尔沟我顾伟UI我还？',
         options: ['14', '10', '13', '22'],
-        score : 4
+        score: 4
     },
     {
         title: '放水后is后我换个问过我无比股市公司规划升级版素',
         options: ['24', '12', '45', '74'],
-        score : 4
+        score: 4
     },
     {
         title: '放水后is后我换个问过我无比股市公司规划升级版素',
         options: ['24', '12', '45', '74'],
-        score : 4
+        score: 4
     },
     {
         title: '放水后is后我换个问过我无比股市公司规划升级版素',
         options: ['24', '12', '45', '74'],
-        score : 4
+        score: 4
     },
     {
         title: '放水后is后我换个问过我无比股市公司规划升级版素',
         options: ['24', '12', '45', '74'],
-        score : 4
+        score: 4
     },
     {
         title: '放水后is后我换个问过我无比股市公司规划升级版素',
         options: ['24', '12', '45', '74'],
-        score : 4
+        score: 4
     },
     {
         title: '放水后is后我换个问过我无比股市公司规划升级版素',
         options: ['24', '12', '45', '74'],
-        score : 4
+        score: 4
     }
 ];
 var duoxuan = [
     {
         title: '阿Ivan哦我AV你哦是AV噶大V11成本法牛初步',
         options: ['1', '2', '3', '4', '5'],
-        score : 4,
-        answer : []
+        score: 4,
+        answer: []
     }
 ];
 var tiankong = [
     {
         title: '中国的直辖市有那个_______',
         input: '',
-        score : 4
+        score: 4
     },
     {
         title: '你的_______是核心',
         input: '',
-        score : 4
+        score: 4
     }
 ];
 var zhuguan = [
     {
         title: '你的感想是什么？',
         input: '',
-        score : 4
+        score: 4
     }
 ];
 //请求得到
@@ -454,8 +454,21 @@ var app = new Vue({
         name: window.localStorage.getItem('courseName'),
         activeNames: ['1'],
         test: [
-            { title: '第一章测试', works: [{ title: '作业一', start: '2019-8-7', end: '2019-12-7', info: '其他', state: -1, score: 0 }, { title: '作业二', start: '2019-8-7', end: '2019-12-7', info: '其他', state: 1, score: 10 }] },
-            { title: '第二章测试', works: [{ title: '作业一', start: '2019-8-7', end: '2019-12-7', info: '其他', state: 0, score: 0 }] }
+            {
+                title: '第一章测试', works:
+                    [
+                        {
+                            title: '作业一', start: '2019-8-7 ', end: '2019-12-7', info: '其他', state: -1, score: 0,submit : 21,
+                            startdate1: new Date(2019, 12, 10), startdate2: new Date(2019, 12, 10, 12, 0, 0), enddate1: new Date(2019, 12, 18), enddate2: new Date(2019, 12, 18, 0, 0, 0)
+                        }
+                    ]
+            },
+            {
+                title: '第二章测试', works: [{
+                    title: '作业一', start: '2019-8-7', end: '2019-12-7', info: '其他', state: 0, score: 0,submit : 18,
+                    startdate1: new Date(2019, 12, 10), startdate2: new Date(2019, 1, 10, 12, 0, 0), enddate1: new Date(2019, 4, 18), enddate2: new Date(2019, 4, 18, 0, 0, 0)
+                }]
+            }
         ],
         exam: [
             { title: '考试一', start: '2019-8-7', end: '2019-12-7', info: '其他', state: 0, score: 87 },
@@ -472,7 +485,7 @@ var app = new Vue({
         time: '00:10:10',
         current: {
             test: '',
-            work: '',
+            work: window.localStorage.getItem('work'),
             state: 0
         },
         talk: [
@@ -553,6 +566,19 @@ var app = new Vue({
             }]
         }],
         ruleForm2: {
+            title: '',
+            start: '',
+            end: '',
+            disabled: true,
+            info: '',
+            test: 0,
+            score: 0,
+            startdate1: '',
+            startdate2: '',
+            enddate1: '',
+            enddate2: '',
+        },
+        ruleForm3: {
             name: '',
             startdate1: '',
             startdate2: '',
@@ -567,28 +593,31 @@ var app = new Vue({
         dialogFormVisible2: false,
         dialogFormVisible3: false,
         dialogFormVisible4: false,
-        selectTest : {
-            title : '',
-            options : [],
-            answer : '',
-            score : 0
+        dialogFormVisible5: false,
+        selectTest: {
+            title: '',
+            options: [],
+            answer: '',
+            score: 0
         },
-        selectTestTianKong : {
+        selectTestTianKong: {
             title: '题目主干信息',
             input: '',
-            score : 4,
-            type: -1, 
-            standard : [],
-            auto : false
+            score: 4,
+            type: -1,
+            standard: [],
+            auto: false
         },
-        selectTestZhuGuan : {
+        selectTestZhuGuan: {
             title: '题目主干信息',
             input: '',
-            score : 4,
-            type: -1, 
-            standard : [],
-            auto : false
-        }
+            score: 4,
+            type: -1,
+            standard: [],
+            auto: false
+        },
+        workInfo : [],
+        multipleSelection: []
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -632,15 +661,15 @@ var app = new Vue({
                         message: '添加成功！',
                         type: 'success'
                     });
-                    var data1 = form.startdate1.getFullYear()+'/'+form.startdate1.getMonth()+'/'+form.startdate1.getDate()+' '+
-                    (form.startdate2.getHours()>9? form.startdate2.getHours():'0'+form.startdate2.getHours())+':'+
-                    (form.startdate2.getMinutes()>9? form.startdate2.getMinutes():'0'+form.startdate2.getMinutes())+':'+
-                    (form.startdate2.getSeconds()>9? form.startdate2.getSeconds():'0'+form.startdate2.getSeconds());
+                    var data1 = form.startdate1.getFullYear() + '/' + form.startdate1.getMonth() + '/' + form.startdate1.getDate() + ' ' +
+                        (form.startdate2.getHours() > 9 ? form.startdate2.getHours() : '0' + form.startdate2.getHours()) + ':' +
+                        (form.startdate2.getMinutes() > 9 ? form.startdate2.getMinutes() : '0' + form.startdate2.getMinutes()) + ':' +
+                        (form.startdate2.getSeconds() > 9 ? form.startdate2.getSeconds() : '0' + form.startdate2.getSeconds());
 
-                    var data2 = form.enddate1.getFullYear()+'/'+form.enddate1.getMonth()+'/'+form.enddate1.getDate()+' '+
-                    (form.enddate2.getHours()>9? form.enddate2.getHours():'0'+form.enddate2.getHours())+':'+
-                    (form.enddate2.getMinutes()>9? form.enddate2.getMinutes():'0'+form.enddate2.getMinutes())+':'+
-                    (form.enddate2.getSeconds()>9? form.enddate2.getSeconds():'0'+form.enddate2.getSeconds());
+                    var data2 = form.enddate1.getFullYear() + '/' + form.enddate1.getMonth() + '/' + form.enddate1.getDate() + ' ' +
+                        (form.enddate2.getHours() > 9 ? form.enddate2.getHours() : '0' + form.enddate2.getHours()) + ':' +
+                        (form.enddate2.getMinutes() > 9 ? form.enddate2.getMinutes() : '0' + form.enddate2.getMinutes()) + ':' +
+                        (form.enddate2.getSeconds() > 9 ? form.enddate2.getSeconds() : '0' + form.enddate2.getSeconds());
 
 
                     this.test[form.test].works.push({
@@ -648,7 +677,7 @@ var app = new Vue({
                         start: data1,
                         end: data2,
                         info: form.info,
-                        state: form.disabled? '可用':'不可用'
+                        state: form.disabled ? '可用' : '不可用'
                     });
                 }
                 else {
@@ -662,45 +691,50 @@ var app = new Vue({
         resetForm2(formName) {
             this.$refs[formName].resetFields();
         },
-        rename(e,data){
-            window.event? window.event.cancelBubble = true : e.stopPropagation();
+        rename(e, data) {
+            window.event ? window.event.cancelBubble = true : e.stopPropagation();
             this.$prompt('请输入', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
-                inputValue : data.title
-              }).then(({ value }) => {
+                inputValue: data.title
+            }).then(({ value }) => {
                 data.title = value;
                 this.$message({
-                  type: 'success',
-                  message: '已命名为' + value
+                    type: 'success',
+                    message: '已命名为' + value
                 });
-              }).catch(() => {
+            }).catch(() => {
                 this.$message({
-                  type: 'info',
-                  message: '取消输入'
-                });       
-              });
+                    type: 'info',
+                    message: '取消输入'
+                });
+            });
         },
-        delTest(e,data){
-            window.event? window.event.cancelBubble = true : e.stopPropagation();
+        delTest(e, data) {
+            window.event ? window.event.cancelBubble = true : e.stopPropagation();
             //
-            this.test.splice(this.test.indexOf(data),1);
+            this.test.splice(this.test.indexOf(data), 1);
 
         },
-        editTestDanXuan(data){
+        editTestDanXuan(data) {
             this.dialogFormVisible = true;
-            this.selectTest= data;
+            this.selectTest = data;
         },
-        editTestDuoXuan(data){
+        editTestDuoXuan(data) {
             this.dialogFormVisible2 = true;
         },
-        editTestTianKong(data){
+        editTestTianKong(data) {
             this.dialogFormVisible3 = true;
             this.selectTestTianKong = data;
         },
-        editTestZhuGuan(data){
+        editTestZhuGuan(data) {
             this.dialogFormVisible4 = true;
             this.selectTestZhuGuan = data;
+        },
+        editWork(data) {
+            console.log(data);
+            this.dialogFormVisible5 = true;
+            this.ruleForm2 = data.row;
         },
         append(data) {
             var id = data.id;
@@ -762,33 +796,33 @@ var app = new Vue({
                 });
             });
         },
-        addTest(){
-            this.test.push({ title: '新章节', works: []});
+        addTest() {
+            this.test.push({ title: '新章节', works: [] });
         },
-        setTest(){
+        setTest() {
             this.dialogFormVisible = false;
         },
-        addTestDanXuan(){
-            this.danxuan.push(    {
+        addTestDanXuan() {
+            this.danxuan.push({
                 title: '题目主体',
                 options: ['A', 'B', 'C', 'D'],
-                score : 4,
-                type : -1,
-                select : 'default'
+                score: 4,
+                type: -1,
+                select: 'default'
             });
         },
-        addTestDuoXuan(){
-            this.duoxuan.push(    {
+        addTestDuoXuan() {
+            this.duoxuan.push({
                 title: '题目主体',
-                options: ['A', 'B', 'C', 'D','E'],
-                score : 4,
-                type : -1,
-                select : [],
-                answer : []
+                options: ['A', 'B', 'C', 'D', 'E'],
+                score: 4,
+                type: -1,
+                select: [],
+                answer: []
             });
         },
-        delDanXuan(index){
-            this.danxuan.splice(index,1);
+        delDanXuan(index) {
+            this.danxuan.splice(index, 1);
         },
         computedScore() {
             var score = 0;
@@ -856,26 +890,26 @@ var app = new Vue({
                 duration: 0
             });
         },
-        write_work(work) {
-            window.localStorage.setItem("work", work.title);
-            window.location.href = "workShow.html";
-            console.log(JSON.stringify(work))
-        },
-        edit_work(work) {
-            console.log(JSON.stringify(work));
-        },
-        write_exam(work) {
-            window.localStorage.setItem("exam", work.title);
-            window.localStorage.setItem("state", work.state);
-            window.location.href = "testShow.html";
-            console.log(JSON.stringify(work))
-        },
-        edit_exam(work) {
-            console.log(JSON.stringify(work));
+        showWork(scope) {
+            console.log(scope);
+            window.localStorage.setItem("work", scope.row.title);
+            window.location.href = "test.html";
         },
         addZ(item) {
             item.number += 1;
         },
+        toggleSelection(rows) {
+            if (rows) {
+              rows.forEach(row => {
+                this.$refs.multipleTable.toggleRowSelection(row);
+              });
+            } else {
+              this.$refs.multipleTable.clearSelection();
+            }
+          },
+          handleSelectionChange(val) {
+            this.multipleSelection = val;
+          }
     },
     computed: {
         write: function () {
@@ -922,37 +956,37 @@ var app = new Vue({
 
 
         },
-        danxuanAllScore : function(){
+        danxuanAllScore: function () {
             var sum = 0;
             this.danxuan.forEach((item) => {
-               sum+=item.score;
+                sum += item.score;
             });
             return sum;
         },
-        duoxuanAllScore : function(){
+        duoxuanAllScore: function () {
             var sum = 0;
             this.duoxuan.forEach((item) => {
-               sum+=item.score;
+                sum += item.score;
             });
             return sum;
         },
-        tiankongAllScore : function(){
+        tiankongAllScore: function () {
             var sum = 0;
             this.tiankong.forEach((item) => {
-               sum+=item.score;
+                sum += item.score;
             });
             return sum;
         },
-        zhuguanAllScore : function(){
+        zhuguanAllScore: function () {
             var sum = 0;
             this.zhuguan.forEach((item) => {
-               sum+=item.score;
+                sum += item.score;
             });
             return sum;
         },
-        AllScore : function(){
-           
-            return this.danxuanAllScore+this.duoxuanAllScore+this.tiankongAllScore+this.zhuguanAllScore;
+        AllScore: function () {
+
+            return this.danxuanAllScore + this.duoxuanAllScore + this.tiankongAllScore + this.zhuguanAllScore;
         }
     },
 });
