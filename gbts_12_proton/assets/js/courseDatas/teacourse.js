@@ -458,14 +458,14 @@ var app = new Vue({
                 title: '第一章测试', works:
                     [
                         {
-                            title: '作业一', start: '2019-8-7 ', end: '2019-12-7', info: '其他', state: -1, score: 0,submit : 21,
+                            title: '作业一', start: '2019-8-7 ', end: '2019-12-7', info: '其他', state: -1, score: 0, submit: 21,
                             startdate1: new Date(2019, 12, 10), startdate2: new Date(2019, 12, 10, 12, 0, 0), enddate1: new Date(2019, 12, 18), enddate2: new Date(2019, 12, 18, 0, 0, 0)
                         }
                     ]
             },
             {
                 title: '第二章测试', works: [{
-                    title: '作业一', start: '2019-8-7', end: '2019-12-7', info: '其他', state: 0, score: 0,submit : 18,
+                    title: '作业一', start: '2019-8-7', end: '2019-12-7', info: '其他', state: 0, score: 0, submit: 18,
                     startdate1: new Date(2019, 12, 10), startdate2: new Date(2019, 1, 10, 12, 0, 0), enddate1: new Date(2019, 4, 18), enddate2: new Date(2019, 4, 18, 0, 0, 0)
                 }]
             }
@@ -616,8 +616,9 @@ var app = new Vue({
             standard: [],
             auto: false
         },
-        workInfo : [],
-        multipleSelection: []
+        workInfo: [],
+        multipleSelection: [],
+        editdisabled: true
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -900,26 +901,32 @@ var app = new Vue({
         },
         toggleSelection(rows) {
             if (rows) {
-              rows.forEach(row => {
-                this.$refs.multipleTable.toggleRowSelection(row);
-              });
+                rows.forEach(row => {
+                    this.$refs.multipleTable.toggleRowSelection(row);
+                });
             } else {
-              this.$refs.multipleTable.clearSelection();
+                this.$refs.multipleTable.clearSelection();
             }
-          },
-          handleSelectionChange(val) {
+        },
+        handleSelectionChange(val) {
             this.multipleSelection = val;
-          }
+        },
+        deleteStuWork(i) {
+            this.workInfo.splice(i, 1);
+        },
+        showSumbit() {
+            window.location.href = "studentWorkInfo.html";
+        }
     },
     computed: {
         write: function () {
             let i = 0;
             this.danxuan.forEach((item) => {
-                if (item.select != 'default') {
+                if (item.select != 'default' && this.editdisabled) {
                     item.type = 0;
                     i++;
                 }
-                else {
+                else if (item.select == 'default' && this.editdisabled) {
                     item.type = -1;
                 }
             });
@@ -989,6 +996,16 @@ var app = new Vue({
             return this.danxuanAllScore + this.duoxuanAllScore + this.tiankongAllScore + this.zhuguanAllScore;
         }
     },
+    mounted() {
+        axios
+            .get('http://47.106.254.86:1234/test/class.php')
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(function (error) { // 请求失败处理
+                console.log(error);
+            });
+    }
 });
 app.current.work = window.localStorage.getItem('work');
 app.current.test = window.localStorage.getItem('exam');
@@ -1036,8 +1053,6 @@ var timer = setInterval(() => {
         app.disabled = true;
     }
 }, 1000);
-
-
 
 
 window.addEventListener('paste', function (e) {

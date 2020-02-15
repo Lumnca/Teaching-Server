@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>作业内容</title>
+    <!-- Import google fonts - Heading first/ text second -->
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
+    <!-- Css files -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/jquery.mmenu.css" rel="stylesheet">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+    <link href="../assets/css/style.min.css" rel="stylesheet">
+    <link href="../assets/css/add-ons.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <style>
+        @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
+
+        .el-header {
+            background-color: #B3C0D1;
+            color: #333;
+            line-height: 60px;
+        }
+
+        .el-aside {
+            color: #3c1dca;
+        }
+
+        .noline:hover {
+            text-decoration: none;
+        }
+
+        .grid-content {
+            height: 48px;
+            margin: 4px;
+            background: #ffffff;
+            ;
+            color: #000000;
+            padding: 13px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+    </style>
+
+</head>
+</head>
+
+<body>
+    <div id="app">
+        <el-container style=" border: 1px solid #eee">
+            <el-header style="text-align: right; font-size: 12px">
+                <el-dropdown>
+                    <span style="margin-right: 15px;font-size: 20px;"><i class="el-icon-user"></i> {{user}}</span>
+
+                    <el-dropdown-menu slot="dropdown">
+                        <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                            <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                        </a>
+                    </el-dropdown-menu>
+                </el-dropdown>
+
+            </el-header>
+        </el-container>
+        <el-container style="height: 1000px; border: 1px solid #eee">
+            <el-aside width="300px" style="background-color: rgb(136, 151, 177)">
+                <p>单选</p>
+                <el-row>
+                    <el-col v-for="(item,i) in danxuan" :span="4">
+                        <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
+                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
+                                    class="fa fa-check"></i></span>
+                        </div>
+                        <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+                <p>多选</p>
+                <el-row>
+                    <el-col v-for="(item,i) in duoxuan" :span="4">
+                        <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
+                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
+                                    class="fa fa-check"></i></span>
+                        </div>
+                        <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+                <p>填空</p>
+                <el-row>
+                    <el-col v-for="(item,i) in tiankong" :span="4">
+                        <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
+                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
+                                    class="fa fa-check"></i></span>
+                        </div>
+                        <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+                <p>主观</p>
+                <el-row>
+                    <el-col v-for="(item,i) in zhuguan" :span="4">
+                        <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
+                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
+                                    class="fa fa-check"></i></span>
+                        </div>
+                        <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+                <div>
+                    {{write}}
+                </div>
+                <div><a href="workAndTest.html">退出作业</a></div>
+            </el-aside>
+            <el-container>
+                <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;text-align: center">
+                    <span><i class="el-icon-edit"></i> {{current.work}}</span>
+                </el-header>
+                <hr>
+                <el-main>
+                    <div v-if="danxuan.length>0">
+                        <div style="margin: 16px;">
+                            <h4><b>单选题</b> </h4>
+                        </div>
+                        <el-divider></el-divider>
+                        <div v-for="(item,i) in danxuan">
+                            <div><span>{{i+1}}.</span>{{item.title}}</div>
+                            <div style="margin-top: 16px">
+                                <el-radio :disabled="disabled" v-for="(option,j) in item.options" v-model="item.select":label="j">{{option}}
+                                </el-radio>
+                            </div>
+                            <el-divider></el-divider>
+                        </div>
+                    </div>
+                    <div v-if="duoxuan.length>0">
+                        <div style="margin: 16px;">
+                            <h4><b>多选题</b> </h4>
+                        </div>
+                        <el-divider></el-divider>
+                        <div v-for="(item,i) in duoxuan">
+                            <div><span>{{i+1}}.</span>{{item.title}}</div>
+                            <div style="margin-top: 16px">
+                                <el-checkbox-group v-model="item.select" :disabled="disabled">
+                                    <el-checkbox v-for="option in item.options" :label="option"></el-checkbox>
+                                </el-checkbox-group>
+                            </div>
+                            <el-divider></el-divider>
+                        </div>
+                    </div>
+                    <div v-if="duoxuan.length>0">
+                        <div style="margin: 16px;">
+                            <h4><b>填空题</b> </h4>
+                        </div>
+                        <el-divider></el-divider>
+                        <div v-for="(item,i) in tiankong">
+                            <div><span>{{i+1}}.</span>{{item.title}}</div>
+                            <div style="margin-top: 16px">
+                                <el-input :disabled="disabled" v-model="item.input" placeholder="请输入内容"></el-input>
+                            </div>
+                            <el-divider></el-divider>
+                        </div>
+                        <div v-if="zhuguan.length>0">
+                            <div style="margin: 16px;">
+                                <h4><b>主观题</b> </h4>
+                            </div>
+                            <el-divider></el-divider>
+                            <div v-for="(item,i) in zhuguan">
+                                <div><span>{{i+1}}.</span>{{item.title}}</div>
+                                <div style="margin-top: 16px">
+                                    <el-input type="textarea" :rows="3" placeholder="请输入内容" :disabled="disabled"
+                                        v-model="item.input">
+                                    </el-input>
+                                </div>
+                                <el-divider></el-divider>
+                            </div>
+                        </div>
+                    </div>
+                    <el-button type="primary" @click="computedScore()">提交</el-button>
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+
+</body>
+<script src="../assets/js/courseDatas/teacourse.js"></script>
+<script>
+        var danxuan = [0,1,2,3,2,1,1,0];
+        var answer1 = [0,1,2,2,2,1,0,0];
+
+        var duoxuan = [
+            ['2','3']
+        ];
+        var answer2 = [
+            [2,3]
+        ];
+
+        var tiankong = ['5个','大脑'];
+        var answer3 = ['5','danao'];
+
+        var zhuguan = ['assadasdasd'];
+        var answer4 = ['cascascas'];
+
+        app.editdisabled = false;
+        app.danxuan.forEach((element,i) => {
+            element.select = danxuan[i];
+            if( danxuan[i] != answer1[i]){
+                element.type = 1;
+            }
+            else{
+                element.type = 0;
+            }
+        });
+        app.duoxuan.forEach((element,i) => {
+            element.select = duoxuan[i];
+            duoxuan[i]==answer2[i]? element.type = 1:element.type = 0;
+        });
+
+        app.tiankong.forEach((element,i) => {
+            element.input = tiankong[i];
+            tiankong[i].indexOf(answer3[i])!=-1 ? element.type = 1:element.type = 0;
+        });
+
+        app.zhuguan.forEach((element,i)=> {
+            element.input = zhuguan[i];
+            zhuguan[i] == answer4[i]?  element.type = 1:element.type = 0;
+        });
+</script>
+</html>
