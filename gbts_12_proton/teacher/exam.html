@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>考试</title>
+    <!-- Import google fonts - Heading first/ text second -->
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
+    <!-- Css files -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/jquery.mmenu.css" rel="stylesheet">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+    <link href="../assets/css/style.min.css" rel="stylesheet">
+    <link href="../assets/css/add-ons.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <style>
+        @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
+
+        .el-header {
+            background-color: #B3C0D1;
+            color: #333;
+            line-height: 60px;
+        }
+
+        .el-aside {
+            color: #3c1dca;
+        }
+
+        .noline:hover {
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+</head>
+
+<body>
+    <div id="app">
+        <el-container style=" border: 1px solid #eee">
+            <el-header style="text-align: right; font-size: 12px">
+                <el-dropdown>
+                    <span style="margin-right: 15px;font-size: 20px;"><i class="el-icon-user"></i> {{user}}</span>
+
+                    <el-dropdown-menu slot="dropdown">
+                        <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                            <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                        </a>
+                    </el-dropdown-menu>
+                </el-dropdown>
+
+            </el-header>
+        </el-container>
+        <el-container style="height: 800px; border: 1px solid #eee">
+            <el-aside width="300px" style="background-color: rgb(238, 241, 246)">
+                <img src="https://edu-image.nosdn.127.net/E60240E3F15C33023E8BE744985C91D3.jpg?imageView&thumbnail=510y288&quality=100"
+                    width="296">
+                <el-menu :default-openeds="['']">
+                    <el-submenu v-for="(list,i) in course.infoList" :index="i.toString()">
+                        <template slot="title"><i :class="list.icon"></i>{{list.title}}</template>
+                        <el-menu-item-group v-for="(item,index) in list.children">
+                            <a class="noline" :href="item.href">
+                                <el-menu-item :index="item.title">{{item.title}}</el-menu-item>
+                            </a>
+                        </el-menu-item-group>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
+            <el-container>
+                <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;">
+                    <span><i class="el-icon-bell"></i> 考试</span>
+                </el-header>
+                <hr>
+                <el-main>
+                    <div style=" background-color: rgb(228, 231, 238); font-size: 18px; padding: 10px 20px">
+                        <el-table :data="exam" style="width: 100%" :default-sort="{prop: 'date', order: 'descending'}">
+
+                            <el-table-column prop="title" label="名称" sortable width="180">
+                            </el-table-column>
+                            <el-table-column prop="start" label="起始时间" sortable width="180">
+                            </el-table-column>
+                            <el-table-column prop="end" label="结束时间" >
+                            </el-table-column>
+                            <el-table-column prop="state" label="状态" >
+                            </el-table-column>
+                            <el-table-column prop="info" label="备注">
+                            </el-table-column>
+                            <el-table-column fixed="right" label="操作">
+                                <template slot-scope="scope">
+                                    <el-button @click="showExam(scope.row.title)" type="el-button" size="small">查看</el-button>
+                                    <el-button @click="editExam(scope.row)" type="el-button" size="small">编辑</el-button>
+                                    <el-button @click="deleteExam(scope.$index)" type="el-button" size="small">删除</el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </div>
+                    <el-dialog title="考试修改" :visible.sync="dialogFormVisible6" label-width="80px">
+                        <el-form :model="selectExam">
+                            <el-form-item label="名称">
+                                <el-input v-model="selectExam.title" autocomplete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="起始时间">
+                                <el-col :span="11">
+                                    <el-date-picker type="date" placeholder="日期" v-model="selectExam.startdate1"
+                                        style="width: 100%;"></el-date-picker>
+                                </el-col>
+                                
+                                <el-col :span="11">
+                                    <el-time-picker placeholder="时间" v-model="selectExam.startdate2"
+                                        style="width: 100%;"></el-time-picker>
+                                </el-col>
+                            </el-form-item>
+
+                            <el-form-item label="结束时间">
+                                    <el-col :span="11">
+                                        <el-date-picker type="date" placeholder="日期" v-model="selectExam.enddate1"
+                                            style="width: 100%;"></el-date-picker>
+                                    </el-col>
+                                    
+                                    <el-col :span="11">
+                                        <el-time-picker placeholder="时间" v-model="selectExam.enddate2"
+                                            style="width: 100%;"></el-time-picker>
+                                    </el-col>
+                                </el-form-item>
+
+                                <el-form-item label="状态">
+                                        <el-radio-group v-model="selectExam.state">
+                                          <el-radio :label="1"></el-radio>
+                                          <el-radio :label="0"></el-radio>
+                                          <el-radio :label="-1"></el-radio>
+                                        </el-radio-group>
+                                      </el-form-item>    
+                            <el-form-item label="备注">
+                                <el-input v-model="selectExam.info" autocomplete="off"></el-input>
+                            </el-form-item>
+
+                        </el-form>
+                        <div slot="footer" class="dialog-footer">
+                            <el-button @click="dialogFormVisible6 = false">取 消</el-button>
+                            <el-button type="primary" @click="dialogFormVisible6 = false">确 定</el-button>
+                        </div>
+                    </el-dialog>
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+    <script src="../assets/js/courseDatas/teacourse.js"></script>
+</body>
+
+</html>

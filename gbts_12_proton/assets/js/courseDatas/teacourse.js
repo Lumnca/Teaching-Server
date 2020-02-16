@@ -51,6 +51,10 @@ var course = {
             children: [
                 {
                     title: '考试',
+                    href: 'exam.html'
+                },
+                {
+                    title: '考试提交',
                     href: 'testInfo.html'
                 }
             ],
@@ -484,7 +488,7 @@ var app = new Vue({
         disabled: false,
         time: '00:10:10',
         current: {
-            test: '',
+            exam : window.localStorage.getItem('exam'),
             work: window.localStorage.getItem('work'),
             state: 0
         },
@@ -594,6 +598,7 @@ var app = new Vue({
         dialogFormVisible3: false,
         dialogFormVisible4: false,
         dialogFormVisible5: false,
+        dialogFormVisible6: false,
         selectTest: {
             title: '',
             options: [],
@@ -615,6 +620,19 @@ var app = new Vue({
             type: -1,
             standard: [],
             auto: false
+        },
+        selectExam : {
+            title: '',
+            start: '',
+            end: '',
+            disabled: true,
+            info: '',
+            test: 0,
+            score: 0,
+            startdate1: '',
+            startdate2: '',
+            enddate1: '',
+            enddate2: '',
         },
         workInfo: [],
         multipleSelection: [],
@@ -736,6 +754,10 @@ var app = new Vue({
             console.log(data);
             this.dialogFormVisible5 = true;
             this.ruleForm2 = data.row;
+        },
+        editExam(data){
+            this.dialogFormVisible6 = true;
+            this.selectExam = data;
         },
         append(data) {
             var id = data.id;
@@ -916,6 +938,13 @@ var app = new Vue({
         },
         showSumbit() {
             window.location.href = "studentWorkInfo.html";
+        },
+        deleteExam(i){
+            this.exam.splice(i,1);
+        },
+        showExam(title){
+            window.localStorage.setItem("exam",title);
+            window.location.href = "examInfo.html";
         }
     },
     computed: {
@@ -997,14 +1026,7 @@ var app = new Vue({
         }
     },
     mounted() {
-        axios
-            .get('http://47.106.254.86:1234/test/class.php')
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(function (error) { // 请求失败处理
-                console.log(error);
-            });
+    
     }
 });
 app.current.work = window.localStorage.getItem('work');
