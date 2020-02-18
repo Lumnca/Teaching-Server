@@ -39,6 +39,10 @@
         .noline:hover {
             text-decoration: none;
         }
+
+        .player-list {
+            background: #222222;
+        }
     </style>
 
 </head>
@@ -46,31 +50,59 @@
 
 <body>
     <div id="app">
-        <video id="my-player" class="video-js" controls preload="auto" width="1080" height="960"
-            data-setup='{"controls": true, "autoplay": false, "preload": "auto"}'>
-            <source src="http://47.106.254.86:1234/test/video.mp4" type="video/mp4" />
-            <track kind="captions" src="//example.com/path/to/captions.vtt" srclang="en" label="English" default>
-        </video>
+        <el-container>
+            <el-header>Header</el-header>
+            <el-container>
+                <el-aside width="1600px">
+                    <video id="my-player" class="video-js" controls preload="auto" width="1600"
+                        data-setup='{"controls": true, "autoplay": false, "preload": "auto" ,"responsive" : true}'>
+                        <source src="http://47.106.254.86:1234/test/video.mp4" type="video/mp4" />
+                    </video>
+                </el-aside>
+                <el-main class="player-list">
+                
+                <div>
+                        <span><a href="#">第一节，XXXXX(5分钟)</a></span>
+                        <el-divider></el-divider>
+                        <span><a href="#">第一节，XXXXX(5分钟)</a></span>
+                        <el-divider></el-divider>
+                        <span><a href="#">第一节，XXXXX(5分钟)</a></span>
+                        <el-divider></el-divider>
+                </div>
+                <div>
+                        <span><a href="#">青春是一个短暂的美梦, 当你醒来时, 它早已消失无踪</a></span>
+                        <el-divider></el-divider>
+                </div><div>
+                        <span><a href="#">青春是一个短暂的美梦, 当你醒来时, 它早已消失无踪</a></span>
+                        <el-divider></el-divider>
+                </div> 
+
+
+                </el-main>
+            </el-container>
+        </el-container>
+
+
     </div>
 
     <script>
         var app = new Vue({
             el: '#app',
             data: {
+                count: 5,
+                activeNames: 0
+            },
+            methods: {
+                load() {
 
+                },
+                handleChange() {
+
+                }
             }
         });
 
         var player = videojs('my-player');
-
-
-        player.ready(function () {
-            // example 0.11 aka 11%
-        
-            
-        });
-
-
 
 
     </script>
