@@ -5,28 +5,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>课程公告</title>
-    <!-- Import google fonts - Heading first/ text second -->
-    <!-- Favicon and touch icons -->
-    <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
-    <!-- Css files -->
-    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/css/jquery.mmenu.css" rel="stylesheet">
-    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
-    <link href="../assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
-    <link href="../assets/css/style.min.css" rel="stylesheet">
-    <link href="../assets/css/add-ons.min.css" rel="stylesheet">
+    <title>视频播放</title>
+    <link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet" />
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
-
-    <link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet" />
     <script src="https://vjs.zencdn.net/7.6.6/video.js"></script>
-    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
     <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
     <style>
         @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
 
-        .el-header {
+        .el-footer {
             background-color: #B3C0D1;
             color: #333;
             line-height: 60px;
@@ -42,6 +30,7 @@
 
         .player-list {
             background: #222222;
+            color: #ffffff;
         }
     </style>
 
@@ -51,38 +40,25 @@
 <body>
     <div id="app">
         <el-container>
-            <el-header>Header</el-header>
             <el-container>
-                <el-aside width="1600px">
-                    <video id="my-player" class="video-js" controls preload="auto" width="1600"
+                <el-main class="player-list" width="80%">
+                    <video id="my-player" class="video-js" controls preload="auto" width="1560"
                         data-setup='{"controls": true, "autoplay": false, "preload": "auto" ,"responsive" : true}'>
                         <source src="http://47.106.254.86:1234/test/video.mp4" type="video/mp4" />
                     </video>
-                </el-aside>
-                <el-main class="player-list">
-                
-                <div>
-                        <span><a href="#">第一节，XXXXX(5分钟)</a></span>
-                        <el-divider></el-divider>
-                        <span><a href="#">第一节，XXXXX(5分钟)</a></span>
-                        <el-divider></el-divider>
-                        <span><a href="#">第一节，XXXXX(5分钟)</a></span>
-                        <el-divider></el-divider>
-                </div>
-                <div>
-                        <span><a href="#">青春是一个短暂的美梦, 当你醒来时, 它早已消失无踪</a></span>
-                        <el-divider></el-divider>
-                </div><div>
-                        <span><a href="#">青春是一个短暂的美梦, 当你醒来时, 它早已消失无踪</a></span>
-                        <el-divider></el-divider>
-                </div> 
-
-
                 </el-main>
             </el-container>
+            <el-footer>
+                <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">
+                    点我打开
+                </el-button>
+
+            </el-footer>
         </el-container>
 
-
+        <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="1200">
+            <embed width="1200" height="800" src="../assets/doc/test.pdf"> </embed>
+        </el-drawer>
     </div>
 
     <script>
@@ -90,7 +66,8 @@
             el: '#app',
             data: {
                 count: 5,
-                activeNames: 0
+                activeNames: 0,
+                drawer: false,
             },
             methods: {
                 load() {
@@ -98,13 +75,14 @@
                 },
                 handleChange() {
 
+                },
+                play() {
+                    console.log("------");
                 }
             }
         });
 
         var player = videojs('my-player');
-
-
     </script>
 </body>
 
