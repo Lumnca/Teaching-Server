@@ -32,6 +32,19 @@
             background: #222222;
             color: #ffffff;
         }
+
+        .info {
+            transition: all;
+        }
+
+        .info div {
+            margin: 8px 16px;
+            font-size: 18px;
+            transition-property: all;
+            transition-duration: .5s;
+            transition-timing-function: ease-in;
+            transition-delay: .1s;
+        }
     </style>
 
 </head>
@@ -40,34 +53,75 @@
 <body>
     <div id="app">
         <el-container>
-            <el-container>
-                <el-main class="player-list" width="80%">
-                    <video id="my-player" class="video-js" controls preload="auto" width="1560"
+            <el-container class="player-list">
+
+                <el-aside width="80%">
+                    <video id="my-player" class="video-js" controls preload="auto" width="1520"
                         data-setup='{"controls": true, "autoplay": false, "preload": "auto" ,"responsive" : true}'>
-                        <source src="http://47.106.254.86:1234/test/video.mp4" type="video/mp4" />
+                        <source :src="video.url" type="video/mp4" />
                     </video>
+                </el-aside>
+                <el-main class="info" :style="showData" >
+                    <div>设 备: {{info.device.device}}</div>
+                    <div>系 统: {{info.platform.platform}}</div>
+                    <div>浏览器: {{info.browser.appname}}</div>
+                    <div>城 市: {{info.city}}</div>
+                    <div>IP: {{info.ip}}</div>
+                    <div>使用时间: {{info.time.format1}} </div>
+                    <div>离开时间: {{info.time.format2}}</div>
                 </el-main>
             </el-container>
             <el-footer>
                 <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">
-                    点我打开
+                    课件
                 </el-button>
-
+                <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">
+                    提问
+                </el-button>
+                <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">
+                    测试
+                </el-button>
+                <el-button @click="show()" type="primary" style="margin-left: 16px;">
+                    数据
+                </el-button>
+                <el-button @click="palyNext()" type="primary" style="margin-left: 16px;">
+                    播放一下个
+                </el-button>
             </el-footer>
         </el-container>
 
-        <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="1200">
+        <el-drawer title="课件" :visible.sync="drawer" :with-header="false" size="1200">
             <embed width="1200" height="800" src="../assets/doc/test.pdf"> </embed>
         </el-drawer>
     </div>
-
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
     <script>
+
         var app = new Vue({
             el: '#app',
             data: {
                 count: 5,
                 activeNames: 0,
                 drawer: false,
+                info: {
+                    browser: getBrower(),
+                    platform: getPlatform(),
+                    device: getDevice(),
+                    ip: '',
+                    city: '',
+                    time: {
+                        use: [0, 0, 0],
+                        free: [0, 0, 0],
+                        format1: '00:00:00',
+                        format2: '00:00:00'
+                    }
+                },
+                video: {
+                    url: '../assets/video/demo1.mp4'
+                },
+                showData: {
+                    visibility: "hidden"
+                }
             },
             methods: {
                 load() {
@@ -78,12 +132,141 @@
                 },
                 play() {
                     console.log("------");
+                },
+                palyNext() {
+                    player.src("../assets/video/demo2.mp4");
+                },
+                show() {
+                    if (this.showData.visibility == "hidden") {
+                        this.showData = {
+                            visibility: "visible"
+                        }
+                    }
+                    else {
+                        this.showData = {
+                            visibility: "hidden"
+                        }
+                    }
+
                 }
             }
         });
 
         var player = videojs('my-player');
+
+
+        //1获取浏览器名称和版本
+        function getBrower() {
+            let agent = navigator.userAgent.toLowerCase();
+            let browser = { appname: 'unknown', version: '0' };
+            if (/(qqbrowser|ubrowser)\D+(\d[\d.]*)/.test(agent)) {//qq浏览器,UC浏览器
+                browser.appname = RegExp.$1;
+                browser.version = RegExp.$2;
+            } else if (/se[\s\.a-zA-Z\d]+metasr/.test(agent)) {
+                browser.appname = 'sougou';
+                browser.version = '0';
+            } else if (/(msie|firefox|opera|chrome|netscape)\D+(\d[\d.]*)/.test(agent)) {
+                browser.appname = RegExp.$1;
+                browser.version = RegExp.$2;
+            } else if (/version\D+(\d[\d.]*).*safari/.test(agent)) { // safari  
+                browser.appname = 'safari';
+                browser.version = RegExp.$2;
+            }
+            return browser;
+        }
+        //2获取浏览器的操作系统平台
+        function getPlatform() {
+            let os = {
+                platform: navigator.platform.toLowerCase(),
+            };
+            return os;
+        };
+        //3获取当前设备类型
+        function getDevice() {
+            let agent = navigator.userAgent.toLowerCase();
+            let result = {
+                device: function () {
+                    if (/windows/.test(agent)) {
+                        return 'windows pc';
+                    } else if (/iphone|ipod/.test(agent) && /mobile/.test(agent)) {
+                        return 'iphone';
+                    } else if (/ipad/.test(agent) && /mobile/.test(agent)) {
+                        return 'ipad';
+                    } else if (/android/.test(agent) && /mobile/.test(agent)) {
+                        return 'android';
+                    } else if (/linux/.test(agent)) {
+                        return 'linux pc';
+                    } else if (/mac/.test(agent)) {
+                        return 'mac';
+                    } else {
+                        return 'other';
+                    }
+                }(),
+            };
+            return result;
+        };
+
+        var hiddenProperty = 'hidden' in document ? 'hidden' :
+            'webkitHidden' in document ? 'webkitHidden' :
+                'mozHidden' in document ? 'mozHidden' :
+                    null;
+        var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+        var onVisibilityChange = function () {
+            /* if (!document[hiddenProperty]) {
+                  console.log('页面非激活');
+              } else {
+                  console.log('页面激活')
+              }*/
+        }
+        document.addEventListener(visibilityChangeEvent, onVisibilityChange);
+
+        console.log(returnCitySN["cip"] + ',' + returnCitySN["cname"]);
+        app.info.ip = returnCitySN["cip"];
+        app.info.city = returnCitySN["cname"];
+
+        setInterval(() => {
+
+            if (!document[hiddenProperty]) {
+                app.info.time.use[0]++;
+                if (app.info.time.use[0] >= 60) {
+                    app.info.time.use[1]++;
+                    app.info.time.use[0] = 0;
+                    if (app.info.time.use[1] >= 60) {
+                        app.info.time.use[1] = 0;
+                        app.info.time.use[2]++;
+                    }
+                }
+            }
+            else {
+                console.log(app.info.time.free[0]);
+                app.info.time.free[0]++;
+                if (app.info.time.free[0] >= 60) {
+                    app.info.time.free[1]++;
+                    app.info.time.free[0] = 0;
+                    if (app.info.time.free[1] >= 60) {
+                        app.info.time.free[1] = 0;
+                        app.info.time.free[2]++;
+                    }
+                }
+            }
+
+            var h1 = app.info.time.use[2];
+            var h2 = app.info.time.free[2];
+
+            var m1 = app.info.time.use[1];
+            var m2 = app.info.time.free[1];
+
+            var s1 = app.info.time.use[0];
+            var s2 = app.info.time.free[0];
+
+
+            app.info.time.format1 = "0" + h1 + ":" + (m1 > 9 ? m1 : "0" + m1) + ":" + (s1 > 9 ? s1 : "0" + s1);
+            app.info.time.format2 = "0" + h2 + ":" + (m2 > 9 ? m2 : "0" + m2) + ":" + (s2 > 9 ? s2 : "0" + s2);
+
+        }, 1000);
+
     </script>
+
 </body>
 
 </html>
