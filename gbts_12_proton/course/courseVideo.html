@@ -7,12 +7,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>视频播放</title>
     <link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
     <script src="https://vjs.zencdn.net/7.6.6/video.js"></script>
     <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+
     <style>
         @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
+
+        .w1000 {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .card-body p:last-child {
+            margin-bottom: 0
+        }
+
+        .rcontent {
+            margin-bottom: .5rem;
+            margin-left: 1rem;
+            padding-top: .5rem;
+            border-top: 1px dashed #dee2e6
+        }
 
         .el-footer {
             background-color: #B3C0D1;
@@ -56,12 +76,12 @@
             <el-container class="player-list">
 
                 <el-aside width="80%">
-                    <video id="my-player" class="video-js" controls preload="auto" width="1520"
+                    <video id="my-player" class="video-js" controls preload="auto" width="1530"
                         data-setup='{"controls": true, "autoplay": false, "preload": "auto" ,"responsive" : true}'>
-                        <source :src="video.url" type="video/mp4" />
+                        <source src="../assets/video/demo1.mp4" type="video/mp4" />
                     </video>
                 </el-aside>
-                <el-main class="info" :style="showData" >
+                <el-main class="info" :style="showData">
                     <div>设 备: {{info.device.device}}</div>
                     <div>系 统: {{info.platform.platform}}</div>
                     <div>浏览器: {{info.browser.appname}}</div>
@@ -75,7 +95,7 @@
                 <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">
                     课件
                 </el-button>
-                <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">
+                <el-button @click="drawer2 = true" type="primary" style="margin-left: 16px;">
                     提问
                 </el-button>
                 <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">
@@ -93,9 +113,58 @@
         <el-drawer title="课件" :visible.sync="drawer" :with-header="false" size="1200">
             <embed width="1200" height="800" src="../assets/doc/test.pdf"> </embed>
         </el-drawer>
+
+        <el-drawer title="问题" :visible.sync="drawer2" direction="ltr">
+            <div style="margin:8px 16px;">
+
+                <div class="panel panel-primary" v-for="item in huifu">
+                    <div class="panel-heading">
+                        <span class="panel-title"><span class="el-icon-user-solid"></span> {{item.userName}}</span>
+                        <span style="float:right;"><a href="#" style="color: red;">[回复]</a></span>
+                    </div>
+                    <div class="panel-body">
+                        {{item.questions}}
+                        <div v-if="item.ask.length>0">
+                            <el-divider></el-divider>
+                            <div style="margin: 4px 8px;" v-for="a in item.ask">
+                                （回复）<span class="panel-title"><span class="el-icon-user-solid"></span> {{a.name}} :
+                                    {{a.info}}</span>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </el-drawer>
+
     </div>
     <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
     <script>
+
+        var huifu = [
+            {
+                userName: 'Kally',
+                questions: '我有一个问题:1+6=7-0？',
+                ask: [
+                    { name: 'Lumnca', info: '不对，应该是3+6=9-0' },
+                    { name: 'Pollan', info: '对的，应该是1+6=7-0' },
+                ]
+            },
+            {
+                userName: 'Bob',
+                questions: '哈哈哈哈哈哈哈哈哈',
+                ask: [
+                    { name: 'Alice', info: '我就来水水军' },
+                    { name: 'Marry', info: '我实在遍布下去了，这就是一个Demo' },
+                ]
+            },
+            {
+                userName: 'Calld',
+                questions: '啊啊啊啊啊啊啊',
+                ask: []
+            }
+        ];
 
         var app = new Vue({
             el: '#app',
@@ -103,6 +172,8 @@
                 count: 5,
                 activeNames: 0,
                 drawer: false,
+                drawer2: false,
+                huifu: huifu,
                 info: {
                     browser: getBrower(),
                     platform: getPlatform(),
@@ -134,6 +205,7 @@
                     console.log("------");
                 },
                 palyNext() {
+                    console.log("开始播放下一个");
                     player.src("../assets/video/demo2.mp4");
                 },
                 show() {
@@ -153,7 +225,9 @@
         });
 
         var player = videojs('my-player');
-
+        player.ready(function () {
+            console.log("Yes");
+        });
 
         //1获取浏览器名称和版本
         function getBrower() {
