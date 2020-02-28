@@ -233,12 +233,12 @@ new Vue({
                     {
                         title : '新设课堂',
                         icon  : 'fa-plus',
-                        href  : '#'
+                        href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\gbts_12_proton\\teacher\\addMyCourse.html'
                     },
                     {
                         title : '编辑课堂',
                         icon  : '  fa-edit',
-                        href  : '#'
+                        href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\gbts_12_proton\\teacher\\courseEdit.html'
                     }
                 ]              
             },

@@ -55,7 +55,7 @@ var course = {
                 },
                 {
                     title: '考试提交',
-                    href: 'testInfo.html'
+                    href: 'studentWorkInfo.html'
                 }
             ],
         },
@@ -945,6 +945,9 @@ var app = new Vue({
         showExam(title){
             window.localStorage.setItem("exam",title);
             window.location.href = "examInfo.html";
+        },
+        addExam(){
+            this.exam.push(  { title: '未命名', start: '2019-1-1', end: '2019-1-1', info: '其他', state: 0, score: 0 },);
         }
     },
     computed: {
