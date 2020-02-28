@@ -38,7 +38,7 @@
                     <input class="text" type="text" name="Username" placeholder="账号ID" required="" v-model="id">
                     <input class="text" type="password" name="password" placeholder="密码" required="" v-model="password">
                     <input class="text" type="text" name="password" placeholder="电话" required="" v-model="tel"><br>
-                    <button type="button" class="btn btn-info" @click="reDate">获取验证码</button>
+                    <el-button type="primary" :loading="yz" @click="reDate">获取验证码</el-button>
                     <span style="color:#ffffff;font-size:18px;">&nbsp;&nbsp;&nbsp;{{info1}} </span>
                     <input class="text" type="text" name="password" placeholder="验证码" required="" v-model="check">
                     <div class="wthree-text">
@@ -53,7 +53,8 @@
                         </ul>
                         <div class="clear"> </div>
                     </div>
-                    <input type="button" value="注册" @click="sumbit()">
+                    <button type="button" class="btn btn-info" @click="sumbit()"> &nbsp;注 &nbsp;册 &nbsp; </button>
+                    <button type="button" class="btn btn-info" @click="back()"> &nbsp;返回主页&nbsp; </button>
                 </form>
             </div>
         </div>
@@ -73,13 +74,6 @@
     </div>
     <script>
 
-        setInterval(()=>{
-            if(new Date().getHours===9){
-                window. location. herf="https://www.icourse163.org/spoc/learn/SICNU-1451540168?tid=1452029446&_trace_c_p_k2_=1a09de7af28346a6a565a58cae9ea0cf#/learn/content";
-            }
-        },1000)
-
-
         var app = new Vue({
             el: '#app',
             data: {
@@ -89,7 +83,8 @@
                 id: '',
                 password: '',
                 tel: '',
-                check: ''
+                check: '',
+                yz: false
             },
             methods: {
                 show: function () {
@@ -98,29 +93,52 @@
 
                     if (this.date <= 0) {
                         this.info1 = '';
+                        this.yz = false;
                         clearInterval(this.time);
                         this.date = 60;
                     }
                 },
                 reDate: function () {
+                    this.yz = true;
                     if (this.date >= 0) {
                         this.time = setInterval(this.show, 1000);
                     }
+                    axios.post('https://open.ucpaas.com/ol/sms/sendsms', {
+                        id : "url参数id的内容等价于 表单的name属性"
+                    })
+                        .then(function (response) {
+                            //响应成功的操作
+                           
+                        })
+                        .catch(function (error) {
+                            //响应失败的操作
+                          
+                        });
+
                 },
                 sumbit() {
                     //post请求响应路径 /user 
-                    axios.post('http://47.106.254.86:1234/server2.php', {
-                        txt : '啊'
+                    axios.post('http://47.106.254.86:1234/test/class.php', {
+                        id: app.id,
+                        password: app.password,
+                        tel: app.tel,
                     })
-                    .then(function (response) {
+                        .then(function (response) {
                             //响应成功的操作
                             console.log(response.data);
-                    })
-                    .catch(function (error) {
-                         //响应失败的操作
-                            this.$message.error('错了哦，这是一条错误消息');
-                    });
+                            this.$message({
+                                message: '恭喜你，这是一条成功消息',
+                                type: 'success'
+                            });
+                        })
+                        .catch(function (error) {
+                            //响应失败的操作
+                            this.$message.error('请求失败！');
+                        });
 
+                },
+                back() {
+                    window.location.href = "index.html";
                 }
             }
         })

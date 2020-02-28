@@ -1,76 +1,132 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
-<title>登录</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
- 
-<link href="css/style2.css" rel="stylesheet" type="text/css" media="all" />
-<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+	<title>登录</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link href="css/style2.css" rel="stylesheet" type="text/css" media="all" />
+	<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+	<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+	<!-- 引入样式 -->
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<!-- 引入组件库 -->
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
+
 <body>
 
-<!-- main -->
-<div class="main-w3layouts wrapper" id="app">
-	<div class="main-agileinfo">
-		<div class="agileits-top"> 
-      <div style="color:#e8f3ec;font-size: 29px;text-align: center;"> 欢迎使用 </div>
-			<form action="../gbts_12_proton/index.html" method="post"> 
-				<input class="text" type="text" name="Username" placeholder="账号" required="">
-				<input class="text" type="password" name="password" placeholder="密码" required="">
-				<input class="text" type="text" name="password" placeholder="输入计算结果" required=""><br>
-				<span style="color:#ffffff;">{{var1}} {{operator}} {{var2}} = ?</span>
-				<div class="wthree-text"> 
-					<ul> 
-						<li>
-							<label class="anim">
-								<input type="checkbox" class="checkbox" required="">
-								<span> 记住 ?</span> 
-							</label> 
-						</li>
-						<li><a href="#">忘记密码 ?</a> </li>
-					</ul>
-					<div class="clear"> </div>
-				</div>   
-				<input type="submit" value="登录">
-			</form>
-			<p>创建一个账号? <a href="regitser.html"> 立即登录!</a><br><a href="index.html">返回主页</a></p>
-		</div>	 
-	</div>	
-	<!-- //copyright -->
-	<ul class="w3lsg-bubbles">
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-	</ul>
-</div>	
-<script>
-		new Vue({
+	<!-- main -->
+	<div class="main-w3layouts wrapper" id="app">
+		<div class="main-agileinfo">
+			<div class="agileits-top">
+				<div style="color:#e8f3ec;font-size: 29px;text-align: center;"> 欢迎使用 </div>
+				<form>
+					<input class="text" type="text" v-model="id" placeholder="账号" required="">
+					<input class="text" type="password" v-model="pw" placeholder="密码" required="">
+					<input class="text" type="text" v-model="input" placeholder="输入计算结果" required=""><br>
+					<span style="color:#ffffff;">{{var1}} {{operator}} {{var2}} = ?</span>
+					<div class="wthree-text">
+						<ul>
+							<li>
+								<label class="anim">
+									<input type="checkbox" class="checkbox" required="">
+									<span> 记住 ?</span>
+								</label>
+							</li>
+							<li><a href="#">忘记密码 ?</a> </li>
+						</ul>
+						<div class="clear"> </div>
+					</div>
+					<div style="margin: 25px 10px;text-align: center;">
+						<el-button type="primary" style="width:300px;" @click="login()">登录</el-button>
+					</div>
+				</form>
+				<p>没有账号? <a href="regitser.html"> 注册账号!</a><br><a href="index.html"> 返回主页</a></p>
+			</div>
+		</div>
+		<!-- //copyright -->
+		<ul class="w3lsg-bubbles">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+	<script>
+		var  app = new Vue({
 			el: '#app',
 			data: {
-				info : '',
+				info: '',
 				var1: 0,
 				var2: 0,
 				operator: '+',
-				result: 0
+				result: 0,
+				input: '',
+				id: '',
+				pw: ''
 			},
-			created : function(){
-				this.var1 = Math.floor( Math.random()*9+1 );
-				this.var2 = Math.floor( Math.random()*9+1 );
+			created: function () {
+				this.var1 = Math.floor(Math.random() * 9 + 1);
+				this.var2 = Math.floor(Math.random() * 9 + 1);
 				this.result = this.var1 + this.var2;
 			},
-			methods : {
+			methods: {
+				login() {
+					if (this.input == this.result) {
+						/**
+						*
+						*get请求 /test 为请求路径
+						*/
+						axios.get('/test', {
+							//参数
+							params: {
+								id: app.id,
+								pw: app.pw
+							}
+						})
+							.then(function (response) {
+								//响应成功的操作response.data是返回的JSON数据（无需转换）
 
+								//响应代码
+								if (response.data.code == 200) {
+									this.$message({
+										message: response.data.message+'3s后跳转',
+										type: 'success'
+									});
+									setTimeout(()=>{
+										//跳转地址
+										window.location.href = "index.html";
+									},3000);
+								}
+								else {
+									this.$message.error(response.data.message);
+								}
+
+							})
+							.catch(function () {
+								//响应失败的操作
+								this.$message.error('请求失败！');
+							});
+
+
+					}
+					else {
+						this.$message.error('你居然连一到简单的计算题都不会？请输入再来一次吧');
+					}
+				}
 			}
 		})
 	</script>
 </body>
+
 </html>
+
 

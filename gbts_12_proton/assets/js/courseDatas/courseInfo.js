@@ -555,6 +555,9 @@ var app = new Vue({
         addZ(item){
             item.number += 1;
         },
+        playViedo(item){
+            window.location.href = "courseVideo.html";
+        }
     },
     computed: {
         write : function(){

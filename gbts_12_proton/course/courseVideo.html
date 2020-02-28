@@ -98,7 +98,7 @@
                 <el-button @click="drawer2 = true" type="primary" style="margin-left: 16px;">
                     提问
                 </el-button>
-                <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">
+                <el-button @click="drawer3 = true" type="primary" style="margin-left: 16px;">
                     测试
                 </el-button>
                 <el-button @click="show()" type="primary" style="margin-left: 16px;">
@@ -106,6 +106,9 @@
                 </el-button>
                 <el-button @click="palyNext()" type="primary" style="margin-left: 16px;">
                     播放一下个
+                </el-button>
+                <el-button @click="returnC()" type="danger" style="float: right;margin: 8px 16px;">
+                    返回课堂
                 </el-button>
             </el-footer>
         </el-container>
@@ -117,10 +120,23 @@
         <el-drawer title="问题" :visible.sync="drawer2" direction="ltr">
             <div style="margin:8px 16px;">
 
+
+                <el-form ref="form" :model="form" label-width="80px" id="a">
+                    <el-form-item :label="tip">
+                        <el-input type="textarea" v-model="form.desc" placeholder="发表的内容"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="onSubmit(form.isAck)">发表</el-button>
+                    </el-form-item>
+                </el-form>
+
+                <el-divider>提问内容</el-divider>
+
                 <div class="panel panel-primary" v-for="item in huifu">
                     <div class="panel-heading">
                         <span class="panel-title"><span class="el-icon-user-solid"></span> {{item.userName}}</span>
-                        <span style="float:right;"><a href="#" style="color: red;">[回复]</a></span>
+                        <span style="float:right;" @click="reUser(item.userName)"><a href="#a"
+                                style="color: red;">[回复]</a></span>
                     </div>
                     <div class="panel-body">
                         {{item.questions}}
@@ -137,6 +153,27 @@
                 </div>
             </div>
         </el-drawer>
+
+
+        <el-dialog title="提示" :visible.sync="drawer3" width="30%" center>
+            
+            <div style="margin-top: 24px;" v-for="(que,i) in test">
+                <h5>{{i+1}}.为何不八极崩按上次你发丝念佛牛飞飞？  <span v-if="que.showD==1"><i class="el-icon-check"></i>答案正确！</span>
+                    <span v-else-if="que.showD==0"><i class="el-icon-close"></i>答案错误！</span>
+                </h5> 
+                <br><br>
+                <el-radio-group v-model="que.value">
+                    <el-radio v-for="o in que.options" :label="o"></el-radio>
+                </el-radio-group>
+            </div>
+
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="drawer3 = false">关 闭</el-button>
+                <el-button type="primary" @click="testSumbit()">确 定</el-button>
+            </span>
+        </el-dialog>
+
+
 
     </div>
     <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
@@ -165,7 +202,23 @@
                 ask: []
             }
         ];
-
+        var test = [
+            {
+                title : '法师和覅是茬蔬菜还哈好是都很低速？',
+                options : ['A0','B5','C7','D9'],
+                ansewr : 'A0',
+                value : ''
+            },
+            {
+                title : '法师和覅是茬蔬菜还哈好是都很低速？',
+                options : ['&a','^a','*A','$A'],
+                ansewr : '^a',
+                value : ''
+            }
+        ];
+        test.forEach((e)=>{
+            e.showD = -1;
+        });
         var app = new Vue({
             el: '#app',
             data: {
@@ -173,7 +226,11 @@
                 activeNames: 0,
                 drawer: false,
                 drawer2: false,
+                drawer3: false,
                 huifu: huifu,
+                tip: '',
+                test :test,
+                showD : -1,
                 info: {
                     browser: getBrower(),
                     platform: getPlatform(),
@@ -192,7 +249,17 @@
                 },
                 showData: {
                     visibility: "hidden"
-                }
+                },
+                form: {
+                    desc: '',
+                    isAck: false,
+                    isAckName: '',
+                    ansewr : ''
+                },
+                user: {
+                    name: "Lumnca"
+
+                },
             },
             methods: {
                 load() {
@@ -220,6 +287,44 @@
                         }
                     }
 
+                },
+                onSubmit() {
+                    if (this.form.isAck) {
+                        this.huifu.forEach(e => {
+                            if (e.userName == this.form.isAckName) {
+                                e.ask.push({
+                                    name: app.user.name,
+                                    info: app.form.desc,
+
+                                })
+                            }
+                        });
+                    }
+                    else {
+                        this.huifu.push({
+                            userName: app.user.name,
+                            questions: app.form.desc,
+                            ask: []
+                        })
+                    }
+                },
+                reUser(item) {
+                    this.form.isAck = true;
+                    this.form.isAckName = item;
+                    this.tip = "回复" + item;
+                },
+                testSumbit(){
+                    this.test.forEach(e => {
+                        if(e.value==e.ansewr){
+                            e.showD = 1;
+                        }
+                        else{
+                            e.showD = 0;
+                        }
+                    });
+                },
+                returnC(){
+                    window.location.href = "courseware.html";
                 }
             }
         });
