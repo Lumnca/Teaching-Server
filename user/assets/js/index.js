@@ -114,7 +114,7 @@ new Vue({
             {
                 title : '好友列表',
                 icon : ' fa-users',
-                href : 'file:///D:/GitHub%20warehouse%202/teaching/Teaching-Server/gbts_12_proton/user/colleague.html'
+                href : 'file:///D:/GitHub%20warehouse%202/teaching/Teaching-Server/user/user/colleague.html'
             },
             {
                 title : '排名表',
@@ -154,28 +154,28 @@ new Vue({
             {
                 title : '个人信息',
                 icon : 'fa-heart',
-                href : 'file:///D:/GitHub%20warehouse%202/teaching/Teaching-Server/gbts_12_proton/user/userInfo.html',
+                href : 'file:///D:/GitHub%20warehouse%202/teaching/Teaching-Server/user/user/userInfo.html',
                 number : '0',
                 style : 'label-default'
             },
             {
                 title : '设置',
                 icon : 'fa-wrench',
-                href : 'file:///D:/GitHub%20warehouse%202/teaching/Teaching-Server/gbts_12_proton/user/setting.html',
+                href : 'file:///D:/GitHub%20warehouse%202/teaching/Teaching-Server/user/user/setting.html',
                 number : 11,
                 style : 'label-danger'
             },
             {
                 title : '钱包',
                 icon : ' fa-credit-card',
-                href : 'file:///D:/GitHub%20warehouse%202/teaching/Teaching-Server/gbts_12_proton/user/cost.html',
+                href : 'file:///D:/GitHub%20warehouse%202/teaching/Teaching-Server/user/user/cost.html',
                 number : 23,
                 style : 'label-info'
             },
             {
                 title : '文件',
                 icon : ' fa-file',
-                href : 'file:///D:/GitHub%20warehouse%202/teaching/Teaching-Server/gbts_12_proton/user/file.html',
+                href : 'file:///D:/GitHub%20warehouse%202/teaching/Teaching-Server/user/user/file.html',
                 number : 36,
                 style : 'label-primary'
             }
@@ -200,7 +200,7 @@ new Vue({
             {
                 title : '主页',
                 icon  : 'fa-laptop',
-                href : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\gbts_12_proton\\index.html',
+                href : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\user\\index.html',
                 childen : []
             },
             {
@@ -211,17 +211,17 @@ new Vue({
                     {
                         title : '查看已有课程',
                         icon  : ' fa-search',
-                        href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\gbts_12_proton\\course\\lookUpCourse.html'
+                        href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\user\\course\\lookUpCourse.html'
                     },
                     {
                         title : '添加新有课程',
                         icon  : 'fa-plus',
-                        href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\gbts_12_proton\\course\\addNewCourse.html'
+                        href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\user\\course\\addNewCourse.html'
                     },
                     {
                         title : '删除已有课程',
                         icon  : 'fa-minus',
-                        href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\gbts_12_proton\\course\\deleteCourse.html'
+                        href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\user\\course\\deleteCourse.html'
                     }
                 ]              
             },
@@ -233,12 +233,12 @@ new Vue({
                     {
                         title : '新设课堂',
                         icon  : 'fa-plus',
-                        href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\gbts_12_proton\\teacher\\addMyCourse.html'
+                        href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\user\\teacher\\addMyCourse.html'
                     },
                     {
                         title : '编辑课堂',
                         icon  : '  fa-edit',
-                        href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\gbts_12_proton\\teacher\\courseEdit.html'
+                        href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\user\\teacher\\courseEdit.html'
                     }
                 ]              
             },
