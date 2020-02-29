@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>数据分析</title>
+    <title>成绩数据分析</title>
     <!-- Import google fonts - Heading first/ text second -->
     <!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
@@ -77,10 +77,28 @@
                 <el-main>
                     <el-row :gutter="50">
                         <el-col :span="12">
-                                <div id="main" style="width: 600px;height:400px;"></div>
+                            <div id="main" style="width: 560px;height:400px;"></div>
                         </el-col>
                         <el-col :span="12">
-                            <div id="analys2" style="width: 600px;height:400px;"></div>
+                            <div id="analys2" style="width: 560px;height:400px;"></div>
+                        </el-col>
+                    </el-row>
+                    <el-row :gutter="50">
+                        <el-col :span="12" style="font-size: 18px;background: #9ddcdf;padding: 16px 32px;">
+                            <div>提交总数: 62</div>
+                            <div>合格人数: 57</div>
+                            <div>合格率: 89%</div>
+                            <div>最高分: 98</div>
+                            <div>最低分: 47</div>
+                            <div>平均分: 77.85</div>
+                        </el-col>
+                        <el-col :span="12"  style="font-size: 18px;background: #8eb7b9;padding: 16px 32px;">
+                           前5
+                           <div>张三: 98</div>
+                           <div>李四: 95</div>
+                           <div>王五: 94</div>
+                           <div>老李: 93</div>
+                           <div>李云祥: 92</div>
                         </el-col>
                     </el-row>
                 </el-main>
@@ -89,24 +107,6 @@
     </div>
     <script src="../assets/js/courseDatas/teacourse.js"></script>
     <script>
-        app.workInfo = [
-            {
-                name: 'ZML',
-                date: '2018/8/9 12:14',
-                score: 75,
-                auto: true ? '是' : '否',
-                check: 'X',
-                repeat: ''
-            },
-            {
-                name: 'KAX',
-                date: '2018/10/9 12:14',
-                score: 71,
-                auto: true ? '是' : '否',
-                check: 'Z',
-                repeat: ''
-            }
-        ];
         var myChart = echarts.init(document.getElementById('main'));
         var myChart2 = echarts.init(document.getElementById('analys2'));
 
@@ -133,7 +133,7 @@
         // 使用刚指定的配置项和数据显示图表。
         var option2 = {
             title: {
-                text: '及格率',
+                text: '分布',
                 subtext: '第一次测验',
                 left: 'center'
             },
@@ -144,17 +144,20 @@
             legend: {
                 orient: 'vertical',
                 left: 'left',
-                data: ['不及格', '及格']
+                data: ['<60', '60~69', '70~79', '80~89', '90~100']
             },
             series: [
                 {
-                    name: '访问来源',
+                    name: '及格分布',
                     type: 'pie',
                     radius: '55%',
-                    center: ['50%', '60%'],
+                    center: ['50%', '50%'],
                     data: [
-                        { value: 335, name: '不及格' },
-                        { value: 310, name: '及格' },
+                        { value: 5, name: '<60' },
+                        { value: 12, name: '60~69' },
+                        { value: 30, name: '70~79' },
+                        { value: 7, name: '80~89' },
+                        { value: 8, name: '90~100' },
                     ],
                     emphasis: {
                         itemStyle: {
