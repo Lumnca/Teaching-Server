@@ -320,7 +320,7 @@ var userOptions = {
         {
             title: '查看进度',
             icon: 'el-icon-collection',
-            href: 'courseLoading.html'
+            href: '#'
         },
         {
             title: '课内消息',
@@ -330,7 +330,7 @@ var userOptions = {
         {
             title: '退出课堂',
             icon: 'el-icon-back',
-            href: 'lookUpCourse.html'
+            href: 'addMyCourse.html'
         }
     ]
 }
@@ -636,7 +636,11 @@ var app = new Vue({
         },
         workInfo: [],
         multipleSelection: [],
-        editdisabled: true
+        editdisabled: true,
+        workRate: [],
+        sortBut : "升序", 
+        filterRate : 0.5,
+        search : ''
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -948,6 +952,29 @@ var app = new Vue({
         },
         addExam(){
             this.exam.push(  { title: '未命名', start: '2019-1-1', end: '2019-1-1', info: '其他', state: 0, score: 0 },);
+        },
+        rateSort(){
+            if(this.sortBut == "降序"){
+                this.workRate.sort((a,b)=>{
+                    return b.rate-a.rate;
+                })
+                this.sortBut = "升序";
+            }
+            else{
+                this.workRate.sort((a,b)=>{
+                    return a.rate-b.rate;
+                })
+                this.sortBut = "降序";
+            }
+           
+        },
+        updateRate(){
+            this.workRate = [];
+            data.forEach((e,i)=>{
+                if(e.rate>=app.filterRate){
+                    app.workRate.push(e);
+                }
+            })
         }
     },
     computed: {
