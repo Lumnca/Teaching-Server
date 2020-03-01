@@ -15,7 +15,8 @@
 		<link href="../assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">	   
 	    <link href="../assets/css/style.min.css" rel="stylesheet">
 		<link href="../assets/css/add-ons.min.css" rel="stylesheet">	
-        <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+		<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+		<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
         <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
         <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
@@ -195,11 +196,23 @@
                             </div>				
 
 							<ul class="profile-details">
-								<li v-for="item in basicInfo">
-                                    
-									<div><i class="fa" v-bind:class="item.icon"></i>{{item.title}}</div>
-                                    <input v-bind:value="item.info" class="line" v-if="item.title!='生日'">
-                                    <el-date-picker v-else  type="date" placeholder="选择日期" v-model="item.info" style="width: 15%;"></el-date-picker>
+								<li>
+									<div><i class="fa fa-credit-card" ></i>ID</div>
+                                    <input v-bind:value="user.id" class="line">
+								</li>
+								<li>
+									<div><i class="fa fa-user" ></i>名称</div>
+                                    <input v-bind:value="user.name" class="line">
+                         
+								</li>
+								<li>
+									<div><i class="fa fa-caret-square-o-right" ></i>年龄</div>
+                                    <input v-bind:value="user.age" class="line">
+                            
+								</li>
+								<li>
+									<div><i class="fa fa-calendar"></i>生日</div>
+                                    <el-date-picker type="date" placeholder="选择日期" v-model="user.birthday" style="width: 15%;"></el-date-picker>
 								</li>
 							</ul>
 							
@@ -208,9 +221,17 @@
 							<h4><strong>联系方式</strong></h4>
 
 							<ul class="profile-details">
-								<li v-for="item in contactInfo">
-                                    <div><i class="fa" v-bind:class="item.icon"></i> {{item.title}}</div>
-                                    <input v-bind:value="item.info" class="line">
+								<li>
+                                    <div><i class="fa fa-phone" ></i>电话</div>
+                                    <input v-bind:value="user.tel" class="line">
+								</li>
+								<li>
+                                    <div><i class="fa fa-envelope"></i> 邮箱</div>
+                                    <input v-bind:value="user.email" class="line">
+								</li>
+								<li>
+                                    <div><i class="fa fa-map-marker"></i>地址</div>
+                                    <input v-bind:value="user.address" class="line">
 								</li>
                             </ul>	
                             
@@ -219,14 +240,14 @@
 							<ul class="profile-details">
                                 <span>接受推送   &nbsp;</span>
 								<el-switch
-									v-model="pushMessage"
+									v-model="user.flag"
 									active-color="#13ce66"
 									inactive-color="#ff4949">
                                 </el-switch>
                                 <br><br>
                                 <span>动态显示   &nbsp;</span>
 								<el-switch
-									v-model="active"
+									v-model="user.flag2"
 									active-color="#13ce66"
 									inactive-color="#ff4949">
 								</el-switch>
