@@ -379,7 +379,7 @@ var danxuan = [
 var duoxuan = [
     {
         title: '阿Ivan哦我AV你哦是AV噶大V11成本法牛初步',
-        options: ['1', '2', '3', '4', '5'],
+        options: ['A1', 'A2', 'A3', 'A4', 'A5'],
         score: 4,
         answer: []
     }
@@ -412,7 +412,7 @@ var answer = [
     },
     {
         type: 'sx',
-        value: [['1', '2']],
+        value: [['A1', 'A4']],
         score: 10
     },
     {
@@ -640,7 +640,9 @@ var app = new Vue({
         workRate: [],
         sortBut : "升序", 
         filterRate : 0.5,
-        search : ''
+        search : '',
+        subjectData : {},
+        sumbitNumber : {}
     },
     methods: {
         handleOpen(key, keyPath) {

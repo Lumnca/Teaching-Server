@@ -177,20 +177,18 @@
 							<h4><strong>基本信息</strong></h4>
 							<div>
                                 <h4>头像</h4>
-                                <img class="img-profile" src="../assets/img/avatar.jpg">
+                                <img class="img-profile" :src="'http://47.106.254.86/assets/img/'+user.url">
                                
                                 <div>
                                         <br><span style="color:blue;">上传头像</span></span><br>
                                         <el-upload class="show"
-                                             action="https://jsonplaceholder.typicode.com/posts/"
+                                             action="posts/"
                                              list-type="picture-card"
-                                             :on-preview="handlePictureCardPreview"
-                                             :on-remove="handleRemove">
+											 :on-success="handleAvatarSuccess"
+  											 :before-upload="beforeAvatarUpload"
+                                            >
                                          <i class="el-icon-plus"></i>
                                        </el-upload>
-                                       <el-dialog :visible.sync="dialogVisible">
-                                         <img width="80" :src="dialogImageUrl" alt="">
-                                       </el-dialog>
                                 </div>
                                  <br>
                             </div>				
@@ -198,16 +196,16 @@
 							<ul class="profile-details">
 								<li>
 									<div><i class="fa fa-credit-card" ></i>ID</div>
-                                    <input v-bind:value="user.id" class="line">
+                                    <input v-model="user.id" class="line">
 								</li>
 								<li>
 									<div><i class="fa fa-user" ></i>名称</div>
-                                    <input v-bind:value="user.name" class="line">
+                                    <input  v-model="user.name" class="line">
                          
 								</li>
 								<li>
 									<div><i class="fa fa-caret-square-o-right" ></i>年龄</div>
-                                    <input v-bind:value="user.age" class="line">
+                                    <input  v-model="user.age" class="line">
                             
 								</li>
 								<li>
@@ -223,15 +221,15 @@
 							<ul class="profile-details">
 								<li>
                                     <div><i class="fa fa-phone" ></i>电话</div>
-                                    <input v-bind:value="user.tel" class="line">
+                                    <input  v-model="user.tel" class="line">
 								</li>
 								<li>
                                     <div><i class="fa fa-envelope"></i> 邮箱</div>
-                                    <input v-bind:value="user.email" class="line">
+                                    <input  v-model="user.email" class="line">
 								</li>
 								<li>
                                     <div><i class="fa fa-map-marker"></i>地址</div>
-                                    <input v-bind:value="user.address" class="line">
+                                    <input  v-model="user.address" class="line">
 								</li>
                             </ul>	
                             
@@ -240,14 +238,14 @@
 							<ul class="profile-details">
                                 <span>接受推送   &nbsp;</span>
 								<el-switch
-									v-model="user.flag"
+									v-model="pushMessage"
 									active-color="#13ce66"
 									inactive-color="#ff4949">
                                 </el-switch>
                                 <br><br>
                                 <span>动态显示   &nbsp;</span>
 								<el-switch
-									v-model="user.flag2"
+									v-model="active"
 									active-color="#13ce66"
 									inactive-color="#ff4949">
 								</el-switch>
@@ -256,7 +254,7 @@
 					</div>
 				</div><!--/.col-->
                 <!--/.col-->
-                    <input type="submit" class="btn btn-success" value="保存设置" style="width:100px;float: right;">
+					<el-button type="primary" @click="updateInfo()">修改信息</el-button>
                 </form>
 			</div><!--/.row profile-->			
         </div>
