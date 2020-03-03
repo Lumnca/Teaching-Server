@@ -36,8 +36,12 @@ var course = {
             title: '测试与作业',
             children: [
                 {
-                    title: '作业',
+                    title: '题型作业',
                     href: 'courseWork.html'
+                },
+                {
+                    title: '文档作业',
+                    href: 'docWork.html'
                 },
                 {
                     title: '查看提交',
@@ -488,7 +492,7 @@ var app = new Vue({
         disabled: false,
         time: '00:10:10',
         current: {
-            exam : window.localStorage.getItem('exam'),
+            exam: window.localStorage.getItem('exam'),
             work: window.localStorage.getItem('work'),
             state: 0
         },
@@ -599,6 +603,7 @@ var app = new Vue({
         dialogFormVisible4: false,
         dialogFormVisible5: false,
         dialogFormVisible6: false,
+        dialogFormVisible7: false,
         selectTest: {
             title: '',
             options: [],
@@ -621,7 +626,7 @@ var app = new Vue({
             standard: [],
             auto: false
         },
-        selectExam : {
+        selectExam: {
             title: '',
             start: '',
             end: '',
@@ -638,11 +643,21 @@ var app = new Vue({
         multipleSelection: [],
         editdisabled: true,
         workRate: [],
-        sortBut : "升序", 
-        filterRate : 0.5,
-        search : '',
-        subjectData : {},
-        sumbitNumber : {}
+        sortBut: "升序",
+        filterRate: 0.5,
+        search: '',
+        subjectData: {},
+        sumbitNumber: {},
+        docWorks: [],
+        docWork: {
+            name: '文案作业一',
+            date: '2020/02/09 12:00',
+            file: 'first.doc',
+            state: true,
+            date1: '',
+            date2: ''
+        },
+        fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }]
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -761,7 +776,7 @@ var app = new Vue({
             this.dialogFormVisible5 = true;
             this.ruleForm2 = data.row;
         },
-        editExam(data){
+        editExam(data) {
             this.dialogFormVisible6 = true;
             this.selectExam = data;
         },
@@ -945,38 +960,83 @@ var app = new Vue({
         showSumbit() {
             window.location.href = "studentWorkInfo.html";
         },
-        deleteExam(i){
-            this.exam.splice(i,1);
+        deleteExam(i) {
+            this.exam.splice(i, 1);
         },
-        showExam(title){
-            window.localStorage.setItem("exam",title);
+        showExam(title) {
+            window.localStorage.setItem("exam", title);
             window.location.href = "examInfo.html";
         },
-        addExam(){
-            this.exam.push(  { title: '未命名', start: '2019-1-1', end: '2019-1-1', info: '其他', state: 0, score: 0 },);
+        addExam() {
+            this.exam.push({ title: '未命名', start: '2019-1-1', end: '2019-1-1', info: '其他', state: 0, score: 0 });
         },
-        rateSort(){
-            if(this.sortBut == "降序"){
-                this.workRate.sort((a,b)=>{
-                    return b.rate-a.rate;
+        rateSort() {
+            if (this.sortBut == "降序") {
+                this.workRate.sort((a, b) => {
+                    return b.rate - a.rate;
                 })
                 this.sortBut = "升序";
             }
-            else{
-                this.workRate.sort((a,b)=>{
-                    return a.rate-b.rate;
+            else {
+                this.workRate.sort((a, b) => {
+                    return a.rate - b.rate;
                 })
                 this.sortBut = "降序";
             }
-           
+
         },
-        updateRate(){
+        updateRate() {
             this.workRate = [];
-            data.forEach((e,i)=>{
-                if(e.rate>=app.filterRate){
+            data.forEach((e, i) => {
+                if (e.rate >= app.filterRate) {
                     app.workRate.push(e);
                 }
             })
+        },
+        editDocWork(data) {
+            this.dialogFormVisible7 = true;
+            this.docWork = data;
+        },
+        handleRemove(file, fileList) {
+            console.log(file, fileList);
+        },
+        beforeRemove(file, fileList) {
+            axios.get('http://127.0.0.1:8080/delete', {
+                params: {
+                    file: file.name
+                }
+            })
+                .then(function (response) {
+                    app.$message({
+                        type: 'success',
+                        message: response.data
+                    });
+                    console.log(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        handleAvatarSuccess(res, file) {
+            this.docWork.file.splice(0, 1);
+            this.docWork.file.push({
+                name: file.name,
+                url: file.name
+            });
+            this.$message({
+                message: '文件:' + file.name + '上传成功！',
+                type: 'success'
+            });
+        },
+        addDocWork() {
+            this.docWorks.push({
+                name: '新建文案',
+                date: '2020/02/12 16:00',
+                file: [{ name: 'xx', url: '../assets/img/logo1.png' }],
+                state: false,
+                date1: '',
+                date2: ''
+            });
         }
     },
     computed: {
@@ -1058,7 +1118,7 @@ var app = new Vue({
         }
     },
     mounted() {
-    
+
     }
 });
 app.current.work = window.localStorage.getItem('work');
