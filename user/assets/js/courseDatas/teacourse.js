@@ -604,6 +604,7 @@ var app = new Vue({
         dialogFormVisible5: false,
         dialogFormVisible6: false,
         dialogFormVisible7: false,
+        dialogFormVisible8: false,
         selectTest: {
             title: '',
             options: [],
@@ -658,10 +659,12 @@ var app = new Vue({
             date2: ''
         },
         fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
-        docWorkSumbit : [{name:'张三',file:'zs.doc',date:'2018/12/21 12:00',score:'79'}]
+        docWorkSumbit : [{name:'张三',file:'zs.doc',date:'2018/12/21 12:00',score:'79'}],
+        selectDocWork : {name:'张三',file:'zs.doc',date:'2018/12/21 12:00',score:'79'}
     },
     methods: {
         handleOpen(key, keyPath) {
+            
             console.log(key, keyPath);
         },
         handleClose(key, keyPath) {
@@ -1038,6 +1041,9 @@ var app = new Vue({
                 date1: '',
                 date2: ''
             });
+        },
+        delSDocWorkSumbit(i){
+            this.docWorkSumbit.splice(i,1)
         }
     },
     computed: {
