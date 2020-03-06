@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>作业和测试</title>
+    <title>文档作业</title>
     <!-- Import google fonts - Heading first/ text second -->
     <!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
@@ -17,6 +17,7 @@
     <link href="../assets/css/style.min.css" rel="stylesheet">
     <link href="../assets/css/add-ons.min.css" rel="stylesheet">
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
@@ -35,6 +36,10 @@
 
         .noline:hover {
             text-decoration: none;
+        }
+
+        .upload-demo input {
+            visibility: hidden;
         }
     </style>
 
@@ -74,43 +79,94 @@
             </el-aside>
             <el-container>
                 <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;">
-                    <span><i class="el-icon-edit"></i> 测试与作业</span>
+                    <span><i class="el-icon-edit"></i> 文档作业</span>
                 </el-header>
                 <hr>
                 <el-main>
-
-                    <el-table :data="test" border style="width: 100%">
-                        <el-table-column prop="title" label="名称" width="250">
+                    <el-table :data="docWorks" style="width: 100%" :default-sort="{prop: 'date', order: 'descending'}">
+                        <el-table-column prop="name" label="名称" sortable width="180">
                         </el-table-column>
-                        <el-table-column prop="start" label="起始日期" width="250">
+                        <el-table-column prop="date" label="截止日期" sortable>
                         </el-table-column>
-                        <el-table-column prop="end" label="结束日期" width="250">
-                        </el-table-column>
-                        <el-table-column prop="score" label="分数" width="200">
-                        </el-table-column>
-                        <el-table-column prop="info" label="备注" width="200">
-                        </el-table-column>
-                        <el-table-column label="状态" width="200">
+                        <el-table-column label="提交日期">
+                                <template slot-scope="scope">
+                                    <span v-for="f in  scope.row.file">{{f.name}}</span>
+                                </template>
+                            </el-table-column>
+                        <el-table-column label="提交文件">
                             <template slot-scope="scope">
-                                    <el-tag v-if="scope.row.state==1" type="success">已提交</el-tag>
-                                    <el-tag v-else type="danger">未提交</el-tag>
+                                <span v-for="f in  scope.row.file">{{f.name}}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column label="操作" width="250">
+                        <el-table-column sortable label="状态">
                             <template slot-scope="scope">
-                                <el-button type="button" size="small" @click="write_work(item)">查看</el-button>
-                                <el-button type="button" size="small" @click="edit_work(item)">编辑</el-button>
+                                <el-tag type="success" v-if="scope.row.state">已提交</el-tag>
+                                <el-tag type="danger" v-else>未提交</el-tag>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="操作">
+                            <template slot-scope="scope">
+                                <el-button type="button" @click=""><span class="el-icon-eleme"></span> 查看</el-button>
+                                <el-button type="button" @click="editDocWork(scope.row)"><span
+                                        class="el-icon-edit-outline"></span> 提交
+                                </el-button>
                             </template>
                         </el-table-column>
                     </el-table>
-
                 </el-main>
+
+                <el-dialog title="作业提交" :visible.sync="dialogFormVisible7" width="30%">
+                    <el-form :model="docWork" label-width="80px">
+                        <el-form-item label="文件名">
+                            <el-input v-model="docWork.file[0].name"></el-input>
+                        </el-form-item>
+
+                        <el-form-item label="文件提交">
+
+
+                            <div style="float:left;padding:16px 32px;">
+
+    
+                                <el-upload class="upload-demo"  drag action="http://127.0.0.1:8080/upload" name = "uploadFile"
+                                  :on-remove="handleRemove" :before-remove="beforeRemove" :on-success="handleAvatarSuccess"
+                                    :file-list="docWork.file">
+                                    <i class="el-icon-upload"></i>
+                                    <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                                    <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+                                </el-upload>
+                            </div>
+
+                        </el-form-item>
+
+                    </el-form>
+                    <span slot="footer" class="dialog-footer">
+                        <el-button @click="dialogFormVisible7 = false">取 消</el-button>
+                        <el-button type="primary" @click="dialogFormVisible7 = false">确 定</el-button>
+                    </span>
+                </el-dialog>
             </el-container>
         </el-container>
     </div>
     <script src="../assets/js/courseDatas/courseInfo.js"></script>
     <script>
-
+        app.docWorks = [
+            {
+                name: '文案作业一',
+                date: '2020/02/09 12:00',
+                file: [{ name: 'xx', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
+                state: true,
+                date1: '',
+                date2: ''
+            },
+            {
+                name: '文案作业二',
+                date: '2020/02/12 16:00',
+                file: [{ name: 'xx', url: '../assets/img/logo1.png' }],
+                state: false,
+                date1: '',
+                date2: ''
+            }
+        ]
     </script>
 </body>
 

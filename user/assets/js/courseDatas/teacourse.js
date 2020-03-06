@@ -322,19 +322,9 @@ var course = {
 var userOptions = {
     order: [
         {
-            title: '查看进度',
-            icon: 'el-icon-collection',
-            href: '#'
-        },
-        {
-            title: '课内消息',
-            icon: 'el-icon-chat-dot-round',
-            href: '#'
-        },
-        {
             title: '退出课堂',
             icon: 'el-icon-back',
-            href: 'addMyCourse.html'
+            href: 'courseEdit.html'
         }
     ]
 }
@@ -463,19 +453,15 @@ var app = new Vue({
         activeNames: ['1'],
         test: [
             {
-                title: '第一章测试', works:
-                    [
-                        {
-                            title: '作业一', start: '2019-8-7 ', end: '2019-12-7', info: '其他', state: -1, score: 0, submit: 21,
-                            startdate1: new Date(2019, 12, 10), startdate2: new Date(2019, 12, 10, 12, 0, 0), enddate1: new Date(2019, 12, 18), enddate2: new Date(2019, 12, 18, 0, 0, 0)
-                        }
-                    ]
+
+                title: '作业一', start: '2019-8-7 ', end: '2019-12-7', info: '其他', state: -1, score: 0, submit: 21,
+                startdate1: new Date(2019, 12, 10), startdate2: new Date(2019, 12, 10, 12, 0, 0), enddate1: new Date(2019, 12, 18), enddate2: new Date(2019, 12, 18, 0, 0, 0)
             },
             {
-                title: '第二章测试', works: [{
-                    title: '作业一', start: '2019-8-7', end: '2019-12-7', info: '其他', state: 0, score: 0, submit: 18,
-                    startdate1: new Date(2019, 12, 10), startdate2: new Date(2019, 1, 10, 12, 0, 0), enddate1: new Date(2019, 4, 18), enddate2: new Date(2019, 4, 18, 0, 0, 0)
-                }]
+
+                title: '作业二', start: '2019-8-7', end: '2019-12-7', info: '其他', state: 0, score: 0, submit: 18,
+                startdate1: new Date(2019, 12, 10), startdate2: new Date(2019, 1, 10, 12, 0, 0), enddate1: new Date(2019, 4, 18), enddate2: new Date(2019, 4, 18, 0, 0, 0)
+
             }
         ],
         exam: [
@@ -659,12 +645,12 @@ var app = new Vue({
             date2: ''
         },
         fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
-        docWorkSumbit : [{name:'张三',file:'zs.doc',date:'2018/12/21 12:00',score:'79'}],
-        selectDocWork : {name:'张三',file:'zs.doc',date:'2018/12/21 12:00',score:'79'}
+        docWorkSumbit: [{ name: '张三', file: 'zs.doc', date: '2018/12/21 12:00', score: '79' }],
+        selectDocWork: { name: '张三', file: 'zs.doc', date: '2018/12/21 12:00', score: '79' }
     },
     methods: {
         handleOpen(key, keyPath) {
-            
+
             console.log(key, keyPath);
         },
         handleClose(key, keyPath) {
@@ -845,10 +831,18 @@ var app = new Vue({
             });
         },
         addTest() {
-            this.test.push({ title: '新章节', works: [] });
+            this.test.push(
+                {
+                    title: '新建作业名', start: '2020-1-1 ', end: '2020-1-1', info: '其他', state: -1, score: 0, submit: 0,
+                    startdate1: new Date(), startdate2: new Date(), enddate1: new Date(), enddate2: new Date()
+                }
+            );
         },
         setTest() {
             this.dialogFormVisible = false;
+        },
+        deleteWork(i){
+            this.test.splice(i,1);
         },
         addTestDanXuan() {
             this.danxuan.push({
@@ -942,6 +936,10 @@ var app = new Vue({
             console.log(scope);
             window.localStorage.setItem("work", scope.row.title);
             window.location.href = "test.html";
+        },
+        showDocSumbit(scope){
+            window.localStorage.setItem("work", scope.row.name);
+            window.location.href = "wocWorkInfo.html";
         },
         addZ(item) {
             item.number += 1;
@@ -1042,8 +1040,8 @@ var app = new Vue({
                 date2: ''
             });
         },
-        delSDocWorkSumbit(i){
-            this.docWorkSumbit.splice(i,1)
+        delSDocWorkSumbit(i) {
+            this.docWorkSumbit.splice(i, 1)
         }
     },
     computed: {

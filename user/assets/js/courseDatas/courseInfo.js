@@ -32,12 +32,12 @@ var course = {
             title: '测试与作业',
             children: [
                 {
-                    title: '作业',
+                    title: '题型作业',
                     href: 'workAndTest.html'
                 },
                 {
-                    title: '测试',
-                    href: 'workAndTest.html'
+                    title: '文档作业',
+                    href: 'docWork.html'
                 }
             ],
         },
@@ -428,8 +428,8 @@ var app = new Vue({
         name: window.localStorage.getItem('courseName'),
         activeNames : ['1'],
         test : [
-           {  title : '第一章测试',works : [{title:'作业一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :-1,score:0},{title:'作业二',start:'2019-8-7',end:'2019-12-7',info:'其他',state :1,score:10}]},
-           { title : '第二章测试',works : [{title:'作业一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :0,score:0}]}
+         {title:'作业一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :-1,score:0},{title:'作业二',start:'2019-8-7',end:'2019-12-7',info:'其他',state :1,score:10},
+        {title:'作业一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :0,score:0}
         ],
         exam : [
             {title:'考试一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :0,score:87},
@@ -457,7 +457,17 @@ var app = new Vue({
         evaluate : {
             number : 3.9,
             infor : ''
-        }
+        },
+        docWorks : [],
+        docWork : {
+            name: '文案作业一',
+            date: '2020/02/09 12:00',
+            file: 'first.doc',
+            state: true,
+            date1: '',
+            date2: ''
+        },
+        dialogFormVisible7 : false
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -557,7 +567,42 @@ var app = new Vue({
         },
         playViedo(item){
             window.location.href = "courseVideo.html";
-        }
+        },
+        handleRemove(file, fileList) {
+            console.log(file, fileList);
+        },
+        beforeRemove(file, fileList) {
+            axios.get('http://127.0.0.1:8080/delete', {
+                params: {
+                    file: file.name
+                }
+            })
+                .then(function (response) {
+                    app.$message({
+                        type: 'success',
+                        message: response.data
+                    });
+                    console.log(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        handleAvatarSuccess(res, file) {
+            this.docWork.file.splice(0, 1);
+            this.docWork.file.push({
+                name: file.name,
+                url: file.name
+            });
+            this.$message({
+                message: '文件:' + file.name + '上传成功！',
+                type: 'success'
+            });
+        },
+        editDocWork(data) {
+            this.dialogFormVisible7 = true;
+            this.docWork = data;
+        },
     },
     computed: {
         write : function(){

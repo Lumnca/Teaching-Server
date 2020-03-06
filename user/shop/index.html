@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>课程总览</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
+    <style>
+        @import url("https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css");
+
+        .el-header,
+        .el-footer {
+            background-color: rgb(245, 245, 245);
+            color: #333;
+            text-align: center;
+            line-height: 60px;
+        }
+
+        .el-aside {
+            background-color: rgb(143, 171, 202);
+            color: #333;
+            text-align: center;
+            line-height: 200px;
+        }
+
+        .el-main {
+            background-color: #E9EEF3;
+            color: #333;
+            text-align: center;
+        }
+
+        body>.el-container {
+            margin-bottom: 40px;
+        }
+
+        .el-container:nth-child(5) .el-aside,
+        .el-container:nth-child(6) .el-aside {
+            line-height: 260px;
+        }
+
+        .el-container:nth-child(7) .el-aside {
+            line-height: 320px;
+        }
+
+        .el-carousel__item h3 {
+            color: #475669;
+            font-size: 14px;
+            opacity: 0.75;
+            line-height: 150px;
+            margin: 0;
+        }
+
+        .el-carousel__item:nth-child(2n) {
+            background-color: #99a9bf;
+        }
+
+        .el-carousel__item:nth-child(2n+1) {
+            background-color: #d3dce6;
+        }
+        .block{
+        
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>
+                <el-row :gutter="20">
+                    <el-col :span="17">
+                        <div>
+                            77
+                        </div>
+                    </el-col>
+                    <el-col :span="5">
+                        <el-input v-model="search" placeholder="输入关键字搜索" />
+                    </el-col>
+                    <el-col :span="1" style="margin-left:-25px;">
+                        <el-button icon="el-icon-search" circle></el-button>
+                    </el-col>
+                    <el-col :span="1" style="float:right;">
+                        <div class="grid-content bg-purple">
+                            <el-dropdown>
+                                <el-avatar :size="60" src="https://empty">
+                                    <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+                                </el-avatar>
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item>查看信息</el-dropdown-item>
+                                    <el-dropdown-item>我的背包</el-dropdown-item>
+                                    <el-dropdown-item>-------</el-dropdown-item>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </el-col>
+                </el-row>
+
+            </el-header>
+            <el-container>
+
+                <el-container>
+                    <el-main>
+
+                        <div class="block">
+                            <el-carousel height="360px">
+                                <el-carousel-item v-for="item in 4" :key="item">
+                                    <h3 class="small">{{ item }}</h3>
+                                </el-carousel-item>
+                            </el-carousel>
+                        </div>
+
+
+                        <div style="margin-top:40px;">
+                            <template>
+                                <el-tabs v-model="activeName" @tab-click="handleClick">
+                                    <el-tab-pane label="教育" name="1">
+                                        <el-row :gutter="20">
+                                            <el-col :span="4">
+                                                <div class="grid-content bg-purple">1</div>
+                                            </el-col>
+                                            <el-col :span="8">
+                                                <div class="block" >
+                                                    <el-image
+                                                        src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg">
+                                                    </el-image>
+                                                    <div>
+                                                        还在犹豫什么，该快加入我们把!  <el-button type="success" size="mini">立即报名</el-button>
+                                                    </div>
+                                                </div>
+                                            </el-col>
+                                            <el-col :span="8">
+                                                <div style="height: 300px;">
+                                                    <el-steps direction="vertical" :active="1">
+                                                        <el-step title="步骤 1"></el-step>
+                                                        <el-step title="步骤 2"></el-step>
+                                                        <el-step title="步骤 3"></el-step>
+                                                        <el-step title="步骤 4"></el-step>
+                                                        <el-step title="步骤 5"></el-step>
+                                                        <el-step title="步骤 6"></el-step>
+                                                        <el-step title="步骤 7" description="这是一段很长很长很长的描述性文字"></el-step>
+                                                    </el-steps>
+                                                </div>
+                                            </el-col>
+                                            <el-col :span="4">
+                                                <div class="grid-content bg-purple">4</div>
+                                            </el-col>
+                                        </el-row>
+                                    </el-tab-pane>
+
+                                    <el-tab-pane label="科技" name="second">配置管理</el-tab-pane>
+                                    <el-tab-pane label="理工" name="third">角色管理</el-tab-pane>
+                                    <el-tab-pane label="文学" name="fourth">定时任务补偿</el-tab-pane>
+                                    <el-tab-pane label="生活" name="4">定时任务补偿</el-tab-pane>
+                                    <el-tab-pane label="技术" name="5">定时任务补偿</el-tab-pane>
+                                    <el-tab-pane label="心理" name="6">定时任务补偿</el-tab-pane>
+                                    <el-tab-pane label="性格" name="7">定时任务补偿</el-tab-pane>
+                                </el-tabs>
+                            </template>
+                        </div>
+                    </el-main>
+                    <el-footer>Footer</el-footer>
+                </el-container>
+            </el-container>
+        </el-container>
+    </div>
+</body>
+<script src="../assets/js/courseShop/index.js"></script>
+
+</html>

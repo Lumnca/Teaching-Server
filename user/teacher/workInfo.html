@@ -78,36 +78,92 @@
                 </el-header>
                 <hr>
                 <el-main>
-                    <el-collapse v-model="activeNames" @change="handleChange">
-                        <el-collapse-item v-for="(item,index) in test" :title="item.title" :name="index">
-                            <el-table :data="item.works" border style="width: 100%">
-                                <el-table-column prop="title" label="名称" width="250">
-                                </el-table-column>
-                                <el-table-column prop="start" label="起始日期" width="250">
-                                </el-table-column>
-                                <el-table-column prop="end" label="结束日期" width="250">
-                                </el-table-column>
-                                <el-table-column prop="info" label="备注" width="200">
-                                </el-table-column>
-                                <el-table-column prop="state" label="状态" width="200">
-                                </el-table-column>
-                                <el-table-column prop="submit" label="提交数" width="200">
-                                    </el-table-column>
-                                <el-table-column label="操作" width="250">
-                                    <template slot-scope="scope">
-                                        <el-button type="button" size="small" @click="showSumbit(item)">查看</el-button>
-                                    </template>
-                                </el-table-column>
-                            </el-table>
-                        </el-collapse-item>
-                    </el-collapse>
+
+                    <el-table :data="test" border style="width: 100%">
+                        <el-table-column label="题型作业提交">
+                            <el-table-column prop="title" label="名称" width="250" sortable>
+                            </el-table-column>
+                            <el-table-column prop="start" label="起始日期" width="250" sortable>
+                            </el-table-column>
+                            <el-table-column prop="end" label="结束日期" width="250" sortable>
+                            </el-table-column>
+                            <el-table-column prop="info" label="备注" width="200">
+                            </el-table-column>
+                            <el-table-column label="状态" width="200" sortable>
+                                <template slot-scope="scope">
+                                    <el-tag v-if="scope.row.state==-1" type="success">提交中</el-tag>
+                                    <el-tag v-else type="danger">已截止</el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="submit" label="提交数" width="200" sortable>
+                            </el-table-column>
+                            <el-table-column label="操作" width="250">
+                                <template slot-scope="scope">
+                                    <el-button type="button" size="small" @click="showSumbit(item)">查看</el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table-column>
+
+
+
+                    </el-table>
+                    <br><br>
+                    <el-table :data="docWorks" border style="width: 100%">
+                        <el-table-column label="文档作业提交">
+                            <el-table-column prop="name" label="名称" width="250" sortable>
+                            </el-table-column>
+                            <el-table-column prop="date1" label="起始日期" width="250" sortable>
+                            </el-table-column>
+                            <el-table-column prop="date2" label="结束日期" width="250" sortable>
+                            </el-table-column>
+                            <el-table-column prop="info" label="备注" width="200">
+                            </el-table-column>
+                            <el-table-column label="状态" width="200" sortable>
+                                <template slot-scope="scope">
+                                    <el-tag v-if="scope.row.state==-1" type="success">提交中</el-tag>
+                                    <el-tag v-else type="danger">已截止</el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="submit" label="提交数" width="200" sortable>
+                            </el-table-column>
+                            <el-table-column label="操作" width="250">
+                                <template slot-scope="scope">
+                                    <el-button type="button" size="small" @click="showDocSumbit(scope)">查看</el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table-column>
+
+
+
+                    </el-table>
                 </el-main>
             </el-container>
         </el-container>
     </div>
     <script src="../assets/js/courseDatas/teacourse.js"></script>
     <script>
-
+        app.docWorks = [
+            {
+                name: '文案作业一',
+                date: '2020/02/09 12:00',
+                file: [{ name: 'xx.doc', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
+                state: true,
+                date1: '',
+                date2: '',
+                state : 1,
+                submit : 12
+            },
+            {
+                name: '文案作业二',
+                date: '2020/02/12 16:00',
+                file: [{ name: 'xx.docx', url: '../assets/img/logo1.png' }],
+                state: false,
+                date1: '',
+                date2: '',
+                state : -1,
+                submit : 21
+            }
+        ]
     </script>
 </body>
 
