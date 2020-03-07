@@ -11,14 +11,18 @@
     <style>
         @import url("https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css");
 
-        .el-header,
-        .el-footer {
+        .el-header {
             background-color: rgb(245, 245, 245);
             color: #333;
             text-align: center;
             line-height: 60px;
         }
-
+        .el-footer{
+            background-color: #444444;
+            color: #eeeeee;
+            text-align: center;
+            padding: 80px 40px;
+        }
         .el-aside {
             background-color: rgb(143, 171, 202);
             color: #333;
@@ -60,9 +64,8 @@
         .el-carousel__item:nth-child(2n+1) {
             background-color: #d3dce6;
         }
-        .block{
-        
-        }
+
+        .block {}
     </style>
 </head>
 
@@ -117,30 +120,35 @@
                             <template>
                                 <el-tabs v-model="activeName" @tab-click="handleClick">
                                     <el-tab-pane label="教育" name="1">
+                                        <div>
+                                            <br>
+                                            <h2>精选直播课</h2> <br>
+                                        </div>
                                         <el-row :gutter="20">
                                             <el-col :span="4">
                                                 <div class="grid-content bg-purple">1</div>
                                             </el-col>
                                             <el-col :span="8">
-                                                <div class="block" >
+                                                <div class="block">
                                                     <el-image
                                                         src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg">
                                                     </el-image>
                                                     <div>
-                                                        还在犹豫什么，该快加入我们把!  <el-button type="success" size="mini">立即报名</el-button>
+                                                        还在犹豫什么，该快加入我们把! <el-button type="success" size="mini">立即报名
+                                                        </el-button>
                                                     </div>
                                                 </div>
                                             </el-col>
                                             <el-col :span="8">
                                                 <div style="height: 300px;">
                                                     <el-steps direction="vertical" :active="1">
-                                                        <el-step title="步骤 1"></el-step>
-                                                        <el-step title="步骤 2"></el-step>
-                                                        <el-step title="步骤 3"></el-step>
-                                                        <el-step title="步骤 4"></el-step>
-                                                        <el-step title="步骤 5"></el-step>
-                                                        <el-step title="步骤 6"></el-step>
-                                                        <el-step title="步骤 7" description="这是一段很长很长很长的描述性文字"></el-step>
+                                                        <el-step title="12:00" description="这是一段很长很长很长的描述性文字"></el-step>
+                                                        <el-step title="14:00" description="这是一段很长很长很长的描述性文字"></el-step>
+                                                        <el-step title="17:00" description="这是一段很长很长很长的描述性文字"></el-step>
+                                                        <el-step title="19:00" description="这是一段很长很长很长的描述性文字"></el-step>
+                                                        <el-step title="20:00" description="这是一段很长很长很长的描述性文字"></el-step>
+                                                        <el-step title="22:00" description="这是一段很长很长很长的描述性文字"></el-step>
+                                                        <el-step title="21:00" description="这是一段很长很长很长的描述性文字"></el-step>
                                                     </el-steps>
                                                 </div>
                                             </el-col>
@@ -148,6 +156,38 @@
                                                 <div class="grid-content bg-purple">4</div>
                                             </el-col>
                                         </el-row>
+                                        <div>
+                                            <br>
+                                            <h2>精选公开课</h2> <br>
+                                        </div>
+
+                                        <el-row :gutter="20">
+                                            <el-col :span="4">
+                                                <div class="grid-content bg-purple">1</div>
+                                            </el-col>
+                                            <el-col :span="16" style="text-align: left">
+                                                <el-row>
+                                                    <el-col :span="4" v-for="(o, index) in 5" :key="o"
+                                                        :offset="index > 0 ? 1 : 0">
+                                                        <el-card :body-style="{ padding: '0px' }">
+                                                            <img src="../assets/img/course1.png" class="image" width="200">
+                                                            <div style="padding: 14px;">
+                                                                <div><span>游戏/辅助/开发教程</span></div>
+                                                                 <div style="color: #bbbbbb;font-size: 12px;"><span>共60节 | 李云祥</span></div>
+                                                                <div><span  style="color: #c44040;font-size: 14px;">免费 </span>
+                                                                <span style="color: #bbbbbb;font-size: 12px;">最近1258人报名</span>
+                                                             </div>
+                                                            </div>
+                                                        </el-card>
+                                                    </el-col>
+                                                </el-row>
+                                            </el-col>
+
+                                            <el-col :span="4">
+                                                <div class="grid-content bg-purple">4</div>
+                                            </el-col>
+                                        </el-row>
+
                                     </el-tab-pane>
 
                                     <el-tab-pane label="科技" name="second">配置管理</el-tab-pane>
@@ -161,7 +201,11 @@
                             </template>
                         </div>
                     </el-main>
-                    <el-footer>Footer</el-footer>
+                    <el-footer>
+                            Copyright © 2020 Tencent. All Rights Reserved.
+                            <br>
+                            XXXX有限公司 版权所有 
+                    </el-footer>
                 </el-container>
             </el-container>
         </el-container>
