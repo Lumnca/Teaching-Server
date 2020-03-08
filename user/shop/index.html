@@ -65,7 +65,9 @@
             background-color: #d3dce6;
         }
 
-        .block {}
+        .cou:hover{
+            background: #03439c;
+        }
     </style>
 </head>
 
@@ -76,7 +78,7 @@
                 <el-row :gutter="20">
                     <el-col :span="17">
                         <div>
-                            77
+                            课堂总览
                         </div>
                     </el-col>
                     <el-col :span="5">
@@ -93,8 +95,8 @@
                                 </el-avatar>
                                 <el-dropdown-menu slot="dropdown">
                                     <el-dropdown-item>查看信息</el-dropdown-item>
-                                    <el-dropdown-item>我的背包</el-dropdown-item>
-                                    <el-dropdown-item>-------</el-dropdown-item>
+                                    <el-dropdown-item>我的课程</el-dropdown-item>
+                                    <el-dropdown-item><a href="../course/lookUpCourse.html">返回</a></el-dropdown-item>
                                 </el-dropdown-menu>
                             </el-dropdown>
                         </div>
@@ -111,6 +113,7 @@
                             <el-carousel height="360px">
                                 <el-carousel-item v-for="item in 4" :key="item">
                                     <h3 class="small">{{ item }}</h3>
+                                    <img :src="'../assets/img/browser'+item+'.png'">
                                 </el-carousel-item>
                             </el-carousel>
                         </div>
@@ -119,14 +122,14 @@
                         <div style="margin-top:40px;">
                             <template>
                                 <el-tabs v-model="activeName" @tab-click="handleClick">
-                                    <el-tab-pane label="教育" name="1">
+                                    <el-tab-pane v-for="c in course" :label="c.name" :name="c.type">
                                         <div>
                                             <br>
                                             <h2>精选直播课</h2> <br>
                                         </div>
                                         <el-row :gutter="20">
                                             <el-col :span="4">
-                                                <div class="grid-content bg-purple">1</div>
+                                                <div class="grid-content bg-purple">&nbsp;</div>
                                             </el-col>
                                             <el-col :span="8">
                                                 <div class="block">
@@ -153,7 +156,7 @@
                                                 </div>
                                             </el-col>
                                             <el-col :span="4">
-                                                <div class="grid-content bg-purple">4</div>
+                                                <div class="grid-content bg-purple">&nbsp;</div>
                                             </el-col>
                                         </el-row>
                                         <div>
@@ -163,41 +166,36 @@
 
                                         <el-row :gutter="20">
                                             <el-col :span="4">
-                                                <div class="grid-content bg-purple">1</div>
+                                                <div class="grid-content bg-purple">&nbsp;</div>
                                             </el-col>
                                             <el-col :span="16" style="text-align: left">
                                                 <el-row>
                                                     <el-col :span="4" v-for="(o, index) in 5" :key="o"
                                                         :offset="index > 0 ? 1 : 0">
+                                                       <div class="cou">
                                                         <el-card :body-style="{ padding: '0px' }">
                                                             <img src="../assets/img/course1.png" class="image" width="200">
                                                             <div style="padding: 14px;">
-                                                                <div><span>游戏/辅助/开发教程</span></div>
+                                                                <div><span><a href="#">游戏/辅助/开发教程</a></span></div>
                                                                  <div style="color: #bbbbbb;font-size: 12px;"><span>共60节 | 李云祥</span></div>
                                                                 <div><span  style="color: #c44040;font-size: 14px;">免费 </span>
                                                                 <span style="color: #bbbbbb;font-size: 12px;">最近1258人报名</span>
                                                              </div>
                                                             </div>
                                                         </el-card>
+                                                       </div>
                                                     </el-col>
                                                 </el-row>
                                             </el-col>
 
                                             <el-col :span="4">
-                                                <div class="grid-content bg-purple">4</div>
+                                                <div class="grid-content bg-purple">&nbsp;</div>
                                             </el-col>
                                         </el-row>
 
                                     </el-tab-pane>
 
-                                    <el-tab-pane label="科技" name="second">配置管理</el-tab-pane>
-                                    <el-tab-pane label="理工" name="third">角色管理</el-tab-pane>
-                                    <el-tab-pane label="文学" name="fourth">定时任务补偿</el-tab-pane>
-                                    <el-tab-pane label="生活" name="4">定时任务补偿</el-tab-pane>
-                                    <el-tab-pane label="技术" name="5">定时任务补偿</el-tab-pane>
-                                    <el-tab-pane label="心理" name="6">定时任务补偿</el-tab-pane>
-                                    <el-tab-pane label="性格" name="7">定时任务补偿</el-tab-pane>
-                                </el-tabs>
+                                
                             </template>
                         </div>
                     </el-main>
