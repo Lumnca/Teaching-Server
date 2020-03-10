@@ -1,46 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-    	<meta charset="utf-8">
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <title>Proton - Admin Template</title>		
 
-		<link rel="shortcut icon" href="assets/ico/favicon.ico" type="image/x-icon" />    
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Proton - Admin Template</title>
 
-	    <!-- Css files -->
-	    <link href="assets/css/bootstrap.min.css" rel="stylesheet">		
-		<link href="assets/css/jquery.mmenu.css" rel="stylesheet">		
-		<link href="assets/css/font-awesome.min.css" rel="stylesheet">
-		<link href="assets/css/climacons-font.css" rel="stylesheet">
-		<link href="assets/plugins/xcharts/css/xcharts.min.css" rel=" stylesheet">		
-		<link href="assets/plugins/fullcalendar/css/fullcalendar.css" rel="stylesheet">
-		<link href="assets/plugins/morris/css/morris.css" rel="stylesheet">
-		<link href="assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
-		<link href="assets/plugins/jvectormap/css/jquery-jvectormap-1.2.2.css" rel="stylesheet">	    
-	    <link href="assets/css/style.min.css" rel="stylesheet">
-		<link href="assets/css/add-ons.min.css" rel="stylesheet">		
-        <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
-	</head>
+	<link rel="shortcut icon" href="assets/ico/favicon.ico" type="image/x-icon" />
+
+	<!-- Css files -->
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="assets/css/jquery.mmenu.css" rel="stylesheet">
+	<link href="assets/css/font-awesome.min.css" rel="stylesheet">
+	<link href="assets/css/climacons-font.css" rel="stylesheet">
+	<link href="assets/plugins/xcharts/css/xcharts.min.css" rel=" stylesheet">
+	<link href="assets/plugins/fullcalendar/css/fullcalendar.css" rel="stylesheet">
+	<link href="assets/plugins/morris/css/morris.css" rel="stylesheet">
+	<link href="assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+	<link href="assets/plugins/jvectormap/css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
+	<link href="assets/css/style.min.css" rel="stylesheet">
+	<link href="assets/css/add-ons.min.css" rel="stylesheet">
+	<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+</head>
 </head>
 
 <body>
 	<!-- 顶部头部信息 -->
-	<div class="navbar" role="navigation">	
-		<div class="container-fluid">		
+	<div class="navbar" role="navigation">
+		<div class="container-fluid">
 			<ul class="nav navbar-nav navbar-actions navbar-left">
-				<li class="visible-md visible-lg"><a href="index.html#" id="main-menu-toggle"><i class="fa fa-th-large"></i></a></li>
-				<li class="visible-xs visible-sm"><a href="index.html#" id="sidebar-menu"><i class="fa fa-navicon"></i></a></li>			
-			</ul>			
+				<li class="visible-md visible-lg"><a href="index.html#" id="main-menu-toggle"><i
+							class="fa fa-th-large"></i></a></li>
+				<li class="visible-xs visible-sm"><a href="index.html#" id="sidebar-menu"><i
+							class="fa fa-navicon"></i></a></li>
+			</ul>
 			<form class="navbar-form navbar-left">
 				<button type="submit" class="fa fa-search"></button>
 				<input type="text" class="form-control" placeholder="搜索..."></a>
 			</form>
-	        <ul class="nav navbar-nav navbar-right">
-                <!--短息消息模块-->
+			<ul class="nav navbar-nav navbar-right">
+				<!--短息消息模块-->
 				<li class="dropdown visible-md visible-lg" id="app1">
-	        		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope-o"></i><span class="badge">{{isRead}}</span></a>
-	        		<ul class="dropdown-menu">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope-o"></i><span
+							class="badge">{{isRead}}</span></a>
+					<ul class="dropdown-menu">
 						<li class="dropdown-menu-header">
 							<strong>信息</strong>
 						</li>
@@ -54,73 +58,83 @@
 						</li>
 						<li class="dropdown-menu-footer text-center">
 							<a href="message/inbox.html">查看所有信息</a>
-						</li>	
-	        		</ul>
-                  </li>
-                <!--系统通知模块-->
+						</li>
+					</ul>
+				</li>
+				<!--系统通知模块-->
 				<li class="dropdown visible-md visible-lg" id="app2">
-	        		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell-o"></i><span class="badge">{{message.length}}</span></a>
-	        		<ul class="dropdown-menu">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell-o"></i><span
+							class="badge">{{message.length}}</span></a>
+					<ul class="dropdown-menu">
 						<li class="dropdown-menu-header">
 							<strong>系统通知</strong>
-						</li>							
-                        <li class="clearfix" v-for="item in message">
-							<i class="fa" v-bind:class="item.icon"></i> 
-                            <a href="message/system.html" class="notification-user"> {{item.title}} </a> 
-                            <span class="notification-action"> 详细查看 </span> 
-                            <a href="message/system.html" class="notification-link"> {{item.info}}</a>
-                        </li>
+						</li>
+						<li class="clearfix" v-for="item in message">
+							<i class="fa" v-bind:class="item.icon"></i>
+							<a href="message/system.html" class="notification-user"> {{item.title}} </a>
+							<span class="notification-action"> 详细查看 </span>
+							<a href="message/system.html" class="notification-link"> {{item.info}}</a>
+						</li>
 						<li class="dropdown-menu-footer text-center">
 							<a href="message/system.html">查看所有信息</a>
 						</li>
-	        		</ul>
-                  </li>
-                  <!--应用信息模块-->
-				<li class="dropdown visible-md visible-lg"id="app3" >
-					 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-th"></i></a>					
-					<ul class="dropdown-menu update-menu" role="menu">
-						<li v-for="item in appInfo"><a :href="item.href" ><i class="fa" v-bind:class="item.icon"></i> {{item.title}} </a></li>
 					</ul>
-                </li>
-                <!--用户信息模块-->
-				<li class="dropdown visible-md visible-lg"id="app4">
-	        		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="user-avatar" src="assets/img/avatar.jpg" alt="user-mail">{{name}}</a>
-	        		<ul class="dropdown-menu">
+				</li>
+				<!--应用信息模块-->
+				<li class="dropdown visible-md visible-lg" id="app3">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-th"></i></a>
+					<ul class="dropdown-menu update-menu" role="menu">
+						<li v-for="item in appInfo"><a :href="item.href"><i class="fa" v-bind:class="item.icon"></i>
+								{{item.title}} </a></li>
+					</ul>
+				</li>
+				<!--用户信息模块-->
+				<li class="dropdown visible-md visible-lg" id="app4">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="user-avatar"
+							src="assets/img/avatar.jpg" alt="user-mail">{{name}}</a>
+					<ul class="dropdown-menu">
 						<li class="dropdown-menu-header">
 							<strong>Account</strong>
-						</li>						
-						<li v-for="item in appInfo"><a v-bind:href="item.href"><i class="fa" v-bind:class="item.icon"></i> {{item.title}} <span class="label" v-bind:class="item.style">{{item.number}}</span></a></li>
-						<li class="divider"></li>						
-						<li><a href="index.html"><i class="fa fa-sign-out"></i>返回主界面</a></li>	
-	        		</ul>
-	      		</li>
-				<li><a href="index.html"><i class="fa fa-power-off"></i></a></li>
-			</ul>	
-		</div>		
+						</li>
+						<li v-for="item in appInfo"><a v-bind:href="item.href"><i class="fa"
+									v-bind:class="item.icon"></i> {{item.title}} <span class="label"
+									v-bind:class="item.style">{{item.number}}</span></a></li>
+						<li class="divider"></li>
+						<li><a href="index.html"><i class="fa fa-sign-out"></i>返回主界面</a></li>
+					</ul>
+				</li>
+				<li><a href="shop/index.html"><i class="fa fa-power-off"></i></a></li>
+			</ul>
+		</div>
 	</div>
 	<!-- end: Header -->
 	<div class="container-fluid content">
-		<div class="row">		
+		<div class="row">
 			<!-- 左侧菜单栏 -->
 			<div class="sidebar ">
 				<div class="sidebar-collapse" id="app5">
 					<div class="sidebar-header t-center">
-                        <span><img class="text-logo" src="assets/img/logo1.png"><i class="fa fa-space-shuttle fa-3x blue"></i></span>
-                    </div>										
-					<div class="sidebar-menu">						
+						<span><img class="text-logo" src="assets/img/logo1.png"><i
+								class="fa fa-space-shuttle fa-3x blue"></i></span>
+					</div>
+					<div class="sidebar-menu">
 						<ul class="nav nav-sidebar">
 							<li v-for="item in functions">
-								<a v-bind:href="item.href"><i class="fa" v-bind:class="item.icon"></i><span class="text">{{item.title}}</span> <span class="fa fa-angle-down pull-right"></span></a>
-								<ul  class="nav sub" v-if="item.childen.length > 0">
-									<li v-for="ch in item.childen"><a v-bind:href="ch.href"><i class="fa" v-bind:class="ch.icon"></i><span class="text"> {{ch.title}}  </span></a></li>
-								</ul>	
+								<a v-bind:href="item.href"><i class="fa" v-bind:class="item.icon"></i><span
+										class="text">{{item.title}}</span> <span
+										class="fa fa-angle-down pull-right"></span></a>
+								<ul class="nav sub" v-if="item.childen.length > 0">
+									<li v-for="ch in item.childen"><a v-bind:href="ch.href"><i class="fa"
+												v-bind:class="ch.icon"></i><span class="text"> {{ch.title}} </span></a>
+									</li>
+								</ul>
 							</li>
 						</ul>
-					</div>					
+					</div>
 				</div>
-				<div class="sidebar-footer">					
+				<div class="sidebar-footer">
 					<div class="sidebar-brand">
-                        Lumnca
+						Lumnca
 					</div>
 					<ul class="sidebar-terms">
 						<li><a href="index.html#">版本</a></li>
@@ -128,125 +142,135 @@
 						<li><a href="index.html#">帮助</a></li>
 						<li><a href="index.html#">关于</a></li>
 					</ul>
-				</div>	
+				</div>
+			</div>
 		</div>
-	</div>
-	
-	<!-- end: Main Menu -->
+
+		<!-- end: Main Menu -->
 		<!-- start: Content -->
 		<div class="main">
 			<div class="row">
 				<div class="col-lg-12">
 					<h3 class="page-header"><i class="fa fa-laptop"></i>主页用户</h3>
 					<ol class="breadcrumb">
-						<li><i class="fa fa-home"></i><a href="index.html">主页</a></li>					  	
+						<li><i class="fa fa-home"></i><a href="index.html">主页</a></li>
 					</ol>
 				</div>
-			</div>		
-			<div class="row">			
-				
-				
-			</div><!--/.row-->
-			
+			</div>
 			<div class="row">
-				
+
+
+			</div>
+			<!--/.row-->
+
+			<div class="row">
+
 				<div class="col-lg-9 col-md-12">
 					<div class="panel panel-default">
-						<div class="panel-body">	
-							<a href="#">课程总览</a>								
-						</div>						
-					</div>						
-				</div><!--/col-->	
-
-				<div class="col-lg-3 col-md-12">
-					<div class="panel panel-default">					
-						<div class="panel-body white-bg">						
-								<a href="#">课程总览</a>		
+						<div class="panel-body">
+							<a href="#">课程总览</a>
 						</div>
-					</div>		
-				</div><!--/.col-->		
-				
-			</div><!--/.row-->	
+					</div>
+				</div>
+				<!--/col-->
 
-			<div class="row">	
-				
-				
 				<div class="col-lg-3 col-md-12">
-					
+					<div class="panel panel-default">
+						<div class="panel-body white-bg">
+							<a href="#">课程总览</a>
+						</div>
+					</div>
+				</div>
+				<!--/.col-->
+
+			</div>
+			<!--/.row-->
+
+			<div class="row">
+
+
+				<div class="col-lg-3 col-md-12">
+
 					<div class="panel panel-default">
 
 						<div class="panel-body weather widget">
-							
+
 							<div class="today text-center">
-									<a href="#">课程总览</a>		
-						
+								<a href="#">课程总览</a>
+
 							</div>
-							
+
 							<div class="forecast row text-center">
-					
-									<a href="#">课程总览</a>		
-							</div>												
-							
+
+								<a href="#">课程总览</a>
+							</div>
+
 						</div>
-					</div>		
-				
-				</div><!--/.col-->
-				
+					</div>
+
+				</div>
+				<!--/.col-->
+
 				<div class="col-lg-3 col-md-12">
-					
+
 					<div class="panel panel-default">
 
 						<div class="panel-body weather widget">
-							
+
 							<div class="today text-center">
-						
-									<a href="#">课程总览</a>		
+
+								<a href="#">课程总览</a>
 							</div>
-							
+
 							<div class="forecast row text-center">
-								
-							
-									<a href="#">课程总览</a>		
-							</div>												
-							
+
+
+								<a href="#">课程总览</a>
+							</div>
+
 						</div>
-					</div>		
-				
-				</div><!--/.col-->
-				
+					</div>
+
+				</div>
+				<!--/.col-->
+
 				<div class="col-lg-3 col-md-6">
-					
+
 					<div class="panel panel-default">
-						
+
 						<div class="panel-body text-center" style="height:230px">
-								<a href="#">课程总览</a>		
-						</div>							
-						
-					</div>	
-										
-				</div><!--/.col-->
-				
+							<a href="#">课程总览</a>
+						</div>
+
+					</div>
+
+				</div>
+				<!--/.col-->
+
 				<div class="col-lg-3 col-md-6">
-					
+
 					<div class="panel panel-default">
-						
+
 						<div class="panel-body text-center" style="height:230px">
-								<a href="#">课程总览</a>		
-						</div>	
-						
-					</div>	
-										
-				</div><!--/.col-->
-			</div><!--/row-->						
-				
-			<div class="row">	
+							<a href="#">课程总览</a>
+						</div>
+
+					</div>
+
+				</div>
+				<!--/.col-->
+			</div>
+			<!--/row-->
+
+			<div class="row">
 
 				<div class="col-sm-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h2><i class="fa fa-bar-chart-o red"></i><strong>xCharts</strong></h2>
 							<div class="panel-actions">
-								<a href="charts-xcharts.html#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
+								<a href="charts-xcharts.html#" class="btn-setting"><i
+										class="fa fa-rotate-right"></i></a>
 								<a href="charts-xcharts.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
 								<a href="charts-xcharts.html#" class="btn-close"><i class="fa fa-times"></i></a>
 							</div>
@@ -255,14 +279,16 @@
 							<figure class="demo" id="chart" style="height: 300px"></figure>
 						</div>
 					</div>
-				</div><!--/col-->				
-			</div><!--/row-->			
-			
-				
-			<div class="row">			
-				
+				</div>
+				<!--/col-->
+			</div>
+			<!--/row-->
+
+
+			<div class="row">
+
 				<div class="col-lg-6 col-md-12">
-					
+
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h2><i class="fa fa-spinner red"></i><strong>In Progress</strong></h2>
@@ -272,8 +298,8 @@
 								<a href="index.html#" class="btn-close"><i class="fa fa-times"></i></a>
 							</div>
 							<ul class="nav nav-tabs" id="recent">
-							  	<li class="active"><a href="index.html#tasks">Tasks</a></li>
-							  	<li><a href="index.html#tickets">Tickets</a></li>
+								<li class="active"><a href="index.html#tasks">Tasks</a></li>
+								<li><a href="index.html#tickets">Tickets</a></li>
 							</ul>
 						</div>
 						<div class="panel-body">
@@ -281,22 +307,24 @@
 								<div class="tab-pane active" id="tasks">
 									<table class="table bootstrap-datatable datatable small-font">
 										<thead>
-											  <tr>
-												  <th>Task</th>
-												  <th>Assigned to</th>
-												  <th>Progress</th>
-												  <th class="center">Status</th>
-											  </tr>
-										  </thead>   
-										  <tbody>
+											<tr>
+												<th>Task</th>
+												<th>Assigned to</th>
+												<th>Progress</th>
+												<th class="center">Status</th>
+											</tr>
+										</thead>
+										<tbody>
 											<tr>
 												<td>Package Usage</td>
 												<td>Jenny Coe</td>
 												<td>
 													<div class="progress thin">
-													  	<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="73" aria-valuemin="0" aria-valuemax="100" style="width: 73%">
-													    	<span class="sr-only">73% Complete (success)</span>
-													  	</div>
+														<div class="progress-bar progress-bar-success"
+															role="progressbar" aria-valuenow="73" aria-valuemin="0"
+															aria-valuemax="100" style="width: 73%">
+															<span class="sr-only">73% Complete (success)</span>
+														</div>
 													</div>
 												</td>
 												<td class="text-center text-info">
@@ -308,9 +336,11 @@
 												<td>Jack Key</td>
 												<td>
 													<div class="progress thin">
-													  	<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 95%">
-													    	<span class="sr-only">95% Complete (success)</span>
-													  	</div>
+														<div class="progress-bar progress-bar-success"
+															role="progressbar" aria-valuenow="95" aria-valuemin="0"
+															aria-valuemax="100" style="width: 95%">
+															<span class="sr-only">95% Complete (success)</span>
+														</div>
 													</div>
 												</td>
 												<td class="text-center text-success">
@@ -322,9 +352,11 @@
 												<td>Jossy</td>
 												<td>
 													<div class="progress thin">
-													  	<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="27" aria-valuemin="0" aria-valuemax="100" style="width: 27%">
-													    	<span class="sr-only">27% Complete (success)</span>
-													  	</div>
+														<div class="progress-bar progress-bar-warning"
+															role="progressbar" aria-valuenow="27" aria-valuemin="0"
+															aria-valuemax="100" style="width: 27%">
+															<span class="sr-only">27% Complete (success)</span>
+														</div>
 													</div>
 												</td>
 												<td class="text-center text-warning">
@@ -336,9 +368,11 @@
 												<td>Alex Bram</td>
 												<td>
 													<div class="progress thin">
-													  	<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
-													    	<span class="sr-only">50% Complete (success)</span>
-													  	</div>
+														<div class="progress-bar progress-bar-success"
+															role="progressbar" aria-valuenow="50" aria-valuemin="0"
+															aria-valuemax="100" style="width: 50%">
+															<span class="sr-only">50% Complete (success)</span>
+														</div>
 													</div>
 												</td>
 												<td class="text-center text-primary">
@@ -350,9 +384,11 @@
 												<td>Jimmy Doe</td>
 												<td>
 													<div class="progress thin">
-													  	<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="73" aria-valuemin="0" aria-valuemax="100" style="width: 73%">
-													    	<span class="sr-only">73% Complete (success)</span>
-													  	</div>
+														<div class="progress-bar progress-bar-danger" role="progressbar"
+															aria-valuenow="73" aria-valuemin="0" aria-valuemax="100"
+															style="width: 73%">
+															<span class="sr-only">73% Complete (success)</span>
+														</div>
 													</div>
 												</td>
 												<td class="text-center text-danger">
@@ -364,9 +400,11 @@
 												<td>Marcell</td>
 												<td>
 													<div class="progress thin">
-													  	<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-													    	<span class="sr-only">40% Complete (success)</span>
-													  	</div>
+														<div class="progress-bar progress-bar-success"
+															role="progressbar" aria-valuenow="40" aria-valuemin="0"
+															aria-valuemax="100" style="width: 40%">
+															<span class="sr-only">40% Complete (success)</span>
+														</div>
 													</div>
 												</td>
 												<td class="text-center text-primary">
@@ -378,19 +416,21 @@
 												<td>Morgan</td>
 												<td>
 													<div class="progress thin">
-													  	<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="27" aria-valuemin="0" aria-valuemax="100" style="width: 27%">
-													    	<span class="sr-only">27% Complete (success)</span>
-													  	</div>
+														<div class="progress-bar progress-bar-warning"
+															role="progressbar" aria-valuenow="27" aria-valuemin="0"
+															aria-valuemax="100" style="width: 27%">
+															<span class="sr-only">27% Complete (success)</span>
+														</div>
 													</div>
 												</td>
 												<td class="text-center text-warning">
 													Pending
 												</td>
-											</tr>											
+											</tr>
 										</tbody>
 									</table>
-								</div>	
-							  	<div class="tab-pane" id="tickets">
+								</div>
+								<div class="tab-pane" id="tickets">
 									<table class="table bootstrap-datatable datatable small-font">
 										<thead>
 											<tr>
@@ -400,7 +440,7 @@
 												<th>User</th>
 												<th>Number</th>
 											</tr>
-										</thead>   
+										</thead>
 										<tbody>
 											<tr>
 												<td><span class="label label-success">Complete</span></td>
@@ -451,17 +491,18 @@
 												<td>Reinald</td>
 												<td><b>[#25639]</b></td>
 											</tr>
-																					
+
 										</tbody>
 									</table>
-							  	</div>
-							</div>	 	
+								</div>
+							</div>
 						</div>
 					</div>
-					
-				</div><!--/col-->
+
+				</div>
+				<!--/col-->
 				<div class="col-md-3">
-					
+
 					<div class="social-box facebook">
 						<i class="fa fa-facebook"></i>
 						<ul>
@@ -474,12 +515,14 @@
 								<span>feeds</span>
 							</li>
 						</ul>
-					</div><!--/social-box-->			
-					
-				</div><!--/col-->
-				
+					</div>
+					<!--/social-box-->
+
+				</div>
+				<!--/col-->
+
 				<div class="col-md-3">
-					
+
 					<div class="social-box twitter">
 						<i class="fa fa-twitter"></i>
 						<ul>
@@ -492,12 +535,14 @@
 								<span>tweets</span>
 							</li>
 						</ul>
-					</div><!--/social-box-->			
-					
-				</div><!--/col-->
-				
+					</div>
+					<!--/social-box-->
+
+				</div>
+				<!--/col-->
+
 				<div class="col-md-3">
-					
+
 					<div class="social-box linkedin">
 						<i class="fa fa-linkedin"></i>
 						<ul>
@@ -510,12 +555,14 @@
 								<span>feeds</span>
 							</li>
 						</ul>
-					</div><!--/social-box-->			
-					
-				</div><!--/col-->
-				
+					</div>
+					<!--/social-box-->
+
+				</div>
+				<!--/col-->
+
 				<div class="col-md-3">
-					
+
 					<div class="social-box google-plus">
 						<i class="fa fa-google-plus"></i>
 						<ul>
@@ -528,22 +575,25 @@
 								<span>circles</span>
 							</li>
 						</ul>
-					</div><!--/social-box-->			
-					
-				</div><!--/col-->
-					
-			</div><!--/row-->	
+					</div>
+					<!--/social-box-->
+
+				</div>
+				<!--/col-->
+
+			</div>
+			<!--/row-->
 
 			<div class="row">
-				
+
 				<div class="col-lg-4 col-md-12">
-					<div class="panel panel-default calendar">	
+					<div class="panel panel-default calendar">
 						<div class="calendar-small"></div>
 						<div class="list">
 							<ul>
 								<li>
 									<label class="custom-checkbox-item">
-										<input class="custom-checkbox" type="checkbox"/>
+										<input class="custom-checkbox" type="checkbox" />
 										<span class="custom-checkbox-mark"></span>
 										<span class="custom-checkbox-desc">Lunch With Clients</span>
 										<i class="fa fa-thumbs-o-up"></i>
@@ -551,7 +601,7 @@
 								</li>
 								<li>
 									<label class="custom-checkbox-item">
-										<input class="custom-checkbox" type="checkbox"/>
+										<input class="custom-checkbox" type="checkbox" />
 										<span class="custom-checkbox-mark"></span>
 										<span class="custom-checkbox-desc">Meeting With All Staff</span>
 										<i class="fa fa-space-shuttle"></i>
@@ -559,7 +609,7 @@
 								</li>
 								<li>
 									<label class="custom-checkbox-item">
-										<input class="custom-checkbox" type="checkbox"/>
+										<input class="custom-checkbox" type="checkbox" />
 										<span class="custom-checkbox-mark"></span>
 										<span class="custom-checkbox-desc">Factory Birthday</span>
 										<i class="fa fa-star-half-o"></i>
@@ -569,15 +619,19 @@
 							<div class="row">
 								<div class="col-xs-6">
 									<button type="button" class="btn btn-success btn-block">Accept</button>
-								</div><!--/col-->
+								</div>
+								<!--/col-->
 								<div class="col-xs-6">
 									<button type="button" class="btn btn-default btn-block">Discard</button>
-								</div><!--/col-->
-							</div><!--/row-->
-						</div>				
+								</div>
+								<!--/col-->
+							</div>
+							<!--/row-->
+						</div>
 					</div>
-				</div><!--/col-->
-				
+				</div>
+				<!--/col-->
+
 				<div class="col-lg-8 col-md-12">
 
 					<div class="panel panel-default">
@@ -590,50 +644,50 @@
 							</div>
 						</div>
 						<div class="panel-body no-padding">
-							<div class="todo-list">									
+							<div class="todo-list">
 								<div class="header">Today</div>
 								<ul id="todo-2" class="todo-list-tasks">
 									<li>
 										<label class="custom-checkbox-item pull-left">
-											<input class="custom-checkbox" type="checkbox"/>
+											<input class="custom-checkbox" type="checkbox" />
 											<span class="custom-checkbox-mark"></span>
 										</label>
-										<span class="desc">Add slider home to creative template</span> 
+										<span class="desc">Add slider home to creative template</span>
 									</li>
 									<li>
 										<label class="custom-checkbox-item pull-left">
-											<input class="custom-checkbox" type="checkbox"/>
+											<input class="custom-checkbox" type="checkbox" />
 											<span class="custom-checkbox-mark"></span>
 										</label>
-										<span class="desc">Change portfolio image with new animation</span> 
+										<span class="desc">Change portfolio image with new animation</span>
 									</li>
 									<li>
 										<label class="custom-checkbox-item pull-left">
-											<input class="custom-checkbox" type="checkbox"/>
+											<input class="custom-checkbox" type="checkbox" />
 											<span class="custom-checkbox-mark"></span>
 										</label>
-										<span class="desc">Fixed JavaScript problem for index page</span> 
+										<span class="desc">Fixed JavaScript problem for index page</span>
 									</li>
 								</ul>
 								<div class="header">Tommorow</div>
 								<ul id="todo-3" class="todo-list-tasks">
 									<li>
 										<label class="custom-checkbox-item pull-left">
-											<input class="custom-checkbox" type="checkbox"/>
+											<input class="custom-checkbox" type="checkbox" />
 											<span class="custom-checkbox-mark"></span>
 										</label>
-										<span class="desc">Update sliding menu with newest</span> 
+										<span class="desc">Update sliding menu with newest</span>
 									</li>
 									<li>
 										<label class="custom-checkbox-item pull-left">
-											<input class="custom-checkbox" type="checkbox"/>
+											<input class="custom-checkbox" type="checkbox" />
 											<span class="custom-checkbox-mark"></span>
 										</label>
-										<span class="desc">Change navigation structure on header</span> 
+										<span class="desc">Change navigation structure on header</span>
 									</li>
 								</ul>
 								<div class="header">Completed</div>
-								<ul class="completed"></ul>		
+								<ul class="completed"></ul>
 							</div>
 						</div>
 						<div class="panel-footer">
@@ -645,66 +699,73 @@
 								<button type="button" class="btn btn-link"><i class="fa fa-file-text"></i></button>
 								<button type="button" class="btn btn-link"><i class="fa fa-heart"></i></button>
 							</div>
-							
+
 							<div class="pull-right">
 								<button type="button" class="btn btn-primary">Submit</button>
-							</div>	
-						</div>						
+							</div>
+						</div>
 					</div>
 
-				</div><!--/col-->
-				
-			</div><!--/row-->     
-					
+				</div>
+				<!--/col-->
+
+			</div>
+			<!--/row-->
+
 		</div>
 		<!-- end: Content -->
 		<br><br><br>
-		
-		
+
+
 		<div id="usage">
 			<ul>
 				<li>
 					<div class="title">Memory</div>
 					<div class="bar">
 						<div class="progress">
-						  	<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
+							<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50"
+								aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
 						</div>
-					</div>			
+					</div>
 					<div class="desc">4GB of 8GB</div>
 				</li>
 				<li>
 					<div class="title">HDD</div>
 					<div class="bar">
 						<div class="progress">
-						  	<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%"></div>
+							<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="25"
+								aria-valuemin="0" aria-valuemax="100" style="width: 25%"></div>
 						</div>
-					</div>			
+					</div>
 					<div class="desc">250GB of 1TB</div>
 				</li>
 				<li>
 					<div class="title">SSD</div>
 					<div class="bar">
 						<div class="progress">
-					  		<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%"></div>
+							<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="70"
+								aria-valuemin="0" aria-valuemax="100" style="width: 70%"></div>
 						</div>
-					</div>			
+					</div>
 					<div class="desc">700GB of 1TB</div>
 				</li>
 				<li>
 					<div class="title">Bandwidth</div>
 					<div class="bar">
 						<div class="progress">
-					  		<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%"></div>
+							<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="90"
+								aria-valuemin="0" aria-valuemax="100" style="width: 90%"></div>
 						</div>
-					</div>			
+					</div>
 					<div class="desc">90TB of 100TB</div>
-				</li>				
-			</ul>	
-		</div>			
-		
-	</div><!--/container-->
-		
-	
+				</li>
+			</ul>
+		</div>
+
+	</div>
+	<!--/container-->
+
+
 	<div class="modal fade" id="myModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -722,14 +783,14 @@
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
-	
+
 	<div class="clearfix"></div>
-	
-		
+
+
 	<!-- start: JavaScript-->
 	<!--[if !IE]>-->
 
-			<script src="assets/js/jquery-2.1.1.min.js"></script>
+	<script src="assets/js/jquery-2.1.1.min.js"></script>
 
 	<!--<![endif]-->
 
@@ -741,9 +802,9 @@
 
 	<!--[if !IE]>-->
 
-		<script type="text/javascript">
-			window.jQuery || document.write("<script src='assets/js/jquery-2.1.1.min.js'>"+"<"+"/script>");
-		</script>
+	<script type="text/javascript">
+		window.jQuery || document.write("<script src='assets/js/jquery-2.1.1.min.js'>" + "<" + "/script>");
+	</script>
 
 	<!--<![endif]-->
 
@@ -755,7 +816,7 @@
 		
 	<![endif]-->
 	<script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>	
+	<script src="assets/js/bootstrap.min.js"></script>
 	<script src="assets/js/index.js"></script>
 	<!-- page scripts -->
 	<script src="assets/plugins/jquery-ui/js/jquery-ui-1.10.4.min.js"></script>
@@ -777,12 +838,13 @@
 	<script src="assets/plugins/morris/js/morris.min.js"></script>
 	<script src="assets/plugins/jvectormap/js/jquery-jvectormap-1.2.2.min.js"></script>
 	<script src="assets/plugins/jvectormap/js/jquery-jvectormap-world-mill-en.js"></script>
-	<script src="assets/plugins/jvectormap/js/gdp-data.js"></script>	
+	<script src="assets/plugins/jvectormap/js/gdp-data.js"></script>
 	<script src="assets/plugins/gauge/gauge.min.js"></script>
 	<script src="assets/js/SmoothScroll.js"></script>
 	<script src="assets/js/jquery.mmenu.min.js"></script>
 	<script src="assets/js/core.min.js"></script>
-	<script src="assets/plugins/d3/d3.min.js"></script>	
-	<script src="assets/js/pages/index.js"></script>	
+	<script src="assets/plugins/d3/d3.min.js"></script>
+	<script src="assets/js/pages/index.js"></script>
 </body>
+
 </html>
