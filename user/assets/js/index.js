@@ -1,4 +1,3 @@
-
 /*
 *
 *
@@ -62,7 +61,7 @@ var userMessage = [
     }, 
 ]
 
-new Vue({
+ new Vue({
     el : '#app1',
     data : {
         message : userMessage
@@ -146,10 +145,11 @@ new Vue({
 *用户模块设置
 *
 */
-new Vue({
+var _u1 = new Vue({
     el : '#app4',
     data : {
         name : 'Lumnca',
+        imgurl :'',
         appInfo : [
             {
                 title : '个人信息',
@@ -180,7 +180,19 @@ new Vue({
                 style : 'label-primary'
             }
         ]
-    }
+    },
+    mounted() {
+        let id = JSON.parse(window.localStorage.getItem('_user')).id;
+        axios.get('http://127.0.0.1:8081/user_info/'+id)
+        .then(function (response) {
+            _u1.name = response.data.name;
+            _u1.imgurl = response.data.imgurl;
+        })
+        .catch(function () {
+            //响应失败的操作
+            alert("请求失败!");
+        });
+    },
 })
 
 /*

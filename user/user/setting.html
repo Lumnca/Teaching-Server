@@ -19,7 +19,8 @@
 		<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
         <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
         <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		
         <style>
             @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
             .line{
@@ -106,7 +107,7 @@
                 </li>
                 <!--用户信息模块-->
 				<li class="dropdown visible-md visible-lg"id="app4">
-	        		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="user-avatar" src="../assets/img/avatar.jpg" alt="user-mail">{{name}}</a>
+	        		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="user-avatar" :src="'http://127.0.0.1:8081/public/'+imgurl" alt="user-mail">{{name}}</a>
 	        		<ul class="dropdown-menu">
 						<li class="dropdown-menu-header">
 							<strong>Account</strong>
@@ -177,12 +178,13 @@
 							<h4><strong>基本信息</strong></h4>
 							<div>
                                 <h4>头像</h4>
-                                <img class="img-profile" :src="'http://47.106.254.86/assets/img/'+user.url">
+                                <img class="img-profile" :src="'http://127.0.0.1:8081/public/'+user.imgurl" width="80">
                                
                                 <div>
                                         <br><span style="color:blue;">上传头像</span></span><br>
-                                        <el-upload class="show"
-                                             action="posts/"
+										<el-upload class="show"
+											 name ="uploadFile"
+                                             action="http://127.0.0.1:8081/upload/"
                                              list-type="picture-card"
 											 :on-success="handleAvatarSuccess"
   											 :before-upload="beforeAvatarUpload"
@@ -194,10 +196,7 @@
                             </div>				
 
 							<ul class="profile-details">
-								<li>
-									<div><i class="fa fa-credit-card" ></i>ID</div>
-                                    <input v-model="user.id" class="line">
-								</li>
+							
 								<li>
 									<div><i class="fa fa-user" ></i>名称</div>
                                     <input  v-model="user.name" class="line">
@@ -297,7 +296,6 @@
 	<!-- page scripts -->
 	<script src="../assets/plugins/jquery-ui/js/jquery-ui-1.10.4.min.js"></script>
 	<!-- theme scripts -->
-	<script src="../assets/js/SmoothScroll.js"></script>
 	<script src="../assets/js/jquery.mmenu.min.js"></script>
 	<script src="../assets/js/core.min.js"></script>
 	<!-- 自定义脚本-->

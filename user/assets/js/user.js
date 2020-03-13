@@ -11,9 +11,9 @@ var Main = new Vue({
         id: 'xx',
         name: 'Lumnca',
         address: '四川省成都市',
-        followers: 127455111,
-        following: 24,
-        posts: 57,         //推送
+        followers: 0,
+        following: 0,
+        posts: 0,         //推送
         active: true,       //动态
         dialogImageUrl: '', //头像
         dialogVisible: false,
@@ -33,13 +33,13 @@ var Main = new Vue({
     },
     methods: {
         updateInfo() {
-
+            
             //this.user 等价于Main.user是一个提交的JSON对象
             //初始化请求用户的数据POST方法！
-            axios.post('http://127.0.0.1:8080/set', Main.user)
+            axios.put('http://127.0.0.1:8081/user_info/'+ Main.user.id, Main.user)
                 .then(function (response) {
                     Main.$message({
-                        message: response.data.message,
+                        message:'修改成功！',
                         type: 'success'
                     });
                 })
@@ -49,7 +49,7 @@ var Main = new Vue({
                 });
         },
         handleAvatarSuccess(res, file) {
-            this.user.url = file.name;
+            this.user.imgurl = file.name;
             this.imageUrl = URL.createObjectURL(file.raw);
         },
         beforeAvatarUpload(file) {
@@ -66,18 +66,16 @@ var Main = new Vue({
         }
     },
     mounted() {
+        let id = JSON.parse(window.localStorage.getItem('_user')).id;
         //初始化请求用户的数据
-        axios.get('http://127.0.0.1:8080/get', {
-            //参数
-            params: {
-                id: window.localStorage.getItem('id') || 'test'
-            }
-        })
+        axios.get('http://127.0.0.1:8081/user_info/'+id)
             .then(function (response) {
                 //响应成功的操作response.data是返回的JSON数据（无需转换）
-                console.log(response.data);
                 //数据类型如下
                 Main.user = response.data;
+                Main.user.id = id;
+                Main.name = response.data.name;
+                Main.address =  response.data.address;
             })
             .catch(function () {
                 //响应失败的操作

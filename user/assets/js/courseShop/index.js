@@ -84,8 +84,8 @@ var app = new Vue({
             checkPass: '',
             age: '',
             id: '',
-            number : 0,
-            result : -1
+            number: 0,
+            result: -1
         },
         rules: {
             pass: [
@@ -102,15 +102,15 @@ var app = new Vue({
             ]
         },
         user: JSON.parse(window.localStorage.getItem('_user')) || { id: '', name: 'Lumnca' },
-        form1 : {
-            isCost : '全部',
-            type : []
+        form1: {
+            isCost: '全部',
+            type: []
         },
-        resources : [],
-        res : [],
-        colors: ['#99A9BF', '#F7BA2A', '#FF9900'], 
-        currentPage : 1,
-        pages : 5
+        resources: [],
+        res: [],
+        colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
+        currentPage: 1,
+        pages: 5
     },
     methods: {
         handleClick(tab, event) {
@@ -119,15 +119,31 @@ var app = new Vue({
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid && this.loginForm.number == this.loginForm.result) {
-                    this.$message({
-                        message: '登录成功!',
-                        type: 'success'
-                    });
-                    this.user.id = this.loginForm.id;
-                    this.user.name = 'Kay';
-                    this.islogin = true;
-                    this.centerDialogVisible = false;
-                    window.localStorage.setItem('_user', JSON.stringify(this.user))
+
+                    axios.get('http://127.0.0.1:8081/users/'+this.loginForm.id)
+                        .then(function (response) {
+                            if(response.data.password==app.loginForm.pass){
+                                app.$message({
+                                    message: '登录成功!',
+                                    type: 'success'
+                                });
+                                app.user.id = app.loginForm.id;
+                                app.user.name = app.loginForm.id;
+                                app.islogin = true;
+                                app.centerDialogVisible = false;
+                                window.localStorage.setItem('_user', JSON.stringify(app.user))
+                            }
+                            else{
+                                app.$message.error('密码错误！');
+                            }
+
+                        })
+                        .catch(function (error) {
+                             app.$message.error('账户不存在！');
+                        });
+
+                   
+                   
                 } else {
                     this.$message.error('验证错误！检查输入');
                     return false;
@@ -138,33 +154,33 @@ var app = new Vue({
             this.$refs[formName].resetFields();
         },
         out() {
-            this.user = {id:''}
+            this.user = { id: '' }
             window.localStorage.clear('_user');
             this.islogin = false;
-            
+
         },
         rehref(url) {
             window.location.href = url;
         },
-        sortPeople(){
-            this.res.sort((a,b)=>{
+        sortPeople() {
+            this.res.sort((a, b) => {
                 return - a.numbers + b.numbers;
             })
         },
-        sortLevel(){
-            this.res.sort((a,b)=>{
+        sortLevel() {
+            this.res.sort((a, b) => {
                 return - a.level + b.level;
             })
         },
-        sortPrice(){
-            this.res.sort((a,b)=>{
+        sortPrice() {
+            this.res.sort((a, b) => {
                 return - a.price + b.price;
             })
         },
-        handleCurrentChange(val){
+        handleCurrentChange(val) {
             this.resources = [];
-            this.res.forEach((e,i)=>{
-                if(i>=(val-1)*20){
+            this.res.forEach((e, i) => {
+                if (i >= (val - 1) * 20) {
                     app.resources.push(e);
                 }
             });
@@ -172,10 +188,10 @@ var app = new Vue({
     },
     computed: {
         isLoginCheck() {
-           
+
             if (this.user.id == '') {
                 this.islogin = false;
-                if(this.loginForm.number == this.loginForm.result){
+                if (this.loginForm.number == this.loginForm.result) {
                     this.$message({
                         message: '验证成功!',
                         type: 'success'
@@ -188,19 +204,19 @@ var app = new Vue({
                 return ''
             }
         },
-        classification(){
+        classification() {
             let t = this.form1.isCost;
             this.resources = [];
-            if(t!='全部'){
-                this.res.forEach((e,i) => {
-                    if(e.type==t){
+            if (t != '全部') {
+                this.res.forEach((e, i) => {
+                    if (e.type == t) {
                         this.resources.push(e);
                     }
                 });
             }
-            else{
-                this.res.forEach((e,i)=>{
-                    if(i>=(app.currentPage-1)*20){
+            else {
+                this.res.forEach((e, i) => {
+                    if (i >= (app.currentPage - 1) * 20) {
                         app.resources.push(e);
                     }
                 });

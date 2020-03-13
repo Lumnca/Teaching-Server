@@ -1,35 +1,12 @@
-new Vue({
+var _c = new Vue({
     el : '#app',
     data : {
-        course : [
-            {
-                name : 'XXX',
-                numbers : 59,
-                teacher : '张三',
-                level : 3.5,
-                src : 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
-                value : '#KL4411',
-                display : false
-            },
-            {
-                name : 'XXX',
-                numbers : 77,
-                teacher : '张三',
-                level : 3.8,
-                src : 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
-                value : '#SO8552',
-                display : false
-            },
-            {
-              name : 'XXX',
-              numbers : 77,
-              teacher : '张三',
-              level : 3.8,
-              src : 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
-              value : '#SO8552',
-              display : false
-          }
-        ],
+        course : {
+          name : '',
+          teacher : '',
+          level : 0,
+          course_numbers : 0
+        },
         state : '',
         restaurants: [],
         timeout:  null,
@@ -42,24 +19,32 @@ new Vue({
         },
         querySearchAsync(queryString, cb) {
           var restaurants = this.restaurants;
-          var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
-  
-          clearTimeout(this.timeout);
-          this.timeout = setTimeout(() => {
-            cb(results);
-          }, 3000 * Math.random());
+          var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;        
+          cb(results);
+    
         },
         createStateFilter(queryString) {
           return (state) => {
-            return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+            console.log(state.name.toLowerCase().indexOf(queryString.toLowerCase()));
+            return (state.name.toLowerCase().indexOf(queryString.toLowerCase()) == 0);
           };
         },
         handleSelect(item) {
           item.display = true;
+          
           console.log(item);
         },
-        showSourchDisplay(){
+        showSourchDisplay(id){
             this.sourchDisplay = true;
+            axios.get('http://127.0.0.1:8081/course/'+id)
+          .then(function (response) {
+            _c.course = response.data;
+             console.log(response.data);
+          })
+          .catch(function () {
+              //响应失败的操作
+              alert("请求失败!");
+          });
             console.log(this.sourchDisplay);
         },
         remove(index){
@@ -72,6 +57,16 @@ new Vue({
         }
       },
       mounted() {
-        this.restaurants = this.loadAll();
+       
+        axios.get('http://127.0.0.1:8081/course')
+          .then(function (response) {
+            _c.restaurants = response.data._embedded.courses;
+          })
+          .catch(function () {
+              //响应失败的操作
+              alert("请求失败!");
+          });
+          
       }
+      
 })

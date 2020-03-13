@@ -126,5 +126,5 @@ var option1 = {
         }
     ]
 };
-var balance =echarts.init(document.getElementById('balance'));
+var balance = echarts.init(document.getElementById('balance'));
 balance.setOption(option1);
