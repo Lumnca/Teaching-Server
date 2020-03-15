@@ -446,10 +446,10 @@ zhuguan.forEach((item) => {
 var app = new Vue({
     el: '#app',
     data: {
-        user: 'XXX',
+        user:  window.localStorage.getItem('_userName'),
         course: course,
         userOptions: userOptions,
-        name: window.localStorage.getItem('courseName'),
+        name: JSON.parse(window.localStorage.getItem('_course')).name ,
         activeNames: ['1'],
         test: [
             {

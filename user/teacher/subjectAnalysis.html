@@ -42,15 +42,26 @@
     <div id="app">
         <el-container style=" border: 1px solid #eee">
             <el-header style="text-align: right; font-size: 12px">
-                <el-dropdown>
-                    <span style="margin-right: 15px;font-size: 20px;"><i class="el-icon-user"></i> {{user}}</span>
-
-                    <el-dropdown-menu slot="dropdown">
-                        <a v-for="item in userOptions.order" :href="item.href" class="noline">
-                            <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
-                        </a>
-                    </el-dropdown-menu>
-                </el-dropdown>
+                <el-row :gutter="20">
+                    <el-col :span="22">
+                        <div style="text-align: center;color: #77837d;">
+                            <h3><i class="el-icon-eleme"></i> {{name}}</h3>
+                        </div>
+                    </el-col>
+                    <el-col :span="2">
+                        <div>
+                            <el-dropdown>
+                                <span style="font-size: 20px;margin-left: 60px;"><i
+                                        class="el-icon-user"></i>{{user}}</span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                                        <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                                    </a>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </el-col>
+                </el-row>
 
             </el-header>
         </el-container>
@@ -78,37 +89,38 @@
                     <h2>单选</h2>
                     <el-collapse accordion>
 
-                            <el-collapse-item v-for="(dx,i) in danxuan">
-                                    <template slot="title">
-                                        {{i+1}}.{{dx.title}}<span
-                                            style="margin-left:80px;color:red;">正确率:{{Math.floor(((subjectData.danxuan[i][answer[0].value[i]]/sumbitNumber.danxuan[i])*100))}}%</span>
-                                    </template>
-                                    <div v-for="(o1,ii1) in dx.options" style="font-size:18px;">
-                                        <span>选项{{ii1+1}} : {{o1}} </span>
-                                        <span style="color:#3c1dca;margin-left: 40px;">
-                                            选择人数:{{subjectData.danxuan[i][ii1]}}({{(subjectData.danxuan[i][ii1]/sumbitNumber.danxuan[i]*100).toFixed(1)}}%)</span>
-                                        <span v-if="ii1==answer[0].value[i]" style="color:#10e62c;margin-left: 10px;"> 正确答案<i
-                                                class="el-icon-check"></i></span>
-                                    </div>
-                                </el-collapse-item>
+                        <el-collapse-item v-for="(dx,i) in danxuan">
+                            <template slot="title">
+                                {{i+1}}.{{dx.title}}<span
+                                    style="margin-left:80px;color:red;">正确率:{{Math.floor(((subjectData.danxuan[i][answer[0].value[i]]/sumbitNumber.danxuan[i])*100))}}%</span>
+                            </template>
+                            <div v-for="(o1,ii1) in dx.options" style="font-size:18px;">
+                                <span>选项{{ii1+1}} : {{o1}} </span>
+                                <span style="color:#3c1dca;margin-left: 40px;">
+                                    选择人数:{{subjectData.danxuan[i][ii1]}}({{(subjectData.danxuan[i][ii1]/sumbitNumber.danxuan[i]*100).toFixed(1)}}%)</span>
+                                <span v-if="ii1==answer[0].value[i]" style="color:#10e62c;margin-left: 10px;"> 正确答案<i
+                                        class="el-icon-check"></i></span>
+                            </div>
+                        </el-collapse-item>
 
 
                     </el-collapse>
                     <h2>多选</h2>
                     <el-collapse accordion>
 
-                            <el-collapse-item v-for="(dx,i) in duoxuan">
-                                    <template slot="title">
-                                        {{i+1}}.{{dx.title}}<span style="margin-left:80px;color:red;">正确率:{{subjectData.duoxuan[i][5]/subjectData.duoxuan[i][6]*100}}%</span>
-                                    </template>
-                                    <div v-for="(o1,ii1) in dx.options" style="font-size:18px;">
-                                        <span>选项{{ii1+1}} : {{o1}} </span>
-                                        <span style="color:#3c1dca;margin-left: 40px;">
-                                                选择人数:{{subjectData.duoxuan[i][ii1]}}({{(subjectData.duoxuan[i][ii1]/sumbitNumber.duoxuan[i]*100).toFixed(1)}}%)</span>
-                                        <span v-if="answer[1].value[i].indexOf(o1)!=-1" style="color:#10e62c;margin-left: 10px;"> 正确答案<i
-                                            class="el-icon-check"></i></span>
-                                    </div>
-                                </el-collapse-item>
+                        <el-collapse-item v-for="(dx,i) in duoxuan">
+                            <template slot="title">
+                                {{i+1}}.{{dx.title}}<span
+                                    style="margin-left:80px;color:red;">正确率:{{subjectData.duoxuan[i][5]/subjectData.duoxuan[i][6]*100}}%</span>
+                            </template>
+                            <div v-for="(o1,ii1) in dx.options" style="font-size:18px;">
+                                <span>选项{{ii1+1}} : {{o1}} </span>
+                                <span style="color:#3c1dca;margin-left: 40px;">
+                                    选择人数:{{subjectData.duoxuan[i][ii1]}}({{(subjectData.duoxuan[i][ii1]/sumbitNumber.duoxuan[i]*100).toFixed(1)}}%)</span>
+                                <span v-if="answer[1].value[i].indexOf(o1)!=-1"
+                                    style="color:#10e62c;margin-left: 10px;"> 正确答案<i class="el-icon-check"></i></span>
+                            </div>
+                        </el-collapse-item>
 
                     </el-collapse>
                 </el-main>
@@ -130,7 +142,7 @@
                 [1, 1, 1, 47]
             ],
             duoxuan: [
-                [25,34,21,12,35,25,60]
+                [25, 34, 21, 12, 35, 25, 60]
             ]
         };
         app.sumbitNumber = {

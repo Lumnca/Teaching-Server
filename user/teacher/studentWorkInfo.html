@@ -46,15 +46,26 @@
     <div id="app">
         <el-container style=" border: 1px solid #eee">
             <el-header style="text-align: right; font-size: 12px">
-                <el-dropdown>
-                    <span style="margin-right: 15px;font-size: 20px;"><i class="el-icon-user"></i> {{user}}</span>
-
-                    <el-dropdown-menu slot="dropdown">
-                        <a v-for="item in userOptions.order" :href="item.href" class="noline">
-                            <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
-                        </a>
-                    </el-dropdown-menu>
-                </el-dropdown>
+                <el-row :gutter="20">
+                    <el-col :span="22">
+                        <div style="text-align: center;color: #77837d;">
+                            <h3><i class="el-icon-eleme"></i> {{name}}</h3>
+                        </div>
+                    </el-col>
+                    <el-col :span="2">
+                        <div>
+                            <el-dropdown>
+                                <span style="font-size: 20px;margin-left: 60px;"><i
+                                        class="el-icon-user"></i>{{user}}</span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                                        <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                                    </a>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </el-col>
+                </el-row>
 
             </el-header>
         </el-container>
@@ -80,42 +91,41 @@
                 <hr>
                 <el-main>
                     <div>
-                        <el-table  ref="multipleTable" :data="workInfo" highlight-current-row
+                        <el-table ref="multipleTable" :data="workInfo" highlight-current-row
                             @current-change="handleSelectionChange" style="width: 100%">
-                            <el-table-column
-                            type="selection"
-                            width="55">
-                          </el-table-column>
+                            <el-table-column type="selection" width="55">
+                            </el-table-column>
                             <el-table-column property="name" label="姓名" width="120" sortable>
                             </el-table-column>
                             <el-table-column property="date" label="提交日期" width="150" sortable>
                             </el-table-column>
                             <el-table-column property="auto" label="还需修改" width="150" sortable>
                             </el-table-column>
-                            <el-table-column property="score" label="分数"  width="150" sortable>
+                            <el-table-column property="score" label="分数" width="150" sortable>
                             </el-table-column>
-                            <el-table-column property="check" label="检测"  width="150" sortable>
+                            <el-table-column property="check" label="检测" width="150" sortable>
                             </el-table-column>
                             <el-table-column fixed="right" label="操作">
                                 <template slot-scope="scope">
                                     <el-button @click="" type="el-button" size="small">查看</el-button>
-                                    <el-button @click="deleteStuWork(scope.$index)" type="el-button" size="small">删除</el-button>
+                                    <el-button @click="deleteStuWork(scope.$index)" type="el-button" size="small">删除
+                                    </el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
                         <div style="margin-top: 20px">
-                                <el-tooltip class="item" effect="dark" content="分析作业情况，正确率以及及格率等" placement="top">
-                                        <el-button @click="">分析</el-button>
-                                </el-tooltip>
-                                <el-tooltip class="item" effect="dark" content="将选中的作业进行查重" placement="top">
-                                        <el-button @click="">查重</el-button>
-                                </el-tooltip>
-                                <el-tooltip class="item" effect="dark" content="计算平均分，总分" placement="top">
-                                        <el-button @click="">计算</el-button>
-                                </el-tooltip>
-                                <el-tooltip class="item" effect="dark" content="未定义" placement="top">
-                                        <el-button @click="">高级</el-button>
-                                </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="分析作业情况，正确率以及及格率等" placement="top">
+                                <el-button @click="">分析</el-button>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="将选中的作业进行查重" placement="top">
+                                <el-button @click="">查重</el-button>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="计算平均分，总分" placement="top">
+                                <el-button @click="">计算</el-button>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="未定义" placement="top">
+                                <el-button @click="">高级</el-button>
+                            </el-tooltip>
                             <el-button @click="toggleSelection()">取消选择</el-button>
                         </div>
                     </div>
@@ -130,17 +140,17 @@
                 name: 'ZML',
                 date: '2018/8/9 12:14',
                 score: 75,
-                auto: true? '是':'否',
-                check : 'X',
-                repeat : ''
+                auto: true ? '是' : '否',
+                check: 'X',
+                repeat: ''
             },
             {
                 name: 'KAX',
                 date: '2018/10/9 12:14',
                 score: 71,
-                auto: true? '是':'否',
-                check : 'Z',
-                repeat : ''
+                auto: true ? '是' : '否',
+                check: 'Z',
+                repeat: ''
             }
         ]
     </script>

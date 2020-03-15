@@ -45,15 +45,26 @@
     <div id="app">
         <el-container style=" border: 1px solid #eee">
             <el-header style="text-align: right; font-size: 12px">
-                <el-dropdown>
-                    <span style="margin-right: 15px;font-size: 20px;"><i class="el-icon-user"></i> {{user}}</span>
-
-                    <el-dropdown-menu slot="dropdown">
-                        <a v-for="item in userOptions.order" :href="item.href" class="noline">
-                            <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
-                        </a>
-                    </el-dropdown-menu>
-                </el-dropdown>
+                <el-row :gutter="20">
+                    <el-col :span="22">
+                        <div style="text-align: center;color: #77837d;">
+                            <h3><i class="el-icon-eleme"></i> {{name}}</h3>
+                        </div>
+                    </el-col>
+                    <el-col :span="2">
+                        <div>
+                            <el-dropdown>
+                                <span style="font-size: 20px;margin-left: 60px;"><i
+                                        class="el-icon-user"></i>{{user}}</span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                                        <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                                    </a>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </el-col>
+                </el-row>
 
             </el-header>
         </el-container>
@@ -90,7 +101,7 @@
                             </el-form>
                         </div>
                     </div>
-                   
+
                 </el-main>
             </el-container>
         </el-container>

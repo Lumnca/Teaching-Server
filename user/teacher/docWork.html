@@ -50,15 +50,26 @@
     <div id="app">
         <el-container style=" border: 1px solid #eee">
             <el-header style="text-align: right; font-size: 12px">
-                <el-dropdown>
-                    <span style="margin-right: 15px;font-size: 20px;"><i class="el-icon-user"></i> {{user}}</span>
-
-                    <el-dropdown-menu slot="dropdown">
-                        <a v-for="item in userOptions.order" :href="item.href" class="noline">
-                            <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
-                        </a>
-                    </el-dropdown-menu>
-                </el-dropdown>
+                <el-row :gutter="20">
+                    <el-col :span="22">
+                        <div style="text-align: center;color: #77837d;">
+                            <h3><i class="el-icon-eleme"></i> {{name}}</h3>
+                        </div>
+                    </el-col>
+                    <el-col :span="2">
+                        <div>
+                            <el-dropdown>
+                                <span style="font-size: 20px;margin-left: 60px;"><i
+                                        class="el-icon-user"></i>{{user}}</span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                                        <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                                    </a>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </el-col>
+                </el-row>
 
             </el-header>
         </el-container>
@@ -110,7 +121,8 @@
                         </el-table-column>
                     </el-table>
                     <div style="margin-top:24px;">
-                        <el-button type="primary" @click="addDocWork()"><i class="el-icon-circle-plus-outline"></i> 添加作业 </el-button>
+                        <el-button type="primary" @click="addDocWork()"><i class="el-icon-circle-plus-outline"></i> 添加作业
+                        </el-button>
                     </div>
                 </el-main>
 
@@ -133,10 +145,10 @@
 
                             <div style="float:left;padding:16px 32px;">
 
-    
-                                <el-upload class="upload-demo"  drag action="http://127.0.0.1:8080/upload" name = "uploadFile"
-                                  :on-remove="handleRemove" :before-remove="beforeRemove" :on-success="handleAvatarSuccess"
-                                    :file-list="docWork.file">
+
+                                <el-upload class="upload-demo" drag action="http://127.0.0.1:8080/upload"
+                                    name="uploadFile" :on-remove="handleRemove" :before-remove="beforeRemove"
+                                    :on-success="handleAvatarSuccess" :file-list="docWork.file">
                                     <i class="el-icon-upload"></i>
                                     <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                                     <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>

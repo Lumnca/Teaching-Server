@@ -20,6 +20,7 @@
 	<script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
 	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
 	<style>
 		@import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
 
@@ -96,7 +97,7 @@
 				<!--用户信息模块-->
 				<li class="dropdown visible-md visible-lg" id="app4">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="user-avatar"
-							src="../assets/img/avatar.jpg" alt="user-mail">{{name}}</a>
+							:src="'http://127.0.0.1:8081/public/'+imgurl" alt="user-mail">{{name}}</a>
 					<ul class="dropdown-menu">
 						<li class="dropdown-menu-header">
 							<strong>Account</strong>
@@ -170,7 +171,7 @@
 					<div class="row" style="padding:8px 12px;">
 						<div class="col-lg-4">
 							<div class="block">
-								<el-image :src="item.src">
+								<el-image :src="item.img_src">
 									<div slot="placeholder" class="image-slot">
 										加载中<span class="dot">...</span>
 									</div>
@@ -183,12 +184,9 @@
 							<br><br>
 							<span style="color:#2b998a;"><b>课程教师 : {{item.teacher}}</b></span>
 							<br><br>
-							<span style="color:#2b998a;"><b>课程人数 : {{item.numbers}}</b></span>
+							<span style="color:#2b998a;"><b>课程人数 : {{item.course_numbers}}</b></span>
 							<br><br>
-							<span style="color:#2b998a;"><b v-if="item.password!=null">课程密匙 : {{item.password}}</b><b
-									v-else>课程密匙: 未设置</b></span>
-							<br><br>
-							<span style="color:#2b998a;"><b>课程状态 : {{item.state}}</b></span>
+							<span style="color:#2b998a;"><b>课程介绍 : {{item.course_info}}</b></span>
 							<br><br>
 							<span style="color:#2b998a;"><b>课程好评 :</b></span>
 							<br><br>
@@ -205,7 +203,7 @@
 								<el-footer>
 									<el-button type="success" size="small" @click="editCourse(item)">编辑&nbsp;&nbsp;<b><i
 												class="fa fa-edit"></i></b></el-button>
-									<el-button type="danger" size="small" @click="deleteCourse(item)">
+									<el-button type="danger" size="small" @click="delCourse(item)">
 										删除&nbsp;&nbsp;<b><i class="fa  fa-trash-o"></i></b></el-button>
 								</el-footer>
 							</el-container>
@@ -265,48 +263,72 @@
 			var add = new Vue({
 				el: '#edit',
 				data: {
-					course: [
-						{
-							name: 'XXX',
-							numbers: 59,
-							teacher: '张三',
-							level: 3.5,
-							src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
-							value: '#KL4411',
-							display: false,
-							state: '可用',
-							password: 'asdesqew12'
-						},
-						{
-							name: 'XXX',
-							numbers: 77,
-							teacher: '张三',
-							level: 3.8,
-							src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
-							value: '#SO8552',
-							display: false,
-							state: '初始化',
-							password: null
-						},
-						{
-							name: 'XXX',
-							numbers: 77,
-							teacher: '张三',
-							level: 3.8,
-							src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
-							value: '#SO8552',
-							display: false,
-							state: '未启用',
-							password: null
-						}
-					],
-
+					course: [],
 				},
 				methods: {
 					editCourse(item) {
+						window.localStorage.setItem('_course',JSON.stringify(item));
 						window.location.href = "courseWareMsg.html";
+					},
+					delCourse(item) {
+
+						this.$confirm('此操作将除该课程, 是否继续?', '提示', {
+							confirmButtonText: '确定',
+							cancelButtonText: '取消',
+							type: 'warning'
+						}).then(() => {
+
+
+							axios.delete('http://127.0.0.1:8081/course/' + item.id)
+								.then(function (response) {
+									add.$message({
+										type: 'success',
+										message: '删除课程成功!'
+									});
+								})
+								.catch(function () {
+									alert("删除课程失败!");
+								});
+
+							axios.post('http://127.0.0.1:8081/dasc',{
+								id : item.id
+							})
+								.then(function (response) {
+									add.$message({
+										type: 'success',
+										message: '删除课程对应选课成功!'
+									});
+								})
+								.catch(function () {
+									alert("删除课程对应选课失败!");
+								});
+
+							add.course.splice(add.course.indexOf(item),1);
+
+
+						}).catch(() => {
+							this.$message({
+								type: 'info',
+								message: '已取消删除'
+							});
+						});
 					}
-				}
+				},
+				mounted() {
+					let id = JSON.parse(window.localStorage.getItem("_user")).id;
+					axios.get('http://127.0.0.1:8081/gmc', {
+						params: {
+							id: id
+						}
+					})
+						.then(function (response) {
+							add.course = response.data;
+							console.log(response.data);
+						})
+						.catch(function () {
+							alert("请求失败!");
+						});
+				},
 			})
 		</script>
 </body>

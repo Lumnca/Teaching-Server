@@ -56,15 +56,26 @@
     <div id="app">
         <el-container style=" border: 1px solid #eee">
             <el-header style="text-align: right; font-size: 12px">
-                <el-dropdown>
-                    <span style="margin-right: 15px;font-size: 20px;"><i class="el-icon-user"></i> {{user}}</span>
-
-                    <el-dropdown-menu slot="dropdown">
-                        <a v-for="item in userOptions.order" :href="item.href" class="noline">
-                            <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
-                        </a>
-                    </el-dropdown-menu>
-                </el-dropdown>
+                <el-row :gutter="20">
+                    <el-col :span="22">
+                        <div style="text-align: center;color: #77837d;">
+                            <h3><i class="el-icon-eleme"></i> {{name}}</h3>
+                        </div>
+                    </el-col>
+                    <el-col :span="2">
+                        <div>
+                            <el-dropdown>
+                                <span style="font-size: 20px;margin-left: 60px;"><i
+                                        class="el-icon-user"></i>{{user}}</span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                                        <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                                    </a>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </el-col>
+                </el-row>
 
             </el-header>
         </el-container>
@@ -137,7 +148,8 @@
                         <div v-for="(item,i) in danxuan">
                             <div><span>{{i+1}}.</span>{{item.title}}</div>
                             <div style="margin-top: 16px">
-                                <el-radio :disabled="disabled" v-for="(option,j) in item.options" v-model="item.select":label="j">{{option}}
+                                <el-radio :disabled="disabled" v-for="(option,j) in item.options" v-model="item.select"
+                                    :label="j">{{option}}
                                 </el-radio>
                             </div>
                             <el-divider></el-divider>
@@ -195,45 +207,46 @@
 </body>
 <script src="../assets/js/courseDatas/teacourse.js"></script>
 <script>
-        var danxuan = [0,1,2,3,2,1,1,0];
-        var answer1 = [0,1,2,2,2,1,0,0];
+    var danxuan = [0, 1, 2, 3, 2, 1, 1, 0];
+    var answer1 = [0, 1, 2, 2, 2, 1, 0, 0];
 
-        var duoxuan = [
-            ['2','3']
-        ];
-        var answer2 = [
-            [2,3]
-        ];
+    var duoxuan = [
+        ['2', '3']
+    ];
+    var answer2 = [
+        [2, 3]
+    ];
 
-        var tiankong = ['5个','大脑'];
-        var answer3 = ['5','danao'];
+    var tiankong = ['5个', '大脑'];
+    var answer3 = ['5', 'danao'];
 
-        var zhuguan = ['assadasdasd'];
-        var answer4 = ['cascascas'];
+    var zhuguan = ['assadasdasd'];
+    var answer4 = ['cascascas'];
 
-        app.editdisabled = false;
-        app.danxuan.forEach((element,i) => {
-            element.select = danxuan[i];
-            if( danxuan[i] != answer1[i]){
-                element.type = 1;
-            }
-            else{
-                element.type = 0;
-            }
-        });
-        app.duoxuan.forEach((element,i) => {
-            element.select = duoxuan[i];
-            duoxuan[i]==answer2[i]? element.type = 1:element.type = 0;
-        });
+    app.editdisabled = false;
+    app.danxuan.forEach((element, i) => {
+        element.select = danxuan[i];
+        if (danxuan[i] != answer1[i]) {
+            element.type = 1;
+        }
+        else {
+            element.type = 0;
+        }
+    });
+    app.duoxuan.forEach((element, i) => {
+        element.select = duoxuan[i];
+        duoxuan[i] == answer2[i] ? element.type = 1 : element.type = 0;
+    });
 
-        app.tiankong.forEach((element,i) => {
-            element.input = tiankong[i];
-            tiankong[i].indexOf(answer3[i])!=-1 ? element.type = 1:element.type = 0;
-        });
+    app.tiankong.forEach((element, i) => {
+        element.input = tiankong[i];
+        tiankong[i].indexOf(answer3[i]) != -1 ? element.type = 1 : element.type = 0;
+    });
 
-        app.zhuguan.forEach((element,i)=> {
-            element.input = zhuguan[i];
-            zhuguan[i] == answer4[i]?  element.type = 1:element.type = 0;
-        });
+    app.zhuguan.forEach((element, i) => {
+        element.input = zhuguan[i];
+        zhuguan[i] == answer4[i] ? element.type = 1 : element.type = 0;
+    });
 </script>
+
 </html>

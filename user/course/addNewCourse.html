@@ -89,7 +89,7 @@
                 </li>
                 <!--用户信息模块-->
 				<li class="dropdown visible-md visible-lg"id="app4">
-	        		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="user-avatar" src="../assets/img/avatar.jpg" alt="user-mail">{{name}}</a>
+	        		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="user-avatar" :src="'http://127.0.0.1:8081/public/'+imgurl" alt="user-mail">{{name}}</a>
 	        		<ul class="dropdown-menu">
 						<li class="dropdown-menu-header">
 							<strong>Account</strong>
@@ -186,7 +186,9 @@
                                 <span style="color:#2b998a;"><b>课程教师 : {{course.teacher}}</b></span>
                                 <br><br>
                                 <span style="color:#2b998a;"><b>课程人数 : {{course.course_numbers}}</b></span>
-                                <br><br>
+								<br><br>
+								<span style="color:#2b998a;"><b>课程简介 : {{course.course_info}}</b></span>
+								<br><br>
                                 <span style="color:#2b998a;"><b>课程好评 :</b></span>
                                 <br><br>
                                 <el-rate
@@ -201,13 +203,13 @@
                             <div class="col-lg-4" style="text-align:right;">
                                 <el-container>
                                     <el-header>
-                                            <el-button type="danger" icon="el-icon-close" size="small" circle @click=""></el-button>
+                                            <el-button type="danger" icon="el-icon-close" size="small" circle @click="sourchDisplay=false"></el-button>
                                     </el-header>
                                     <br><br>
                                     <el-main></el-main>
                                     <br><br>
                                     <el-footer>
-                                        <el-button type="primary" size="small">添加课程&nbsp;&nbsp;<b><i class="fa fa-plus"></i></b></el-button>
+                                        <el-button type="primary" size="small" @click="addSCourse(course.id)">添加课程&nbsp;&nbsp;<b><i class="fa fa-plus"></i></b></el-button>
                                     </el-footer>
                                 </el-container>
                                 

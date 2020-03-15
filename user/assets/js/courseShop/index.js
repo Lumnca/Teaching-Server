@@ -117,12 +117,13 @@ var app = new Vue({
             console.log(tab, event);
         },
         submitForm(formName) {
+            let login = this.getLoginInfo();
             this.$refs[formName].validate((valid) => {
                 if (valid && this.loginForm.number == this.loginForm.result) {
 
-                    axios.get('http://127.0.0.1:8081/users/'+this.loginForm.id)
+                    axios.get('http://127.0.0.1:8081/users/' + this.loginForm.id)
                         .then(function (response) {
-                            if(response.data.password==app.loginForm.pass){
+                            if (response.data.password == app.loginForm.pass) {
                                 app.$message({
                                     message: '登录成功!',
                                     type: 'success'
@@ -131,19 +132,27 @@ var app = new Vue({
                                 app.user.name = app.loginForm.id;
                                 app.islogin = true;
                                 app.centerDialogVisible = false;
-                                window.localStorage.setItem('_user', JSON.stringify(app.user))
+
+                                axios.post('http://127.0.0.1:8081/login', login).then(function (response) {
+                                    console.log("Login OK!");
+                                })
+                                    .catch(function (error) {
+                                        console.log("Login Fail!");
+                                    });
+
+                                window.localStorage.setItem('_user', JSON.stringify(app.user));
                             }
-                            else{
+                            else {
                                 app.$message.error('密码错误！');
                             }
 
                         })
                         .catch(function (error) {
-                             app.$message.error('账户不存在！');
+                            app.$message.error('账户不存在！');
                         });
 
-                   
-                   
+
+
                 } else {
                     this.$message.error('验证错误！检查输入');
                     return false;
@@ -184,6 +193,22 @@ var app = new Vue({
                     app.resources.push(e);
                 }
             });
+        },
+        getLoginInfo() {
+            let ip = returnCitySN["cip"];
+            let time = new Date();
+            let format = time.getFullYear() + "/" + (time.getMonth() + 1) + "/" + time.getDate() + " " + time.getHours() + ":" + time.getMinutes()+":" + time.getSeconds();
+            let id = this.loginForm.id;
+            let ps = this.loginForm.pass;
+
+            var login = {
+                user_id: id,
+                input_pw: ps,
+                login_time: format,
+                login_ip: ip,
+                index: 1
+            }
+            return login;
         }
     },
     computed: {

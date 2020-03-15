@@ -50,15 +50,26 @@
     <div id="app">
         <el-container style=" border: 1px solid #eee">
             <el-header style="text-align: right; font-size: 12px">
-                <el-dropdown>
-                    <span style="margin-right: 15px;font-size: 20px;"><i class="el-icon-user"></i> {{user}}</span>
-
-                    <el-dropdown-menu slot="dropdown">
-                        <a v-for="item in userOptions.order" :href="item.href" class="noline">
-                            <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
-                        </a>
-                    </el-dropdown-menu>
-                </el-dropdown>
+                <el-row :gutter="20">
+                    <el-col :span="22">
+                        <div style="text-align: center;color: #77837d;">
+                            <h3><i class="el-icon-eleme"></i> {{name}}</h3>
+                        </div>
+                    </el-col>
+                    <el-col :span="2">
+                        <div>
+                            <el-dropdown>
+                                <span style="font-size: 20px;margin-left: 60px;"><i
+                                        class="el-icon-user"></i>{{user}}</span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                                        <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                                    </a>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </el-col>
+                </el-row>
 
             </el-header>
         </el-container>
@@ -83,53 +94,60 @@
                 </el-header>
                 <hr>
                 <el-main>
-                    <div  v-for="(i) in Math.ceil(docWorkSumbit.length/5)" >
-                        <el-col  :span="5" v-for="(j) in 5" :key="j" :offset="j > 0? 1 : 0" v-if="docWorkSumbit[(i-1)*5+j-1]!=null" style="margin-top:20px;" >
+                    <div v-for="(i) in Math.ceil(docWorkSumbit.length/5)">
+                        <el-col :span="5" v-for="(j) in 5" :key="j" :offset="j > 0? 1 : 0"
+                            v-if="docWorkSumbit[(i-1)*5+j-1]!=null" style="margin-top:20px;">
                             <el-card :body-style="{ padding: '7px 12px'}">
-                                <h2><span><i class="el-icon-tickets"></i></span> {{docWorkSumbit[(i-1)*5+j-1].file}} <span v-if="docWorkSumbit[(i-1)*5+j-1].score>0" style="float:right;color: rgb(125, 224, 43);font-size: 18px;">得分 : {{docWorkSumbit[(i-1)*5+j-1].score}}</span></h2>
+                                <h2><span><i class="el-icon-tickets"></i></span> {{docWorkSumbit[(i-1)*5+j-1].file}}
+                                    <span v-if="docWorkSumbit[(i-1)*5+j-1].score>0"
+                                        style="float:right;color: rgb(125, 224, 43);font-size: 18px;">得分 :
+                                        {{docWorkSumbit[(i-1)*5+j-1].score}}</span></h2>
                                 <div style="padding: 14px;">
                                     <span><i class="el-icon-s-custom"></i> {{docWorkSumbit[(i-1)*5+j-1].name}}</span>
                                     <div class="bottom clearfix">
-                                        <time class="time"><i class="el-icon-time"></i> {{docWorkSumbit[(i-1)*5+j-1].date}}</time>
-                                        
-                                        <el-button type="text" class="button"><a href="../assets/doc/test.txt"> 下载 </a></el-button>
-                                        <el-button type="text" class="button" @click="dialogFormVisible8 = true,selectDocWork=docWorkSumbit[(i-1)*5+j-1]">评分</el-button>
-                                        <el-button type="text" class="button" @click="delSDocWorkSumbit((i-1)*5+j-1)">删除</el-button>
+                                        <time class="time"><i class="el-icon-time"></i>
+                                            {{docWorkSumbit[(i-1)*5+j-1].date}}</time>
+
+                                        <el-button type="text" class="button"><a href="../assets/doc/test.txt"> 下载 </a>
+                                        </el-button>
+                                        <el-button type="text" class="button"
+                                            @click="dialogFormVisible8 = true,selectDocWork=docWorkSumbit[(i-1)*5+j-1]">
+                                            评分</el-button>
+                                        <el-button type="text" class="button" @click="delSDocWorkSumbit((i-1)*5+j-1)">删除
+                                        </el-button>
                                     </div>
                                 </div>
                             </el-card>
                         </el-col>
                     </div>
-                    
 
-                    <el-dialog
-                      title="提示"
-                      :visible.sync="dialogFormVisible8"
-                      width="30%">
-                      <el-input-number v-model="selectDocWork.score"  :min="0" :max="100" label="描述文字"></el-input-number>
-                      <span slot="footer" class="dialog-footer">
-                        <el-button @click="dialogFormVisible8 = false">取 消</el-button>
-                        <el-button type="primary" @click="dialogFormVisible8 = false">确 定</el-button>
-                      </span>
+
+                    <el-dialog title="提示" :visible.sync="dialogFormVisible8" width="30%">
+                        <el-input-number v-model="selectDocWork.score" :min="0" :max="100" label="描述文字">
+                        </el-input-number>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button @click="dialogFormVisible8 = false">取 消</el-button>
+                            <el-button type="primary" @click="dialogFormVisible8 = false">确 定</el-button>
+                        </span>
                     </el-dialog>
-                   
+
                 </el-main>
             </el-container>
         </el-container>
     </div>
     <script src="../assets/js/courseDatas/teacourse.js"></script>
     <script>
-        
+
         app.docWorkSumbit = [
-            {name:'张三',file:'zs.doc',date:'2018/12/21 12:00',score:79},
-            {name:'李四',file:'ls.doc',date:'2018/12/21 13:00',score:89},
-            {name:'王五',file:'ww.doc', date:'2018/12/21 14:00',score:62},
-            {name:'刘六',file:'ll.doc',date:'2018/12/21 15:00',score:94},
-            {name:'元气',file:'yq.doc',date:'2018/12/21 16:00',score:42},
-            {name:'手打',file:'sd.doc',date:'2018/12/21 17:00',score:52},
-            {name:'奥德',file:'ad.doc',date:'2018/12/21 18:00',score:-1},
-            {name:'阿达',file:'ads.doc',date:'2018/12/21 19:00',score:-1},
-            {name:'阿萨德',file:'zsss.doc',date:'2018/12/21 20:00',score:58}
+            { name: '张三', file: 'zs.doc', date: '2018/12/21 12:00', score: 79 },
+            { name: '李四', file: 'ls.doc', date: '2018/12/21 13:00', score: 89 },
+            { name: '王五', file: 'ww.doc', date: '2018/12/21 14:00', score: 62 },
+            { name: '刘六', file: 'll.doc', date: '2018/12/21 15:00', score: 94 },
+            { name: '元气', file: 'yq.doc', date: '2018/12/21 16:00', score: 42 },
+            { name: '手打', file: 'sd.doc', date: '2018/12/21 17:00', score: 52 },
+            { name: '奥德', file: 'ad.doc', date: '2018/12/21 18:00', score: -1 },
+            { name: '阿达', file: 'ads.doc', date: '2018/12/21 19:00', score: -1 },
+            { name: '阿萨德', file: 'zsss.doc', date: '2018/12/21 20:00', score: 58 }
         ]
     </script>
 </body>

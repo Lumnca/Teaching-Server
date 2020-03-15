@@ -23,6 +23,7 @@
 	<link href="assets/css/add-ons.min.css" rel="stylesheet">
 	<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
 	<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+
 </head>
 </head>
 
@@ -92,7 +93,7 @@
 				<!--用户信息模块-->
 				<li class="dropdown visible-md visible-lg" id="app4">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="user-avatar"
-							src="assets/img/avatar.jpg" alt="user-mail">{{name}}</a>
+							:src="'http://127.0.0.1:8081/public/'+imgurl" alt="user-mail">{{name}}</a>
 					<ul class="dropdown-menu">
 						<li class="dropdown-menu-header">
 							<strong>Account</strong>
@@ -158,120 +159,18 @@
 					</ol>
 				</div>
 			</div>
-			<div class="row">
-
-
-			</div>
 			<!--/.row-->
 
-			<div class="row">
 
-				<div class="col-lg-9 col-md-12">
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<a href="#">课程总览</a>
-						</div>
-					</div>
-				</div>
-				<!--/col-->
-
-				<div class="col-lg-3 col-md-12">
-					<div class="panel panel-default">
-						<div class="panel-body white-bg">
-							<a href="#">课程总览</a>
-						</div>
-					</div>
-				</div>
-				<!--/.col-->
-
-			</div>
-			<!--/.row-->
-
-			<div class="row">
-
-
-				<div class="col-lg-3 col-md-12">
-
-					<div class="panel panel-default">
-
-						<div class="panel-body weather widget">
-
-							<div class="today text-center">
-								<a href="#">课程总览</a>
-
-							</div>
-
-							<div class="forecast row text-center">
-
-								<a href="#">课程总览</a>
-							</div>
-
-						</div>
-					</div>
-
-				</div>
-				<!--/.col-->
-
-				<div class="col-lg-3 col-md-12">
-
-					<div class="panel panel-default">
-
-						<div class="panel-body weather widget">
-
-							<div class="today text-center">
-
-								<a href="#">课程总览</a>
-							</div>
-
-							<div class="forecast row text-center">
-
-
-								<a href="#">课程总览</a>
-							</div>
-
-						</div>
-					</div>
-
-				</div>
-				<!--/.col-->
-
-				<div class="col-lg-3 col-md-6">
-
-					<div class="panel panel-default">
-
-						<div class="panel-body text-center" style="height:230px">
-							<a href="#">课程总览</a>
-						</div>
-
-					</div>
-
-				</div>
-				<!--/.col-->
-
-				<div class="col-lg-3 col-md-6">
-
-					<div class="panel panel-default">
-
-						<div class="panel-body text-center" style="height:230px">
-							<a href="#">课程总览</a>
-						</div>
-
-					</div>
-
-				</div>
-				<!--/.col-->
-			</div>
-			<!--/row-->
 
 			<div class="row">
 
 				<div class="col-sm-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h2><i class="fa fa-bar-chart-o red"></i><strong>xCharts</strong></h2>
+							<h2><i class="fa fa-bar-chart-o red"></i><strong>使用统计</strong></h2>
 							<div class="panel-actions">
-								<a href="charts-xcharts.html#" class="btn-setting"><i
-										class="fa fa-rotate-right"></i></a>
+								<a href="" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
 								<a href="charts-xcharts.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
 								<a href="charts-xcharts.html#" class="btn-close"><i class="fa fa-times"></i></a>
 							</div>
@@ -288,11 +187,11 @@
 
 			<div class="row">
 
-				<div class="col-lg-6 col-md-12">
+				<div class="col-lg-12 col-md-12">
 
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h2><i class="fa fa-spinner red"></i><strong>In Progress</strong></h2>
+							<h2><i class="fa fa-spinner red"></i><strong>课程进度</strong></h2>
 							<div class="panel-actions">
 								<a href="index.html#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
 								<a href="index.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
@@ -309,10 +208,10 @@
 									<table class="table bootstrap-datatable datatable small-font">
 										<thead>
 											<tr>
-												<th>Task</th>
-												<th>Assigned to</th>
-												<th>Progress</th>
-												<th class="center">Status</th>
+												<th>课程</th>
+												<th>用户</th>
+												<th>进度</th>
+												<th class="center">状态</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -501,348 +400,265 @@
 					</div>
 
 				</div>
-				<!--/col-->
-				<div class="col-md-3">
 
-					<div class="social-box facebook">
-						<i class="fa fa-facebook"></i>
-						<ul>
-							<li>
-								<strong>256k</strong>
-								<span>friends</span>
-							</li>
-							<li>
-								<strong>359</strong>
-								<span>feeds</span>
-							</li>
-						</ul>
-					</div>
-					<!--/social-box-->
+				<div class="row">
 
-				</div>
-				<!--/col-->
-
-				<div class="col-md-3">
-
-					<div class="social-box twitter">
-						<i class="fa fa-twitter"></i>
-						<ul>
-							<li>
-								<strong>1562k</strong>
-								<span>followers</span>
-							</li>
-							<li>
-								<strong>2562</strong>
-								<span>tweets</span>
-							</li>
-						</ul>
-					</div>
-					<!--/social-box-->
-
-				</div>
-				<!--/col-->
-
-				<div class="col-md-3">
-
-					<div class="social-box linkedin">
-						<i class="fa fa-linkedin"></i>
-						<ul>
-							<li>
-								<strong>8926</strong>
-								<span>contacts</span>
-							</li>
-							<li>
-								<strong>6253</strong>
-								<span>feeds</span>
-							</li>
-						</ul>
-					</div>
-					<!--/social-box-->
-
-				</div>
-				<!--/col-->
-
-				<div class="col-md-3">
-
-					<div class="social-box google-plus">
-						<i class="fa fa-google-plus"></i>
-						<ul>
-							<li>
-								<strong>962</strong>
-								<span>followers</span>
-							</li>
-							<li>
-								<strong>256</strong>
-								<span>circles</span>
-							</li>
-						</ul>
-					</div>
-					<!--/social-box-->
-
-				</div>
-				<!--/col-->
-
-			</div>
-			<!--/row-->
-
-			<div class="row">
-
-				<div class="col-lg-4 col-md-12">
-					<div class="panel panel-default calendar">
-						<div class="calendar-small"></div>
-						<div class="list">
-							<ul>
-								<li>
-									<label class="custom-checkbox-item">
-										<input class="custom-checkbox" type="checkbox" />
-										<span class="custom-checkbox-mark"></span>
-										<span class="custom-checkbox-desc">Lunch With Clients</span>
-										<i class="fa fa-thumbs-o-up"></i>
-									</label>
-								</li>
-								<li>
-									<label class="custom-checkbox-item">
-										<input class="custom-checkbox" type="checkbox" />
-										<span class="custom-checkbox-mark"></span>
-										<span class="custom-checkbox-desc">Meeting With All Staff</span>
-										<i class="fa fa-space-shuttle"></i>
-									</label>
-								</li>
-								<li>
-									<label class="custom-checkbox-item">
-										<input class="custom-checkbox" type="checkbox" />
-										<span class="custom-checkbox-mark"></span>
-										<span class="custom-checkbox-desc">Factory Birthday</span>
-										<i class="fa fa-star-half-o"></i>
-									</label>
-								</li>
-							</ul>
-							<div class="row">
-								<div class="col-xs-6">
-									<button type="button" class="btn btn-success btn-block">Accept</button>
-								</div>
-								<!--/col-->
-								<div class="col-xs-6">
-									<button type="button" class="btn btn-default btn-block">Discard</button>
-								</div>
-								<!--/col-->
-							</div>
-							<!--/row-->
-						</div>
-					</div>
-				</div>
-				<!--/col-->
-
-				<div class="col-lg-8 col-md-12">
-
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h2><i class="fa fa-check red"></i><strong>To Do</strong></h2>
-							<div class="panel-actions">
-								<a href="index.html#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
-								<a href="index.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-								<a href="index.html#" class="btn-close"><i class="fa fa-times"></i></a>
-							</div>
-						</div>
-						<div class="panel-body no-padding">
-							<div class="todo-list">
-								<div class="header">Today</div>
-								<ul id="todo-2" class="todo-list-tasks">
+					<div class="col-lg-4 col-md-12">
+						<div class="panel panel-default calendar">
+							<div class="calendar-small"></div>
+							<div class="list">
+								<ul>
 									<li>
-										<label class="custom-checkbox-item pull-left">
+										<label class="custom-checkbox-item">
 											<input class="custom-checkbox" type="checkbox" />
 											<span class="custom-checkbox-mark"></span>
+											<span class="custom-checkbox-desc">Lunch With Clients</span>
+											<i class="fa fa-thumbs-o-up"></i>
 										</label>
-										<span class="desc">Add slider home to creative template</span>
 									</li>
 									<li>
-										<label class="custom-checkbox-item pull-left">
+										<label class="custom-checkbox-item">
 											<input class="custom-checkbox" type="checkbox" />
 											<span class="custom-checkbox-mark"></span>
+											<span class="custom-checkbox-desc">Meeting With All Staff</span>
+											<i class="fa fa-space-shuttle"></i>
 										</label>
-										<span class="desc">Change portfolio image with new animation</span>
 									</li>
 									<li>
-										<label class="custom-checkbox-item pull-left">
+										<label class="custom-checkbox-item">
 											<input class="custom-checkbox" type="checkbox" />
 											<span class="custom-checkbox-mark"></span>
+											<span class="custom-checkbox-desc">Factory Birthday</span>
+											<i class="fa fa-star-half-o"></i>
 										</label>
-										<span class="desc">Fixed JavaScript problem for index page</span>
 									</li>
 								</ul>
-								<div class="header">Tommorow</div>
-								<ul id="todo-3" class="todo-list-tasks">
-									<li>
-										<label class="custom-checkbox-item pull-left">
-											<input class="custom-checkbox" type="checkbox" />
-											<span class="custom-checkbox-mark"></span>
-										</label>
-										<span class="desc">Update sliding menu with newest</span>
-									</li>
-									<li>
-										<label class="custom-checkbox-item pull-left">
-											<input class="custom-checkbox" type="checkbox" />
-											<span class="custom-checkbox-mark"></span>
-										</label>
-										<span class="desc">Change navigation structure on header</span>
-									</li>
-								</ul>
-								<div class="header">Completed</div>
-								<ul class="completed"></ul>
-							</div>
-						</div>
-						<div class="panel-footer">
-							<div class="form-group">
-								<input type="email" class="form-control" placeholder="Add new task">
-							</div>
-							<div class="btn-group">
-								<button type="button" class="btn btn-link"><i class="fa fa-wheelchair"></i></button>
-								<button type="button" class="btn btn-link"><i class="fa fa-file-text"></i></button>
-								<button type="button" class="btn btn-link"><i class="fa fa-heart"></i></button>
-							</div>
-
-							<div class="pull-right">
-								<button type="button" class="btn btn-primary">Submit</button>
+								<div class="row">
+									<div class="col-xs-6">
+										<button type="button" class="btn btn-success btn-block">Accept</button>
+									</div>
+									<!--/col-->
+									<div class="col-xs-6">
+										<button type="button" class="btn btn-default btn-block">Discard</button>
+									</div>
+									<!--/col-->
+								</div>
+								<!--/row-->
 							</div>
 						</div>
 					</div>
+					<!--/col-->
+
+					<div class="col-lg-8 col-md-12">
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h2><i class="fa fa-check red"></i><strong>To Do</strong></h2>
+								<div class="panel-actions">
+									<a href="index.html#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
+									<a href="index.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+									<a href="index.html#" class="btn-close"><i class="fa fa-times"></i></a>
+								</div>
+							</div>
+							<div class="panel-body no-padding">
+								<div class="todo-list">
+									<div class="header">Today</div>
+									<ul id="todo-2" class="todo-list-tasks">
+										<li>
+											<label class="custom-checkbox-item pull-left">
+												<input class="custom-checkbox" type="checkbox" />
+												<span class="custom-checkbox-mark"></span>
+											</label>
+											<span class="desc">Add slider home to creative template</span>
+										</li>
+										<li>
+											<label class="custom-checkbox-item pull-left">
+												<input class="custom-checkbox" type="checkbox" />
+												<span class="custom-checkbox-mark"></span>
+											</label>
+											<span class="desc">Change portfolio image with new animation</span>
+										</li>
+										<li>
+											<label class="custom-checkbox-item pull-left">
+												<input class="custom-checkbox" type="checkbox" />
+												<span class="custom-checkbox-mark"></span>
+											</label>
+											<span class="desc">Fixed JavaScript problem for index page</span>
+										</li>
+									</ul>
+									<div class="header">Tommorow</div>
+									<ul id="todo-3" class="todo-list-tasks">
+										<li>
+											<label class="custom-checkbox-item pull-left">
+												<input class="custom-checkbox" type="checkbox" />
+												<span class="custom-checkbox-mark"></span>
+											</label>
+											<span class="desc">Update sliding menu with newest</span>
+										</li>
+										<li>
+											<label class="custom-checkbox-item pull-left">
+												<input class="custom-checkbox" type="checkbox" />
+												<span class="custom-checkbox-mark"></span>
+											</label>
+											<span class="desc">Change navigation structure on header</span>
+										</li>
+									</ul>
+									<div class="header">Completed</div>
+									<ul class="completed"></ul>
+								</div>
+							</div>
+							<div class="panel-footer">
+								<div class="form-group">
+									<input type="email" class="form-control" placeholder="Add new task">
+								</div>
+								<div class="btn-group">
+									<button type="button" class="btn btn-link"><i class="fa fa-wheelchair"></i></button>
+									<button type="button" class="btn btn-link"><i class="fa fa-file-text"></i></button>
+									<button type="button" class="btn btn-link"><i class="fa fa-heart"></i></button>
+								</div>
+
+								<div class="pull-right">
+									<button type="button" class="btn btn-primary">Submit</button>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!--/col-->
 
 				</div>
-				<!--/col-->
+				<!--/row-->
 
 			</div>
-			<!--/row-->
+			<!-- end: Content -->
+			<br><br><br>
+
+
+			<div id="usage">
+				<ul>
+					<li>
+						<div class="title">Memory</div>
+						<div class="bar">
+							<div class="progress">
+								<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50"
+									aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
+							</div>
+						</div>
+						<div class="desc">4GB of 8GB</div>
+					</li>
+					<li>
+						<div class="title">HDD</div>
+						<div class="bar">
+							<div class="progress">
+								<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="25"
+									aria-valuemin="0" aria-valuemax="100" style="width: 25%"></div>
+							</div>
+						</div>
+						<div class="desc">250GB of 1TB</div>
+					</li>
+					<li>
+						<div class="title">SSD</div>
+						<div class="bar">
+							<div class="progress">
+								<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="70"
+									aria-valuemin="0" aria-valuemax="100" style="width: 70%"></div>
+							</div>
+						</div>
+						<div class="desc">700GB of 1TB</div>
+					</li>
+					<li>
+						<div class="title">Bandwidth</div>
+						<div class="bar">
+							<div class="progress">
+								<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="90"
+									aria-valuemin="0" aria-valuemax="100" style="width: 90%"></div>
+							</div>
+						</div>
+						<div class="desc">90TB of 100TB</div>
+					</li>
+				</ul>
+			</div>
 
 		</div>
-		<!-- end: Content -->
-		<br><br><br>
+		<!--/container-->
 
 
-		<div id="usage">
-			<ul>
-				<li>
-					<div class="title">Memory</div>
-					<div class="bar">
-						<div class="progress">
-							<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50"
-								aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
-						</div>
+		<div class="modal fade" id="myModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Warning Title</h4>
 					</div>
-					<div class="desc">4GB of 8GB</div>
-				</li>
-				<li>
-					<div class="title">HDD</div>
-					<div class="bar">
-						<div class="progress">
-							<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="25"
-								aria-valuemin="0" aria-valuemax="100" style="width: 25%"></div>
-						</div>
+					<div class="modal-body">
+						<p>Here settings can be configured...</p>
 					</div>
-					<div class="desc">250GB of 1TB</div>
-				</li>
-				<li>
-					<div class="title">SSD</div>
-					<div class="bar">
-						<div class="progress">
-							<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="70"
-								aria-valuemin="0" aria-valuemax="100" style="width: 70%"></div>
-						</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save changes</button>
 					</div>
-					<div class="desc">700GB of 1TB</div>
-				</li>
-				<li>
-					<div class="title">Bandwidth</div>
-					<div class="bar">
-						<div class="progress">
-							<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="90"
-								aria-valuemin="0" aria-valuemax="100" style="width: 90%"></div>
-						</div>
-					</div>
-					<div class="desc">90TB of 100TB</div>
-				</li>
-			</ul>
-		</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 
-	</div>
-	<!--/container-->
+		<div class="clearfix"></div>
 
 
-	<div class="modal fade" id="myModal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Warning Title</h4>
-				</div>
-				<div class="modal-body">
-					<p>Here settings can be configured...</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
-				</div>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
+		<!-- start: JavaScript-->
+		<!--[if !IE]>-->
 
-	<div class="clearfix"></div>
+		<script src="assets/js/jquery-2.1.1.min.js"></script>
 
+		<!--<![endif]-->
 
-	<!-- start: JavaScript-->
-	<!--[if !IE]>-->
-
-	<script src="assets/js/jquery-2.1.1.min.js"></script>
-
-	<!--<![endif]-->
-
-	<!--[if IE]>
+		<!--[if IE]>
 	
 		<script src="assets/js/jquery-1.11.1.min.js"></script>
 	
 	<![endif]-->
 
-	<!--[if !IE]>-->
+		<!--[if !IE]>-->
 
-	<script type="text/javascript">
-		window.jQuery || document.write("<script src='assets/js/jquery-2.1.1.min.js'>" + "<" + "/script>");
-	</script>
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='assets/js/jquery-2.1.1.min.js'>" + "<" + "/script>");
+		</script>
 
-	<!--<![endif]-->
+		<!--<![endif]-->
 
-	<!--[if IE]>
+		<!--[if IE]>
 	
 		<script type="text/javascript">
 	 	window.jQuery || document.write("<script src='assets/js/jquery-1.11.1.min.js'>"+"<"+"/script>");
 		</script>
 		
 	<![endif]-->
-	<script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
-	<script src="assets/js/index.js"></script>
-	<!-- page scripts -->
-	<script src="assets/plugins/jquery-ui/js/jquery-ui-1.10.4.min.js"></script>
-	<script src="assets/plugins/touchpunch/jquery.ui.touch-punch.min.js"></script>
-	<script src="assets/plugins/moment/moment.min.js"></script>
-	<script src="assets/plugins/fullcalendar/js/fullcalendar.min.js"></script>
-	<script src="assets/plugins/flot/jquery.flot.min.js"></script>
-	<script src="assets/plugins/flot/jquery.flot.pie.min.js"></script>
-	<script src="assets/plugins/flot/jquery.flot.stack.min.js"></script>
-	<script src="assets/plugins/flot/jquery.flot.resize.min.js"></script>
-	<script src="assets/plugins/flot/jquery.flot.time.min.js"></script>
-	<script src="assets/plugins/flot/jquery.flot.spline.min.js"></script>
-	<script src="assets/plugins/xcharts/js/xcharts.min.js"></script>
-	<script src="assets/plugins/autosize/jquery.autosize.min.js"></script>
-	<script src="assets/plugins/placeholder/jquery.placeholder.min.js"></script>
-	<script src="assets/plugins/datatables/js/jquery.dataTables.min.js"></script>
-	<script src="assets/plugins/datatables/js/dataTables.bootstrap.min.js"></script>
-	<script src="assets/plugins/raphael/raphael.min.js"></script>
-	<script src="assets/plugins/jvectormap/js/jquery-jvectormap-1.2.2.min.js"></script>
-	<script src="assets/plugins/jvectormap/js/jquery-jvectormap-world-mill-en.js"></script>
-	<script src="assets/plugins/jvectormap/js/gdp-data.js"></script>
-	<script src="assets/js/SmoothScroll.js"></script>
-	<script src="assets/js/jquery.mmenu.min.js"></script>
-	<script src="assets/js/core.min.js"></script>
-	<script src="assets/js/pages/index.js"></script>
+		<script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+		<script src="assets/js/bootstrap.min.js"></script>
+		<script src="assets/js/index.js"></script>
+		<!-- page scripts -->
+		<script src="assets/plugins/jquery-ui/js/jquery-ui-1.10.4.min.js"></script>
+		<script src="assets/plugins/touchpunch/jquery.ui.touch-punch.min.js"></script>
+		<script src="assets/plugins/moment/moment.min.js"></script>
+		<script src="assets/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+		<script src="assets/plugins/flot/jquery.flot.min.js"></script>
+		<script src="assets/plugins/flot/jquery.flot.pie.min.js"></script>
+		<script src="assets/plugins/flot/jquery.flot.stack.min.js"></script>
+		<script src="assets/plugins/flot/jquery.flot.resize.min.js"></script>
+		<script src="assets/plugins/flot/jquery.flot.time.min.js"></script>
+		<script src="assets/plugins/flot/jquery.flot.spline.min.js"></script>
+		<script src="assets/plugins/xcharts/js/xcharts.min.js"></script>
+		<script src="assets/plugins/autosize/jquery.autosize.min.js"></script>
+		<script src="assets/plugins/placeholder/jquery.placeholder.min.js"></script>
+		<script src="assets/plugins/datatables/js/jquery.dataTables.min.js"></script>
+		<script src="assets/plugins/datatables/js/dataTables.bootstrap.min.js"></script>
+		<script src="assets/plugins/raphael/raphael.min.js"></script>
+		<script src="assets/plugins/jvectormap/js/jquery-jvectormap-1.2.2.min.js"></script>
+		<script src="assets/plugins/jvectormap/js/jquery-jvectormap-world-mill-en.js"></script>
+		<script src="assets/plugins/jvectormap/js/gdp-data.js"></script>
+		<script src="assets/js/SmoothScroll.js"></script>
+		<script src="assets/js/jquery.mmenu.min.js"></script>
+		<script src="assets/js/core.min.js"></script>
+		<script src="assets/js/pages/index.js"></script>
 </body>
 
 </html>

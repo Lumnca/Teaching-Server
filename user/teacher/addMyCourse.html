@@ -20,6 +20,7 @@
 	<script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
 	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
 	<style>
 		@import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
 
@@ -96,7 +97,7 @@
 				<!--用户信息模块-->
 				<li class="dropdown visible-md visible-lg" id="app4">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="user-avatar"
-							src="../assets/img/avatar.jpg" alt="user-mail">{{name}}</a>
+							:src="'http://127.0.0.1:8081/public/'+imgurl" alt="user-mail">{{name}}</a>
 					<ul class="dropdown-menu">
 						<li class="dropdown-menu-header">
 							<strong>Account</strong>
@@ -166,58 +167,61 @@
 			</div>
 			<div id="add">
 				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+					<el-form-item label="课堂ID" prop="id">
+						<el-input v-model="ruleForm.id"></el-input>
+					</el-form-item>
 					<el-form-item label="课堂名称" prop="name">
 						<el-input v-model="ruleForm.name"></el-input>
 					</el-form-item>
-					<el-form-item label="类型" prop="region">
-						<el-select v-model="ruleForm.region" placeholder="请选择课堂类型">
-							<el-option label="公共" value="shanghai"></el-option>
-							<el-option label="私人" value="beijing"></el-option>
+					<el-form-item label="类型" prop="type">
+						<el-select v-model="ruleForm.type" placeholder="请选择课堂类型">
+							<el-option label="公共" value="public"></el-option>
+							<el-option label="私人" value="private"></el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item label="是否付费" prop="delivery">
-						<el-switch v-model="ruleForm.delivery"></el-switch>
+					<el-form-item label="是否付费" prop="is_cost">
+						<el-switch v-model="ruleForm.is_cost"></el-switch>
 
 					</el-form-item>
 					<el-form-item label="价格" prop="price">
-						<el-input v-model="ruleForm.price" :disabled="!ruleForm.delivery"></el-input>
+						<el-input v-model="ruleForm.price" :disabled="!ruleForm.is_cost"></el-input>
 					</el-form-item>
 					<el-form-item label="开课时间" required>
 						<el-col :span="11">
-							<el-form-item prop="date1">
-								<el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1"
+							<el-form-item prop="start_date">
+								<el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.start_date"
 									style="width: 100%;"></el-date-picker>
 							</el-form-item>
 						</el-col>
 						<el-col class="line" :span="2">-</el-col>
 						<el-col :span="11">
-							<el-form-item prop="date2">
-								<el-time-picker placeholder="选择时间" v-model="ruleForm.date2" style="width: 100%;">
+							<el-form-item prop="start_time">
+								<el-time-picker placeholder="选择时间" v-model="ruleForm.start_time" style="width: 100%;">
 								</el-time-picker>
 							</el-form-item>
 						</el-col>
 					</el-form-item>
-					
-					<el-form-item label="课堂标签" prop="type">
-						<el-checkbox-group v-model="ruleForm.type">
-							<el-checkbox label="生活" name="type"></el-checkbox>
-							<el-checkbox label="科技" name="type"></el-checkbox>
-							<el-checkbox label="艺术" name="type"></el-checkbox>
-							<el-checkbox label="教育" name="type"></el-checkbox>
-							<el-checkbox label="自然" name="type"></el-checkbox>
-							<el-checkbox label="文学" name="type"></el-checkbox>
-							<el-checkbox label="技术" name="type"></el-checkbox>
-							<el-checkbox label="理工" name="type"></el-checkbox>
+
+					<el-form-item label="课堂标签" prop="course_icon">
+						<el-checkbox-group v-model="ruleForm.course_icon">
+							<el-checkbox label="生活" name="course_icon"></el-checkbox>
+							<el-checkbox label="科技" name="course_icon"></el-checkbox>
+							<el-checkbox label="艺术" name="course_icon"></el-checkbox>
+							<el-checkbox label="教育" name="course_icon"></el-checkbox>
+							<el-checkbox label="自然" name="course_icon"></el-checkbox>
+							<el-checkbox label="文学" name="course_icon"></el-checkbox>
+							<el-checkbox label="技术" name="course_icon"></el-checkbox>
+							<el-checkbox label="理工" name="course_icon"></el-checkbox>
 						</el-checkbox-group>
 					</el-form-item>
-					<el-form-item label="特殊资源" prop="resource">
-						<el-radio-group v-model="ruleForm.resource">
+					<el-form-item label="特殊资源" prop="other">
+						<el-radio-group v-model="ruleForm.other">
 							<el-radio label="基本"></el-radio>
 							<el-radio label="监控"></el-radio>
 						</el-radio-group>
 					</el-form-item>
-					<el-form-item label="课堂介绍" prop="desc">
-						<el-input type="textarea" v-model="ruleForm.desc"></el-input>
+					<el-form-item label="课堂介绍" prop="course_info">
+						<el-input type="textarea" v-model="ruleForm.course_info"></el-input>
 					</el-form-item>
 					<el-form-item>
 						<el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
@@ -274,53 +278,120 @@
 		<script src="../assets/js/index.js"></script>
 		<script>
 			var add = new Vue({
-				el : '#add',
-				data : {
-						ruleForm: {
-							name: '',
-							region: '',
-							date1: '',
-							date2: '',
-							delivery: false,
-							type: [],
-							resource: '',
-							desc: '',
-							price : 0
-						},
-						rules: {
-							name: [
-								{ required: true, message: '请输入课堂名称', trigger: 'blur' },
-								{ min: 2, max: 25, message: '长度在 2 到 25 个字符', trigger: 'blur' }
-							],
-							region: [
-								{ required: true, message: '请输入', trigger: 'change' }
-							],
-							date1: [
-								{ type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-							],
-							date2: [
-								{ type: 'date', required: true, message: '请选择时间', trigger: 'change' }
-							],
-							type: [
-								{ type: 'array', required: true, message: '请至少选择一个', trigger: 'change' }
-							],
-							resource: [
-								{ required: true, message: '请选择', trigger: 'change' }
-							],
-							desc: [
-								{ required: true, message: '请输入课堂介绍', trigger: 'blur' }
-							],
-							price : [
-								{ type: 'number', required: true, message: '请输入价格', trigger: 'change' }	
-							]
-						}
-					
+				el: '#add',
+				data: {
+					ruleForm: {
+						id: '',
+						name: '',
+						type: '',
+						start_date: '',
+						start_time: '',
+						is_cost: false,
+						course_icon: [],
+						other: '',
+						coutse_info: '',
+						price: 0
+					},
+					rules: {
+						id: [
+							{ required: true, message: '请输入', trigger: 'change' },
+							{ min: 8, max: 20, message: '长度在 8 到 20 个字符', trigger: 'blur' }
+						],
+						name: [
+							{ required: true, message: '请输入课堂名称', trigger: 'blur' },
+							{ min: 2, max: 25, message: '长度在 2 到 25 个字符', trigger: 'blur' }
+						],
+						type: [
+							{ required: true, message: '请输入', trigger: 'change' }
+						],
+						start_date: [
+							{ type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+						],
+						start_time: [
+							{ type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+						],
+						course_icon: [
+							{ type: 'array', message: '请至少选择一个', trigger: 'change' }
+						],
+						other: [
+							{ required: true, message: '请选择', trigger: 'change' }
+						],
+						course_info: [
+							{ required: true, message: '请输入课堂介绍', trigger: 'blur' }
+						],
+						price: [
+							{ required: true, message: '请输入', trigger: 'change' }
+						]
+					}
+
 				},
 				methods: {
 					submitForm(formName) {
+
+						let uid = JSON.parse(window.localStorage.getItem('_user')).id;
+
 						this.$refs[formName].validate((valid) => {
 							if (valid) {
-								alert('submit!');
+								var c = add.ruleForm;
+
+								c.teacher = window.localStorage.getItem('_userName');
+								c.level = 2.5;
+								c.img_src = '';
+								c.course_numbers = 0;
+								c.classes = 0;
+								c.course_icon = c.course_icon.toString();
+								c.is_cost = c.is_cost ? 1 : 0;
+
+								axios.post('http://127.0.0.1:8081/course', c)
+									.then(function (response) {
+
+										axios.post('http://127.0.0.1:8081/asc', { uid: uid, cid: c.id, iden: 'T' })
+											.then(function (response) {
+												add.$message({
+													message: '添加成功！',
+													type: 'success'
+												});
+												setTimeout(() => {
+													window.location.href = "courseEdit.html";
+												}, 1000);
+											})
+											.catch(function () {
+												//响应失败的操作
+												c = {
+													id: '',
+													name: '',
+													type: '',
+													start_date: '',
+													start_time: '',
+													is_cost: false,
+													course_icon: [],
+													other: '',
+													coutse_info: '',
+													price: 0
+												},
+													alert("请求失败!");
+											});
+
+
+									})
+									.catch(function () {
+										//响应失败的操作
+										c = {
+											id: '',
+											name: '',
+											type: '',
+											start_date: '',
+											start_time: '',
+											is_cost: false,
+											course_icon: [],
+											other: '',
+											coutse_info: '',
+											price: 0
+										},
+											alert("请求失败!");
+
+									});
+
 							} else {
 								console.log('error submit!!');
 								return false;

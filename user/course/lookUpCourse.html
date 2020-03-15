@@ -18,7 +18,8 @@
         <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
         <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
         <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
         <style>
             @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
             .itemActive:hover{
@@ -88,7 +89,7 @@
                 </li>
                 <!--用户信息模块-->
 				<li class="dropdown visible-md visible-lg"id="app4">
-	        		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="user-avatar" src="../assets/img/avatar.jpg" alt="user-mail">{{name}}</a>
+	        		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="user-avatar" :src="'http://127.0.0.1:8081/public/'+imgurl" alt="user-mail">{{name}}</a>
 	        		<ul class="dropdown-menu">
 						<li class="dropdown-menu-header">
 							<strong>Account</strong>
@@ -150,7 +151,7 @@
                 
             </div>
                 <div>
-                    <div class="profile panel panel-default itemActive"  v-for="(item,index) in course">
+                    <div class="profile panel panel-default itemActive"  v-for="(item,index) in courses">
                         <div class="row" style="padding:8px 12px;">
                             <div class="col-lg-4"> 
                                 <div class="block">
@@ -167,8 +168,10 @@
                                 <br><br>
                                 <span style="color:#2b998a;"><b>课程教师 : {{item.teacher}}</b></span>
                                 <br><br>
-                                <span style="color:#2b998a;"><b>课程人数 : {{item.numbers}}</b></span>
-                                <br><br>
+                                <span style="color:#2b998a;"><b>课程人数 : {{item.course_numbers}}</b></span>
+								<br><br>
+								<span style="color:#2b998a;"><b>课程简介 : {{item.course_info}}</b></span>
+								<br><br>
                                 <span style="color:#2b998a;"><b>课程好评 :</b></span>
                                 <br><br>
                                 <el-rate
@@ -242,6 +245,10 @@
 	<script src="../assets/js/core.min.js"></script>
 	<!-- 自定义脚本-->
     <script src="../assets/js/index.js"></script>
-    <script src="../assets/js/couse.js"></script>
+	<script src="../assets/js/couse.js"></script>
+	<script>
+		let id = JSON.parse(window.localStorage.getItem("_user")).id;
+		_c.initRequset("http://127.0.0.1:8081/gasc",id);
+	</script>
 </body>
 </html>

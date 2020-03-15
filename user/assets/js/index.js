@@ -186,6 +186,7 @@ var _u1 = new Vue({
         axios.get('http://127.0.0.1:8081/user_info/'+id)
         .then(function (response) {
             _u1.name = response.data.name;
+            window.localStorage.setItem("_userName",_u1.name);
             _u1.imgurl = response.data.imgurl;
         })
         .catch(function () {
@@ -221,17 +222,17 @@ new Vue({
                 href : '#',
                 childen : [
                     {
-                        title : '查看已有课程',
+                        title : '查看已选课程',
                         icon  : ' fa-search',
                         href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\user\\course\\lookUpCourse.html'
                     },
                     {
-                        title : '添加新有课程',
+                        title : '添加新选课程',
                         icon  : 'fa-plus',
                         href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\user\\course\\addNewCourse.html'
                     },
                     {
-                        title : '删除已有课程',
+                        title : '删除已选课程',
                         icon  : 'fa-minus',
                         href  : 'D:\\GitHub warehouse 2\\teaching\\Teaching-Server\\user\\course\\deleteCourse.html'
                     }
