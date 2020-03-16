@@ -585,6 +585,7 @@ var app = new Vue({
         dialogFormVisible6: false,
         dialogFormVisible7: false,
         dialogFormVisible8: false,
+        dialogFormVisible9: false,
         selectTest: {
             title: '',
             options: [],
@@ -1040,7 +1041,15 @@ var app = new Vue({
                 type: 'success'
             });
         },
-        handleAvatarSuccessWare(res, file) {
+        handleAvatarSuccessWareViedo(res, file) {
+            this.ware.viedo = file.name;
+            this.$message({
+                message: '文件:' + file.name + '上传成功！',
+                type: 'success'
+            });
+        },
+        handleAvatarSuccessWarePDF(res, file) {
+            this.ware.pdf = file.name;
             this.$message({
                 message: '文件:' + file.name + '上传成功！',
                 type: 'success'
@@ -1056,8 +1065,16 @@ var app = new Vue({
                 date2: ''
             });
         },
-        addViedo(ch){
-            this.dialogFormVisible7 = true;
+        addViedo(ch,type){
+            if(type === 1){
+                this.ware = ch ;
+                this.dialogFormVisible7 = true;
+            }
+            else{
+                this.ware = ch ;
+                this.dialogFormVisible9 = true;
+            }
+           
         },
         delSDocWorkSumbit(i) {
             this.docWorkSumbit.splice(i, 1)

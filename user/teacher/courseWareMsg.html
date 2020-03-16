@@ -47,14 +47,15 @@
             <el-header style="font-size: 12px">
                 <el-row :gutter="20">
                     <el-col :span="22">
-                        <div style="text-align: center;color: #77837d;"> 
+                        <div style="text-align: center;color: #77837d;">
                             <h3><i class="el-icon-eleme"></i> {{name}}</h3>
                         </div>
                     </el-col>
                     <el-col :span="2">
                         <div>
                             <el-dropdown>
-                                <span style="font-size: 20px;margin-left: 60px;"><i class="el-icon-user"></i>{{user}}</span>
+                                <span style="font-size: 20px;margin-left: 60px;"><i
+                                        class="el-icon-user"></i>{{user}}</span>
                                 <el-dropdown-menu slot="dropdown">
                                     <a v-for="item in userOptions.order" :href="item.href" class="noline">
                                         <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
@@ -103,17 +104,18 @@
                                     <el-menu-item :index="ch.name">
                                         {{ch.label}}
                                         <span style="float: right;">
-                                                &nbsp;
+                                            &nbsp;
                                             视频文件:{{ch.viedo == ''? '无':ch.viedo}}
                                             &nbsp;
                                             <el-tooltip content="添加视频" placement="top">
-                                                <el-button size="mini"><i class=" fa fa-video-camera" @click="addViedo(ch)"></i></el-button>
+                                                <el-button size="mini"><i class=" fa fa-video-camera"
+                                                        @click="addViedo(ch,1)"></i></el-button>
                                             </el-tooltip>
                                             &nbsp;
                                             PDF文件:{{ch.pdf == ''? '无': ch.pdf}}
                                             &nbsp;
                                             <el-tooltip content="添加PDF文档" placement="top">
-                                                <el-button size="mini"><i class="fa fa-file"></i>
+                                                <el-button size="mini"  @click="addViedo(ch,2)"><i class="fa fa-file"></i>
                                         </span></el-button>
                                         </el-tooltip>
                                     </el-menu-item>
@@ -125,26 +127,54 @@
                         </el-menu>
                     </el-col>
                     <el-dialog title="文件上传" :visible.sync="dialogFormVisible7" width="30%">
-                            <el-form :model="ware" label-width="80px">
-                                <el-form-item label="视频文件">
-                                    <div style="float:left;padding:16px 32px;">
-                                        <el-upload class="upload-demo" drag action="http://127.0.0.1:8081/upload"
-                                            name="uploadFile" :on-remove="handleRemove" :before-remove="beforeRemove"
-                                            :on-success="handleAvatarSuccessWare" :file-list="ware.fileList">
-                                            <i class="el-icon-upload"></i>
-                                            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                                            <div class="el-upload__tip" slot="tip">只能上传mp4/avi文件，且不超过1G</div>
-                                        </el-upload>
-                                    </div>
-                                </el-form-item>
-        
-                            </el-form>
-                            <span slot="footer" class="dialog-footer">
-                                <el-button @click="dialogFormVisible7 = false">取 消</el-button>
-                                <el-button type="primary" @click="dialogFormVisible7 = false">确 定</el-button>
-                            </span>
-                        </el-dialog>
+                        <el-form :model="ware" label-width="80px">
+                            <el-form-item label="视频文件">
+                                <div style="float:left;padding:16px 32px;">
+                                    <el-upload class="upload-demo" drag action="http://127.0.0.1:8081/upload"
+                                        name="uploadFile" :on-remove="handleRemove" :before-remove="beforeRemove"
+                                        :on-success="handleAvatarSuccessWareViedo" :file-list="ware.fileList">
+                                        <i class="el-icon-upload"></i>
+                                        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                                        <div class="el-upload__tip" slot="tip">只能上传mp4/avi文件，且不超过1G</div>
+                                    </el-upload>
+                                </div>
+                            </el-form-item>
+
+                        </el-form>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button @click="dialogFormVisible7 = false">取 消</el-button>
+                            <el-button type="primary" @click="dialogFormVisible7 = false">确 定</el-button>
+                        </span>
+                    </el-dialog>
+
+                    <el-dialog title="文件上传" :visible.sync="dialogFormVisible9" width="30%">
+                        <el-form :model="ware" label-width="80px">
+                            <el-form-item label="PDF文件">
+                                <div style="float:left;padding:16px 32px;">
+                                    <el-upload class="upload-demo" drag action="http://127.0.0.1:8081/upload"
+                                        name="uploadFile" :on-remove="handleRemove" :before-remove="beforeRemove"
+                                        :on-success="handleAvatarSuccessWarePDF" :file-list="ware.fileList">
+                                        <i class="el-icon-upload"></i>
+                                        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                                        <div class="el-upload__tip" slot="tip">只能上传pdf文件</div>
+                                    </el-upload>
+                                </div>
+                            </el-form-item>
+
+                        </el-form>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button @click="dialogFormVisible9 = false">取 消</el-button>
+                            <el-button type="primary" @click="dialogFormVisible9 = false">确 定</el-button>
+                        </span>
+                    </el-dialog>
                 </el-main>
+                <el-footer>
+                    <div style="margin:10px 20px;">
+                        <el-button @click="saveWare(wares)" type="primary">
+                            保存上传的文件
+                        </el-button>
+                    </div>
+                </el-footer>
             </el-container>
         </el-container>
     </div>
