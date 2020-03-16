@@ -10,16 +10,12 @@
     <!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
     <!-- Css files -->
-    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/css/jquery.mmenu.css" rel="stylesheet">
     <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
-    <link href="../assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
-    <link href="../assets/css/style.min.css" rel="stylesheet">
-    <link href="../assets/css/add-ons.min.css" rel="stylesheet">
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     <style>
         @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
 
@@ -35,6 +31,10 @@
 
         .noline:hover {
             text-decoration: none;
+        }
+
+        .upload-demo input {
+            visibility: hidden;
         }
     </style>
 
@@ -103,12 +103,16 @@
                                     <el-menu-item :index="ch.name">
                                         {{ch.label}}
                                         <span style="float: right;">
-
-                                            <el-tooltip content="播放视频" placement="top">
-                                                <el-button size="mini"><i class=" fa fa-video-camera"></i></el-button>
+                                                &nbsp;
+                                            视频文件:{{ch.viedo == ''? '无':ch.viedo}}
+                                            &nbsp;
+                                            <el-tooltip content="添加视频" placement="top">
+                                                <el-button size="mini"><i class=" fa fa-video-camera" @click="addViedo(ch)"></i></el-button>
                                             </el-tooltip>
-                                            &nbsp;&nbsp;
-                                            <el-tooltip content="查看文档" placement="top">
+                                            &nbsp;
+                                            PDF文件:{{ch.pdf == ''? '无': ch.pdf}}
+                                            &nbsp;
+                                            <el-tooltip content="添加PDF文档" placement="top">
                                                 <el-button size="mini"><i class="fa fa-file"></i>
                                         </span></el-button>
                                         </el-tooltip>
@@ -120,13 +124,33 @@
 
                         </el-menu>
                     </el-col>
+                    <el-dialog title="文件上传" :visible.sync="dialogFormVisible7" width="30%">
+                            <el-form :model="ware" label-width="80px">
+                                <el-form-item label="视频文件">
+                                    <div style="float:left;padding:16px 32px;">
+                                        <el-upload class="upload-demo" drag action="http://127.0.0.1:8081/upload"
+                                            name="uploadFile" :on-remove="handleRemove" :before-remove="beforeRemove"
+                                            :on-success="handleAvatarSuccessWare" :file-list="ware.fileList">
+                                            <i class="el-icon-upload"></i>
+                                            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                                            <div class="el-upload__tip" slot="tip">只能上传mp4/avi文件，且不超过1G</div>
+                                        </el-upload>
+                                    </div>
+                                </el-form-item>
+        
+                            </el-form>
+                            <span slot="footer" class="dialog-footer">
+                                <el-button @click="dialogFormVisible7 = false">取 消</el-button>
+                                <el-button type="primary" @click="dialogFormVisible7 = false">确 定</el-button>
+                            </span>
+                        </el-dialog>
                 </el-main>
             </el-container>
         </el-container>
     </div>
     <script src="../assets/js/courseDatas/teacourse.js"></script>
     <script>
-
+        app.initRequest();
     </script>
 </body>
 

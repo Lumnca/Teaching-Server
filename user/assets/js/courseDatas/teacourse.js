@@ -446,10 +446,10 @@ zhuguan.forEach((item) => {
 var app = new Vue({
     el: '#app',
     data: {
-        user:  window.localStorage.getItem('_userName'),
+        user: window.localStorage.getItem('_userName'),
         course: course,
         userOptions: userOptions,
-        name: JSON.parse(window.localStorage.getItem('_course')).name ,
+        name: JSON.parse(window.localStorage.getItem('_course')).name,
         activeNames: ['1'],
         test: [
             {
@@ -501,7 +501,7 @@ var app = new Vue({
             resource: '基本',
             desc: 'xxxxxx',
             price: 0,
-            info: '欢迎大家选修算法设计与分析MOOC课程！ 屈老师的算法设计与分析课程深受学生喜爱。本课程是算法设计与分析对基础篇。通过十周的课程，介绍算法设计与分析的基础知识，并为大家详细讲解分治策略、动态规划、贪心法、以及回溯与分支限界法等算法设计方法以及相应的算法分析技术。相信大家经过学习一定会受益匪浅！'
+            info: ''
         },
         rules: {
             name: [
@@ -536,29 +536,23 @@ var app = new Vue({
             children: [{
                 id: '0-0',
                 label: '课题一',
-                children: []
-            }]
-        }, {
-            id: '1',
-            label: '第二章',
-            children: [{
-                id: '1-0',
-                label: '课题一'
-            }, {
-                id: '1-1',
-                label: '课题二'
-            }]
-        }, {
-            id: '2',
-            label: '第三章',
-            children: [{
-                id: '2-0',
-                label: '课题一'
-            }, {
-                id: '2-1',
-                label: '课题二'
+                children: [],
+                viedo : 'class1.mp4',
+                pdf : '',
+                file: '',
+                other : ''
             }]
         }],
+        ware : {
+            id: '',
+            label: '',
+            children: [],
+            viedo : '',
+            pdf : '',
+            file: '',
+            other : '',
+            fileList : []
+        },
         ruleForm2: {
             title: '',
             start: '',
@@ -651,10 +645,9 @@ var app = new Vue({
     methods: {
         handleOpen(key, keyPath) {
 
-            console.log(key, keyPath);
         },
         handleClose(key, keyPath) {
-            console.log(key, keyPath);
+        
         },
         handleChange(val) {
 
@@ -780,7 +773,7 @@ var app = new Vue({
             if (data.children.length == 0) {
                 id = id + '-0';
                 console.log(id);
-                const newChild = { id: id, label: '新子节点', children: [] };
+                const newChild = { id: id, label: '新子节点', children: [],viedo:'',file:'',pdf:'',other:''};
 
                 if (id.length > 3) {
                     this.$message({
@@ -812,6 +805,23 @@ var app = new Vue({
             const index = children.findIndex(d => d.id === data.id);
             children.splice(index, 1);
         },
+        saveWare(wares) {
+            let id = JSON.parse(window.localStorage.getItem("_course")).id;
+            axios.put('http://127.0.0.1:8081/wares/'+id, {
+                id : id,
+                notice: app.ruleForm.info,
+                ware: JSON.stringify(wares)
+            })
+                .then(function (response) {
+                    app.$message({
+                        type: 'success',
+                        message: '数据保存成功 '
+                    });
+                })
+                .catch(function (error) {
+                    alert("失败!");
+                });
+        },
         update(data) {
             this.$prompt('请输入新名称', '提示', {
                 confirmButtonText: '确定',
@@ -841,8 +851,8 @@ var app = new Vue({
         setTest() {
             this.dialogFormVisible = false;
         },
-        deleteWork(i){
-            this.test.splice(i,1);
+        deleteWork(i) {
+            this.test.splice(i, 1);
         },
         addTestDanXuan() {
             this.danxuan.push({
@@ -937,7 +947,7 @@ var app = new Vue({
             window.localStorage.setItem("work", scope.row.title);
             window.location.href = "test.html";
         },
-        showDocSumbit(scope){
+        showDocSumbit(scope) {
             window.localStorage.setItem("work", scope.row.name);
             window.location.href = "wocWorkInfo.html";
         },
@@ -1003,9 +1013,9 @@ var app = new Vue({
             console.log(file, fileList);
         },
         beforeRemove(file, fileList) {
-            axios.get('http://127.0.0.1:8080/delete', {
+            axios.get('http://127.0.0.1:8081/delete', {
                 params: {
-                    file: file.name
+                    file: 'static/public/'+file.name
                 }
             })
                 .then(function (response) {
@@ -1030,6 +1040,12 @@ var app = new Vue({
                 type: 'success'
             });
         },
+        handleAvatarSuccessWare(res, file) {
+            this.$message({
+                message: '文件:' + file.name + '上传成功！',
+                type: 'success'
+            });
+        },
         addDocWork() {
             this.docWorks.push({
                 name: '新建文案',
@@ -1040,8 +1056,23 @@ var app = new Vue({
                 date2: ''
             });
         },
+        addViedo(ch){
+            this.dialogFormVisible7 = true;
+        },
         delSDocWorkSumbit(i) {
             this.docWorkSumbit.splice(i, 1)
+        },
+        initRequest(){
+            let id = JSON.parse(window.localStorage.getItem("_course")).id;
+    
+            axios.get('http://127.0.0.1:8081/wares/' + id)
+                .then(function (response) {
+                    app.ruleForm.info = response.data.notice;
+                    app.wares = JSON.parse(response.data.ware);
+                })
+                .catch(function (error) {
+                    return null;
+                });
         }
     },
     computed: {
