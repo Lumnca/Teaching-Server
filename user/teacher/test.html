@@ -10,16 +10,11 @@
     <!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
     <!-- Css files -->
-    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/css/jquery.mmenu.css" rel="stylesheet">
-    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
-    <link href="../assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
-    <link href="../assets/css/style.min.css" rel="stylesheet">
-    <link href="../assets/css/add-ons.min.css" rel="stylesheet">
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     <style>
         @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
 
@@ -136,11 +131,11 @@
             </el-aside>
             <el-container>
                 <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;text-align: center">
-                    <span><i class="el-icon-edit"></i> {{current.work}} (总分:{{ AllScore }})</span>
+                    <span><i class="el-icon-edit"></i> {{current.work.name}} (总分:{{ AllScore }})</span>
                 </el-header>
                 <hr>
                 <el-main>
-                    <div v-if="danxuan.length>0">
+                    <div >
                         <div style="margin: 16px;">
                             <h4><b>单选题</b> </h4>
                         </div>
@@ -198,7 +193,7 @@
 
 
 
-                    <div v-if="duoxuan.length>0">
+                    <div>
                         <div style="margin: 16px;">
                             <h4><b>多选题</b> </h4>
                         </div>
@@ -251,7 +246,7 @@
                                     class="el-icon-circle-plus-outline"></span> 添加</el-button>
                         </div>
                     </div>
-                    <div v-if="tiankong.length>0">
+                    <div>
 
                         <div style="margin: 16px;">
                             <h4><b>填空题</b> </h4>
@@ -318,7 +313,7 @@
                         </el-dialog>
 
 
-                        <div v-if="zhuguan.length>0">
+                        <div>
                             <div style="margin: 16px;">
                                 <h4><b>主观题</b> </h4>
                             </div>
@@ -385,7 +380,7 @@
 
                     </div>
                     <br><br>
-                    <el-button type="primary" @click="computedScore()">提交</el-button>
+                    <el-button type="primary" @click="saveWork(current.work)">保存作业信息</el-button>
                 </el-main>
             </el-container>
         </el-container>
@@ -393,5 +388,19 @@
 
 </body>
 <script src="../assets/js/courseDatas/teacourse.js"></script>
+<script>
+    app.current.work = JSON.parse(window.localStorage.getItem('_work'));
+    var works =   JSON.parse(app.current.work.work);
+    if(works.danxuan == undefined){
+        works.danxuan = [];
+        works.duoxuan = [];
+        works.tiankong = [];
+        works.zhuguan = [];
+    }
 
+    app.danxuan = works.danxuan;
+    app.duoxuan = works.duoxuan;
+    app.tiankong = works.tiankong;
+    app.zhuguan = works.zhuguan;
+</script>
 </html>

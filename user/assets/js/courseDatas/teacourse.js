@@ -83,6 +83,20 @@ var course = {
                 }
             ],
         },
+        {
+            icon: 'el-icon-s-grid',
+            title: '学生管理',
+            children: [
+                {
+                    title: '学生信息',
+                    href: 'studentInfo.html'
+                },
+                {
+                    title: '使用统计',
+                    href: 'evaluate.html'
+                }
+            ],
+        }
     ],
     courseOutline: [
         {
@@ -328,75 +342,10 @@ var userOptions = {
         }
     ]
 }
-var danxuan = [
-    {
-        title: '那艘if阿富豪我好是欧式花是你OA深？',
-        options: ['12', '17', '13', '20'],
-        score: 4
-    },
-    {
-        title: '部分可微波古尔沟我顾伟UI我还？',
-        options: ['14', '10', '13', '22'],
-        score: 4
-    },
-    {
-        title: '放水后is后我换个问过我无比股市公司规划升级版素',
-        options: ['24', '12', '45', '74'],
-        score: 4
-    },
-    {
-        title: '放水后is后我换个问过我无比股市公司规划升级版素',
-        options: ['24', '12', '45', '74'],
-        score: 4
-    },
-    {
-        title: '放水后is后我换个问过我无比股市公司规划升级版素',
-        options: ['24', '12', '45', '74'],
-        score: 4
-    },
-    {
-        title: '放水后is后我换个问过我无比股市公司规划升级版素',
-        options: ['24', '12', '45', '74'],
-        score: 4
-    },
-    {
-        title: '放水后is后我换个问过我无比股市公司规划升级版素',
-        options: ['24', '12', '45', '74'],
-        score: 4
-    },
-    {
-        title: '放水后is后我换个问过我无比股市公司规划升级版素',
-        options: ['24', '12', '45', '74'],
-        score: 4
-    }
-];
-var duoxuan = [
-    {
-        title: '阿Ivan哦我AV你哦是AV噶大V11成本法牛初步',
-        options: ['A1', 'A2', 'A3', 'A4', 'A5'],
-        score: 4,
-        answer: []
-    }
-];
-var tiankong = [
-    {
-        title: '中国的直辖市有那个_______',
-        input: '',
-        score: 4
-    },
-    {
-        title: '你的_______是核心',
-        input: '',
-        score: 4
-    }
-];
-var zhuguan = [
-    {
-        title: '你的感想是什么？',
-        input: '',
-        score: 4
-    }
-];
+var danxuan = [];
+var duoxuan = [];
+var tiankong = [];
+var zhuguan = [];
 //请求得到
 var answer = [
     {
@@ -451,19 +400,7 @@ var app = new Vue({
         userOptions: userOptions,
         name: JSON.parse(window.localStorage.getItem('_course')).name,
         activeNames: ['1'],
-        test: [
-            {
-
-                title: '作业一', start: '2019-8-7 ', end: '2019-12-7', info: '其他', state: -1, score: 0, submit: 21,
-                startdate1: new Date(2019, 12, 10), startdate2: new Date(2019, 12, 10, 12, 0, 0), enddate1: new Date(2019, 12, 18), enddate2: new Date(2019, 12, 18, 0, 0, 0)
-            },
-            {
-
-                title: '作业二', start: '2019-8-7', end: '2019-12-7', info: '其他', state: 0, score: 0, submit: 18,
-                startdate1: new Date(2019, 12, 10), startdate2: new Date(2019, 1, 10, 12, 0, 0), enddate1: new Date(2019, 4, 18), enddate2: new Date(2019, 4, 18, 0, 0, 0)
-
-            }
-        ],
+        test: [],
         exam: [
             { title: '考试一', start: '2019-8-7', end: '2019-12-7', info: '其他', state: 0, score: 87 },
             { title: '考试二', start: '2019-9-7', end: '2019-12-7', info: '其他', state: 1, score: 0 },
@@ -479,7 +416,7 @@ var app = new Vue({
         time: '00:10:10',
         current: {
             exam: window.localStorage.getItem('exam'),
-            work: window.localStorage.getItem('work'),
+            work: { name: 'XX' },
             state: 0
         },
         talk: [
@@ -493,13 +430,13 @@ var app = new Vue({
         },
         ruleForm: {
             name: 'XXX',
-            region: 'XXXXXX',
-            date1: new Date(2020, 10, 5),
-            date2: new Date(2020, 10, 5, 12, 12, 12),
-            delivery: false,
-            type: ['科技', '技术'],
-            resource: '基本',
-            desc: 'xxxxxx',
+            type: 'public',
+            start_date: new Date(2020, 10, 5),
+            start_time: new Date(2020, 10, 5, 12, 12, 12),
+            is_cost: false,
+            course_icon: ['科技', '技术'],
+            other: '基本',
+            info: 'xxxxxx',
             price: 0,
             info: ''
         },
@@ -508,22 +445,22 @@ var app = new Vue({
                 { required: true, message: '请输入课堂名称', trigger: 'blur' },
                 { min: 2, max: 25, message: '长度在 2 到 25 个字符', trigger: 'blur' }
             ],
-            region: [
+            type: [
                 { required: true, message: '请输入', trigger: 'change' }
             ],
-            date1: [
+            start_date: [
                 { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
             ],
-            date2: [
+            start_time: [
                 { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
             ],
-            type: [
+            course_icon: [
                 { type: 'array', required: true, message: '请至少选择一个', trigger: 'change' }
             ],
-            resource: [
+            other: [
                 { required: true, message: '请选择', trigger: 'change' }
             ],
-            desc: [
+            info: [
                 { required: true, message: '请输入课堂介绍', trigger: 'blur' }
             ],
             price: [
@@ -537,21 +474,21 @@ var app = new Vue({
                 id: '0-0',
                 label: '课题一',
                 children: [],
-                viedo : 'class1.mp4',
-                pdf : '',
+                viedo: 'class1.mp4',
+                pdf: '',
                 file: '',
-                other : ''
+                other: ''
             }]
         }],
-        ware : {
+        ware: {
             id: '',
             label: '',
             children: [],
-            viedo : '',
-            pdf : '',
+            viedo: '',
+            pdf: '',
             file: '',
-            other : '',
-            fileList : []
+            other: '',
+            fileList: []
         },
         ruleForm2: {
             title: '',
@@ -641,30 +578,59 @@ var app = new Vue({
         },
         fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
         docWorkSumbit: [{ name: '张三', file: 'zs.doc', date: '2018/12/21 12:00', score: '79' }],
-        selectDocWork: { name: '张三', file: 'zs.doc', date: '2018/12/21 12:00', score: '79' }
+        selectDocWork: { name: '张三', file: 'zs.doc', date: '2018/12/21 12:00', score: '79' },
+        studentInfoData: []
     },
     methods: {
         handleOpen(key, keyPath) {
 
         },
         handleClose(key, keyPath) {
-        
+
         },
         handleChange(val) {
 
         },
+        dateFormat(date, type) {
+            if (type == 1) {
+                return date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+            }
+            else {
+                return (date.getHours() > 9 ? date.getHours() : '0' + date.getHours()) + ":" + (date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes()) + ":" + (date.getSeconds() > 9 ? date.getSeconds() : '0' + date.getSeconds());
+            }
+        },
         submitForm(formName) {
+            let cid = JSON.parse(window.localStorage.getItem('_course')).id;
+
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    alert('submit!');
+                    var c = app.ruleForm;
+                    c.is_cost = c.is_cost ? 1 : 0;
+                    c.course_icon = c.course_icon.toString();
+                    axios.put('http://127.0.0.1:8081/course/' + cid, c)
+                        .then(function (response) {
+                            app.$message({
+                                message: '修改成功！',
+                                type: 'success'
+                            });
+                            setTimeout(()=>{
+                                window.location.reload();
+                            },200);
+                        })
+                        .catch(function () {
+                            alert("请求失败!");
+                        });
+
                 } else {
                     console.log('error submit!!');
                     return false;
                 }
             });
+
         },
         resetForm(formName) {
             this.$refs[formName].resetFields();
+
         },
         submitForm2(form) {
             var success = false;
@@ -756,13 +722,37 @@ var app = new Vue({
             this.selectTestZhuGuan = data;
         },
         editWork(data) {
-            console.log(data);
+
             this.dialogFormVisible5 = true;
             this.ruleForm2 = data.row;
         },
         editExam(data) {
             this.dialogFormVisible6 = true;
             this.selectExam = data;
+        },
+        updateWorkInfo(data) {
+            this.dialogFormVisible5 = false;
+            data.start_time = new Date(this.dateFormat(data.start_date, 1) + " " + this.dateFormat(data.start_time, 0));
+            data.end_time = new Date(this.dateFormat(data.end_date, 1) + " " + this.dateFormat(data.end_time, 0));
+
+            if (data.end_time.getTime() < data.start_time.getTime()) {
+                this.$message({
+                    message: '起始日期比结束日期大，已重置结束日期！',
+                    type: 'warning'
+                });
+                data.end_time = new Date(this.dateFormat(data.start_date, 1) + " " + this.dateFormat(data.start_time, 0));
+            }
+
+            axios.put('http://127.0.0.1:8081/works/' + data.id, data)
+                .then(function (response) {
+                    app.$message({
+                        type: 'success',
+                        message: '作业编辑成功 '
+                    });
+                })
+                .catch(function (error) {
+                    alert("失败!");
+                });
         },
         append(data) {
             var id = data.id;
@@ -774,7 +764,7 @@ var app = new Vue({
             if (data.children.length == 0) {
                 id = id + '-0';
                 console.log(id);
-                const newChild = { id: id, label: '新子节点', children: [],viedo:'',file:'',pdf:'',other:''};
+                const newChild = { id: id, label: '新子节点', children: [], viedo: '', file: '', pdf: '', other: '' };
 
                 if (id.length > 3) {
                     this.$message({
@@ -808,8 +798,8 @@ var app = new Vue({
         },
         saveWare(wares) {
             let id = JSON.parse(window.localStorage.getItem("_course")).id;
-            axios.put('http://127.0.0.1:8081/wares/'+id, {
-                id : id,
+            axios.put('http://127.0.0.1:8081/wares/' + id, {
+                id: id,
                 notice: app.ruleForm.info,
                 ware: JSON.stringify(wares)
             })
@@ -842,12 +832,46 @@ var app = new Vue({
             });
         },
         addTest() {
-            this.test.push(
-                {
-                    title: '新建作业名', start: '2020-1-1 ', end: '2020-1-1', info: '其他', state: -1, score: 0, submit: 0,
-                    startdate1: new Date(), startdate2: new Date(), enddate1: new Date(), enddate2: new Date()
-                }
-            );
+            let w = {
+                id: max_Id + 1,
+                cid: JSON.parse(window.localStorage.getItem('_course')).id,
+                start_date: app.dateFormat(new Date(), 1),
+                start_time: app.dateFormat(new Date(), 1),
+                end_date: app.dateFormat(new Date(), 1),
+                end_time: app.dateFormat(new Date(), 1),
+                info: '无',
+                name: '新建作业名',
+                work: ''
+            }
+            this.$confirm('此操作将会建立一份新的作业, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+
+                axios.post('http://127.0.0.1:8081/works/', w)
+                    .then(function (response) {
+                        app.$message({
+                            type: 'success',
+                            message: '创建成功！'
+                        });
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 200);
+                    })
+                    .catch(function (error) {
+                        alert("失败!");
+                    });
+
+
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消创建'
+                });
+            });
+
+
         },
         setTest() {
             this.dialogFormVisible = false;
@@ -876,6 +900,26 @@ var app = new Vue({
         },
         delDanXuan(index) {
             this.danxuan.splice(index, 1);
+        },
+        saveWork(data) {
+            let work = {
+                danxuan: app.danxuan,
+                duoxuan: app.duoxuan,
+                tiankong: app.tiankong,
+                zhuguan: app.zhuguan
+            }
+            data.work = JSON.stringify(work);
+
+            axios.put('http://127.0.0.1:8081/works/' + data.id, data)
+                .then(function (response) {
+                    app.$message({
+                        type: 'success',
+                        message: '作业编辑成功 '
+                    });
+                })
+                .catch(function (error) {
+                    alert("失败!");
+                });
         },
         computedScore() {
             var score = 0;
@@ -944,8 +988,7 @@ var app = new Vue({
             });
         },
         showWork(scope) {
-            console.log(scope);
-            window.localStorage.setItem("work", scope.row.title);
+            window.localStorage.setItem("_work", JSON.stringify(scope.row));
             window.location.href = "test.html";
         },
         showDocSumbit(scope) {
@@ -1016,7 +1059,7 @@ var app = new Vue({
         beforeRemove(file, fileList) {
             axios.get('http://127.0.0.1:8081/delete', {
                 params: {
-                    file: 'static/public/'+file.name
+                    file: 'static/public/' + file.name
                 }
             })
                 .then(function (response) {
@@ -1065,23 +1108,23 @@ var app = new Vue({
                 date2: ''
             });
         },
-        addViedo(ch,type){
-            if(type === 1){
-                this.ware = ch ;
+        addViedo(ch, type) {
+            if (type === 1) {
+                this.ware = ch;
                 this.dialogFormVisible7 = true;
             }
-            else{
-                this.ware = ch ;
+            else {
+                this.ware = ch;
                 this.dialogFormVisible9 = true;
             }
-           
+
         },
         delSDocWorkSumbit(i) {
             this.docWorkSumbit.splice(i, 1)
         },
-        initRequest(){
+        initRequest() {
             let id = JSON.parse(window.localStorage.getItem("_course")).id;
-    
+
             axios.get('http://127.0.0.1:8081/wares/' + id)
                 .then(function (response) {
                     app.ruleForm.info = response.data.notice;

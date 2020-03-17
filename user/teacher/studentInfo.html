@@ -5,15 +5,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>课件</title>
+    <title>学生信息</title>
     <!-- Import google fonts - Heading first/ text second -->
     <!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Css files -->
+    <script src="../assets/js/echarts.js"></script>
+    <script src="../assets/js/echarts.min.js"></script>
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
-    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <style>
         @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
 
@@ -38,7 +41,7 @@
 <body>
     <div id="app">
         <el-container style=" border: 1px solid #eee">
-            <el-header>
+            <el-header style="text-align: right; font-size: 12px">
                 <el-row :gutter="20">
                     <el-col :span="22">
                         <div style="text-align: center;color: #77837d;">
@@ -79,53 +82,35 @@
             </el-aside>
             <el-container>
                 <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;">
-                    <span><i class="el-icon-bell"></i> 课件</span>
+                    <span><i class="el-icon-user-solid"></i> 选课信息</span>
                 </el-header>
                 <hr>
                 <el-main>
-                    <div class="custom-tree-container">
-                        <div class="block">
-                            <p>课堂章节</p>
-                            <el-tree :data="wares" show-checkbox node-key="id" default-expand-all
-                                :expand-on-click-node="false">
-                                <span class="custom-tree-node" slot-scope="{ node, data }">
-                                    <span>{{ node.label }}</span>
-                                    <span>
-                                        <el-button type="text" size="mini" @click="() => append(data)">
-                                            添加
-                                        </el-button>
-                                        <el-button type="text" size="mini" @click="() => remove(node, data)">
-                                            删除
-                                        </el-button>
-                                        <el-button type="text" size="mini" @click="() => update(data)">
-                                            编辑
-                                        </el-button>
-                                    </span>
-                                </span>
-
-                            </el-tree>
-                            <span>
-                                <el-button type="text" size="mini" @click="() => addnode()">
-                                    添加
-                                </el-button>
-                            </span>
-                        </div>
-                    </div>
-
+                    <el-table :data="studentInfoData" border style="width: 100%">
+                        <el-table-column prop="name" label="姓名">
+                        </el-table-column>
+                        <el-table-column prop="iden" label="身份">
+                        </el-table-column>
+                        <el-table-column fixed="right" label="操作" width="400">
+                            <template slot-scope="scope">
+                                <el-button type="primary" size="small">给予管理</el-button>
+                                <el-button type="warning" size="small">撤销管理</el-button>
+                                <el-button type="warning" size="small">重置</el-button>
+                                <el-button type="danger" size="small">删除</el-button>
+                               
+                            </template>
+                        </el-table-column>
+                    </el-table>
                 </el-main>
-                <el-footer>
-                    <div style="margin:10px 20px;">
-                        <el-button @click="saveWare(wares)" type="primary">
-                            保存
-                        </el-button>
-                    </div>
-                </el-footer>
             </el-container>
         </el-container>
     </div>
     <script src="../assets/js/courseDatas/teacourse.js"></script>
     <script>
-        app.initRequest();
+        app.studentInfoData = [
+            { name: '张上', iden: '教师' },
+            { name: '张上', iden: '学生' }
+        ]
     </script>
 </body>
 

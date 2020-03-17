@@ -10,16 +10,10 @@
     <!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
     <!-- Css files -->
-    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/css/jquery.mmenu.css" rel="stylesheet">
-    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
-    <link href="../assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
-    <link href="../assets/css/style.min.css" rel="stylesheet">
-    <link href="../assets/css/add-ons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     <style>
         @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
 
@@ -90,19 +84,25 @@
                 <el-main>
 
                     <el-table :data="test" border style="width: 100%">
-                        <el-table-column prop="title" label="名称" width="250">
+                        <el-table-column prop="name" label="名称" width="250">
                         </el-table-column>
-                        <el-table-column prop="start" label="起始日期" width="250">
-                        </el-table-column>
-                        <el-table-column prop="end" label="结束日期" width="250">
-                        </el-table-column>
-                        <el-table-column prop="score" label="分数" width="150">
-                        </el-table-column>
-                        <el-table-column prop="info" label="备注" width="150">
-                        </el-table-column>
-                        <el-table-column label="状态" width="200">
+                        <el-table-column label="起始日期" width="250">
                             <template slot-scope="scope">
-                                <el-tag v-if="scope.row.state==1" type="success">可用</el-tag>
+                                {{dateFormat(scope.row.start_date,1)}} - {{dateFormat(scope.row.start_time,0)}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="结束日期" width="250">
+                            <template slot-scope="scope">
+                                {{dateFormat(scope.row.end_date,1)}} - {{dateFormat(scope.row.end_time,0)}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="info" label="备注" width="450">
+                        </el-table-column>
+                        <el-table-column label="状态">
+                            <template slot-scope="scope">
+                                <el-tag
+                                    v-if="scope.row.start_time.getTime() < new Date().getTime() && scope.row.end_time.getTime() > new Date().getTime() "
+                                    type="success">可用</el-tag>
                                 <el-tag v-else type="danger">不可用</el-tag>
                             </template>
                         </el-table-column>
@@ -125,40 +125,38 @@
                             class="demo-ruleForm">
 
                             <el-form-item label="作业名称" prop="pass">
-                                <el-input type="text" v-model="ruleForm2.title"></el-input>
+                                <el-input type="text" v-model="ruleForm2.name"></el-input>
                             </el-form-item>
                             <el-form-item label="起始时间">
                                 <el-col :span="11">
-                                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm2.startdate1"
+                                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm2.start_date"
                                         style="width: 100%;"></el-date-picker>
                                 </el-col>
                                 <el-col class="line" :span="2" style="text-align:center">-------
                                 </el-col>
                                 <el-col :span="11">
-                                    <el-time-picker placeholder="选择时间" v-model="ruleForm2.startdate2"
+                                    <el-time-picker placeholder="选择时间" v-model="ruleForm2.start_time"
                                         style="width: 100%;"></el-time-picker>
                                 </el-col>
                             </el-form-item>
                             <el-form-item label="结束时间">
                                 <el-col :span="11">
-                                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm2.enddate1"
+                                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm2.end_date"
                                         style="width: 100%;"></el-date-picker>
                                 </el-col>
                                 <el-col class="line" :span="2" style="text-align:center">--------
                                 </el-col>
                                 <el-col :span="11">
-                                    <el-time-picker placeholder="选择时间" v-model="ruleForm2.enddate2"
+                                    <el-time-picker placeholder="选择时间" v-model="ruleForm2.end_time"
                                         style="width: 100%;"></el-time-picker>
                                 </el-col>
                             </el-form-item>
-                            <el-form-item :label="ruleForm2.disabled? '可用':'不可用'" prop="disabled">
-                                <el-switch v-model="ruleForm2.disabled"></el-switch>
-                            </el-form-item>
+
                             <el-form-item label="备注" prop="info">
                                 <el-input v-model.number="ruleForm2.info"></el-input>
                             </el-form-item>
                             <el-form-item>
-                                <el-button type="primary" @click="dialogFormVisible5 = false">提交</el-button>
+                                <el-button type="primary" @click="updateWorkInfo(ruleForm2)">提交</el-button>
                                 <el-button @click="resetForm2('ruleForm2')">重置</el-button>
                             </el-form-item>
                         </el-form>
@@ -176,7 +174,32 @@
     </div>
     <script src="../assets/js/courseDatas/teacourse.js"></script>
     <script>
+        let max_Id = 0;
+        axios.get('http://127.0.0.1:8081/getworks', {
+            params: {
+                cid: JSON.parse(window.localStorage.getItem("_course")).id
+            }
+        })
+            .then(function (response) {
+                app.test = response.data;
+                app.test.forEach(e=> {
+                    e.start_time = new Date(e.start_time);
+                    e.start_date = new Date(e.start_date);
+                    e.end_time = new Date(e.end_time);
+                    e.end_date = new Date(e.end_date);
+                });
+            })
+            .catch(function (error) {
+                alert("获取信息失败!");
+            });
 
+            axios.get('http://127.0.0.1:8081/works')
+            .then(function (response) {
+                max_Id = response.data.page.totalElements;
+            })
+            .catch(function (error) {
+               
+            });
     </script>
 </body>
 
