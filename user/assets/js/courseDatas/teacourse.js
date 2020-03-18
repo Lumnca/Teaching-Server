@@ -1074,11 +1074,12 @@ var app = new Vue({
                 });
         },
         handleAvatarSuccess(res, file) {
-            this.docWork.file.splice(0, 1);
-            this.docWork.file.push({
+            this.docWork.file_url.splice(0, 1);
+            this.docWork.file_url.push({
                 name: file.name,
                 url: file.name
             });
+            this.docWork.file_name = file.name;
             this.$message({
                 message: '文件:' + file.name + '上传成功！',
                 type: 'success'

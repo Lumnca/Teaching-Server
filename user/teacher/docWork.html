@@ -10,17 +10,12 @@
     <!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
     <!-- Css files -->
-    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/css/jquery.mmenu.css" rel="stylesheet">
-    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
-    <link href="../assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
-    <link href="../assets/css/style.min.css" rel="stylesheet">
-    <link href="../assets/css/add-ons.min.css" rel="stylesheet">
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     <style>
         @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
 
@@ -95,13 +90,18 @@
                 <hr>
                 <el-main>
                     <el-table :data="docWorks" style="width: 100%" :default-sort="{prop: 'date', order: 'descending'}">
-                        <el-table-column prop="name" label="名称" sortable width="180">
+                        <el-table-column prop="name" label="名称" sortable>
                         </el-table-column>
-                        <el-table-column prop="date" label="截止日期" sortable>
+                        <el-table-column  label="截止日期" sortable>
+                            <template slot-scope="scope">
+                               {{dateFormat(scope.row.date,1)}} - {{dateFormat(scope.row.date,0)}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="file_name" label="文件名称" sortable>
                         </el-table-column>
                         <el-table-column label="文件">
                             <template slot-scope="scope">
-                                <span v-for="f in  scope.row.file">{{f.name}}</span>
+                                <span v-for="f in  scope.row.file_url">{{f.name}}</span>
                             </template>
                         </el-table-column>
                         <el-table-column sortable label="状态">
@@ -110,7 +110,7 @@
                                 <el-tag type="danger" v-else>不可用</el-tag>
                             </template>
                         </el-table-column>
-                        <el-table-column label="操作">
+                        <el-table-column label="操作" width="400">
                             <template slot-scope="scope">
                                 <el-button type="button" @click=""><span class="el-icon-eleme"></span> 查看</el-button>
                                 <el-button type="button" @click="editDocWork(scope.row)"><span
@@ -132,21 +132,21 @@
                             <el-input v-model="docWork.name"></el-input>
                         </el-form-item>
 
-                        <el-form-item label="活动时间">
+                        <el-form-item label="截止时间">
                             <el-col :span="11">
-                                <el-date-picker type="date" placeholder="选择日期" v-model="docWork.date1"
+                                <el-date-picker type="date" placeholder="选择日期" v-model="docWork.date"
                                     style="width: 100%;"></el-date-picker>
                             </el-col>
                             <el-col class="line" :span="2">-</el-col>
                             <el-col :span="11">
-                                <el-time-picker placeholder="选择时间" v-model="docWork.date2" style="width: 100%;">
+                                <el-time-picker placeholder="选择时间" v-model="docWork.date" style="width: 100%;">
                                 </el-time-picker>
                             </el-col>
 
                             <div style="float:left;padding:16px 32px;">
 
 
-                                <el-upload class="upload-demo" drag action="http://127.0.0.1:8080/upload"
+                                <el-upload class="upload-demo" drag action="http://127.0.0.1:8081/upload"
                                     name="uploadFile" :on-remove="handleRemove" :before-remove="beforeRemove"
                                     :on-success="handleAvatarSuccess" :file-list="docWork.file">
                                     <i class="el-icon-upload"></i>
@@ -168,24 +168,22 @@
     </div>
     <script src="../assets/js/courseDatas/teacourse.js"></script>
     <script>
-        app.docWorks = [
-            {
-                name: '文案作业一',
-                date: '2020/02/09 12:00',
-                file: [{ name: 'xx', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
-                state: true,
-                date1: '',
-                date2: ''
-            },
-            {
-                name: '文案作业二',
-                date: '2020/02/12 16:00',
-                file: [{ name: 'xx', url: '../assets/img/logo1.png' }],
-                state: false,
-                date1: '',
-                date2: ''
+
+        axios.get('http://127.0.0.1:8081/getfilework', {
+            params: {
+                cid: JSON.parse(window.localStorage.getItem('_course')).id
             }
-        ]
+        })
+            .then(function (response) {
+                app.docWorks = response.data;
+                app.docWorks.forEach(e => {
+                    e.file_url = JSON.parse(e.file_url);
+                    e.date = new Date(e.date);
+                });
+            })
+            .catch(function (error) {
+                alert("失败!");
+            });
     </script>
 </body>
 
