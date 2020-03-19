@@ -401,11 +401,7 @@ var app = new Vue({
         name: JSON.parse(window.localStorage.getItem('_course')).name,
         activeNames: ['1'],
         test: [],
-        exam: [
-            { title: '考试一', start: '2019-8-7', end: '2019-12-7', info: '其他', state: 0, score: 87 },
-            { title: '考试二', start: '2019-9-7', end: '2019-12-7', info: '其他', state: 1, score: 0 },
-            { title: '考试三', start: '2019-9-7', end: '2019-12-7', info: '其他', state: -1, score: 0 }
-        ],
+        exam: [],
         radio: '1',
         danxuan: danxuan,
         duoxuan: duoxuan,
@@ -415,7 +411,7 @@ var app = new Vue({
         disabled: false,
         time: '00:10:10',
         current: {
-            exam: window.localStorage.getItem('exam'),
+            exam: JSON.parse(window.localStorage.getItem('_exam')),
             work: { name: 'XX' },
             state: 0
         },
@@ -546,17 +542,10 @@ var app = new Vue({
             auto: false
         },
         selectExam: {
-            title: '',
-            start: '',
-            end: '',
-            disabled: true,
+            name: '',
             info: '',
-            test: 0,
-            score: 0,
-            startdate1: '',
-            startdate2: '',
-            enddate1: '',
-            enddate2: '',
+            start_date: new Date(),
+            end_date: new Date()
         },
         workInfo: [],
         multipleSelection: [],
@@ -613,9 +602,9 @@ var app = new Vue({
                                 message: '修改成功！',
                                 type: 'success'
                             });
-                            setTimeout(()=>{
+                            setTimeout(() => {
                                 window.location.reload();
-                            },200);
+                            }, 200);
                         })
                         .catch(function () {
                             alert("请求失败!");
@@ -1019,12 +1008,83 @@ var app = new Vue({
         deleteExam(i) {
             this.exam.splice(i, 1);
         },
-        showExam(title) {
-            window.localStorage.setItem("exam", title);
+        showExam(exam) {
+            window.localStorage.setItem("_exam", JSON.stringify(exam));
             window.location.href = "examInfo.html";
         },
         addExam() {
-            this.exam.push({ title: '未命名', start: '2019-1-1', end: '2019-1-1', info: '其他', state: 0, score: 0 });
+            let exam = {
+                id: maxId + 1,
+                cid: JSON.parse(window.localStorage.getItem("_course")).id,
+                name: '新建考试',
+                start_date: new Date(),
+                end_date: new Date(),
+                info: '',
+                exam: JSON.stringify({})
+            };
+
+
+            this.$confirm('此操作将创建一个新的作业, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                exam.start_date = app.dateFormat(exam.start_date, 1) + " " + app.dateFormat(exam.start_date, 0);
+                exam.end_date = app.dateFormat(exam.end_date, 1) + " " + app.dateFormat(exam.end_date, 0);
+                axios.post('http://127.0.0.1:8081/exams', exam)
+                    .then(function (response) {
+                        app.$message({
+                            type: 'success',
+                            message: '创建成功！'
+                        });
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 200);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消操作'
+                });
+            });
+
+        },
+        updateExamData(exam) {
+            exam.start_date = this.dateFormat(exam.start_date, 1) + " " + this.dateFormat(exam.start_date, 0);
+            exam.end_date = this.dateFormat(exam.end_date, 1) + " " + this.dateFormat(exam.end_date, 0);
+            axios.put('http://127.0.0.1:8081/exams/' + exam.id, exam)
+                .then(function (response) {
+
+                    app.dialogFormVisible6 = false;
+                    app.$message({
+                        type: 'success',
+                        message: '修改成功！'
+                    });
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 200);
+                })
+                .catch(function (error) {
+                    alert("失败！");
+                });
+
+        },
+        saveExam() {
+            let exam = JSON.parse(window.localStorage.getItem('_exam'));
+            exam.exam = JSON.stringify(works);
+            axios.put('http://127.0.0.1:8081/exams/' + exam.id, exam)
+                .then(function (response) {
+                    app.$message({
+                        type: 'success',
+                        message: '修改成功！'
+                    });
+                })
+                .catch(function (error) {
+                    alert("失败！");
+                });
         },
         rateSort() {
             if (this.sortBut == "降序") {
@@ -1052,6 +1112,21 @@ var app = new Vue({
         editDocWork(data) {
             this.dialogFormVisible7 = true;
             this.docWork = data;
+        },
+        saveFileDoc(docWork) {
+            docWork.date = this.dateFormat(docWork.date, 1) + " " + this.dateFormat(docWork.date, 0);
+            docWork.file_url = JSON.stringify(docWork.file_url);
+            axios.put('http://127.0.0.1:8081/fileworks/' + docWork.id, docWork)
+                .then(function (response) {
+                    app.$message({
+                        type: 'success',
+                        message: '修改成功！'
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            this.dialogFormVisible7 = false;
         },
         handleRemove(file, fileList) {
             console.log(file, fileList);
@@ -1100,14 +1175,39 @@ var app = new Vue({
             });
         },
         addDocWork() {
-            this.docWorks.push({
+            let doc = {
                 name: '新建文案',
-                date: '2020/02/12 16:00',
-                file: [{ name: 'xx', url: '../assets/img/logo1.png' }],
-                state: false,
-                date1: '',
-                date2: ''
+                date: '2020/01/01 00:00',
+                file_url: JSON.stringify([]),
+                file_name: '',
+                cid: JSON.parse(window.localStorage.getItem('_course')).id,
+                id: maxCid + 1
+            };
+            this.$confirm('此操作将创建一个新的作业, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                axios.post('http://127.0.0.1:8081/fileworks', doc)
+                    .then(function (response) {
+                        app.$message({
+                            type: 'success',
+                            message: '创建成功！'
+                        });
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 200);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消操作'
+                });
             });
+
         },
         addViedo(ch, type) {
             if (type === 1) {

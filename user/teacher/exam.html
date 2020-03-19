@@ -10,16 +10,11 @@
     <!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
     <!-- Css files -->
-    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/css/jquery.mmenu.css" rel="stylesheet">
-    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
-    <link href="../assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
-    <link href="../assets/css/style.min.css" rel="stylesheet">
-    <link href="../assets/css/add-ons.min.css" rel="stylesheet">
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     <style>
         @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
 
@@ -91,19 +86,31 @@
                     <div style=" background-color: rgb(228, 231, 238); font-size: 18px; padding: 10px 20px">
                         <el-table :data="exam" style="width: 100%" :default-sort="{prop: 'date', order: 'descending'}">
 
-                            <el-table-column prop="title" label="名称" sortable width="180">
+                            <el-table-column prop="name" label="名称" sortable width="180">
                             </el-table-column>
-                            <el-table-column prop="start" label="起始时间" sortable width="180">
+                            <el-table-column label="起始时间" sortable width="180">
+                                <template slot-scope="scope">
+                                    {{dateFormat(scope.row.start_date,1)}} {{dateFormat(scope.row.start_date,0)}}
+                                </template>
                             </el-table-column>
-                            <el-table-column prop="end" label="结束时间">
+                            <el-table-column prop="end_date" label="结束时间">
+                                <template slot-scope="scope">
+                                    {{dateFormat(scope.row.end_date,1)}} {{dateFormat(scope.row.end_date,0)}}
+                                </template>
                             </el-table-column>
-                            <el-table-column prop="state" label="状态">
+                            <el-table-column label="状态">
+                                <template slot-scope="scope">
+                                    <el-tag type="success"
+                                        v-if="scope.row.start_date.getTime()<new Date().getTime() && scope.row.end_date.getTime()>new Date().getTime()">
+                                        可用</el-tag>
+                                    <el-tag type="danger" v-else>不可用</el-tag>
+                                </template>
                             </el-table-column>
                             <el-table-column prop="info" label="备注">
                             </el-table-column>
                             <el-table-column fixed="right" label="操作">
                                 <template slot-scope="scope">
-                                    <el-button @click="showExam(scope.row.title)" type="el-button" size="small">查看
+                                    <el-button @click="showExam(scope.row)" type="el-button" size="small">查看
                                     </el-button>
                                     <el-button @click="editExam(scope.row)" type="el-button" size="small">编辑</el-button>
                                     <el-button @click="deleteExam(scope.$index)" type="el-button" size="small">删除
@@ -117,39 +124,32 @@
                     <el-dialog title="考试修改" :visible.sync="dialogFormVisible6" label-width="80px">
                         <el-form :model="selectExam">
                             <el-form-item label="名称">
-                                <el-input v-model="selectExam.title" autocomplete="off"></el-input>
+                                <el-input v-model="selectExam.name" autocomplete="off"></el-input>
                             </el-form-item>
                             <el-form-item label="起始时间">
                                 <el-col :span="11">
-                                    <el-date-picker type="date" placeholder="日期" v-model="selectExam.startdate1"
+                                    <el-date-picker type="date" placeholder="日期" v-model="selectExam.start_date"
                                         style="width: 100%;"></el-date-picker>
                                 </el-col>
 
                                 <el-col :span="11">
-                                    <el-time-picker placeholder="时间" v-model="selectExam.startdate2"
+                                    <el-time-picker placeholder="时间" v-model="selectExam.start_date"
                                         style="width: 100%;"></el-time-picker>
                                 </el-col>
                             </el-form-item>
 
                             <el-form-item label="结束时间">
                                 <el-col :span="11">
-                                    <el-date-picker type="date" placeholder="日期" v-model="selectExam.enddate1"
+                                    <el-date-picker type="date" placeholder="日期" v-model="selectExam.end_date"
                                         style="width: 100%;"></el-date-picker>
                                 </el-col>
 
                                 <el-col :span="11">
-                                    <el-time-picker placeholder="时间" v-model="selectExam.enddate2" style="width: 100%;">
+                                    <el-time-picker placeholder="时间" v-model="selectExam.end_date" style="width: 100%;">
                                     </el-time-picker>
                                 </el-col>
                             </el-form-item>
 
-                            <el-form-item label="状态">
-                                <el-radio-group v-model="selectExam.state">
-                                    <el-radio :label="1"></el-radio>
-                                    <el-radio :label="0"></el-radio>
-                                    <el-radio :label="-1"></el-radio>
-                                </el-radio-group>
-                            </el-form-item>
                             <el-form-item label="备注">
                                 <el-input v-model="selectExam.info" autocomplete="off"></el-input>
                             </el-form-item>
@@ -157,7 +157,7 @@
                         </el-form>
                         <div slot="footer" class="dialog-footer">
                             <el-button @click="dialogFormVisible6 = false">取 消</el-button>
-                            <el-button type="primary" @click="dialogFormVisible6 = false">确 定</el-button>
+                            <el-button type="primary" @click="updateExamData(selectExam)">确 定</el-button>
                         </div>
                     </el-dialog>
                 </el-main>
@@ -165,6 +165,30 @@
         </el-container>
     </div>
     <script src="../assets/js/courseDatas/teacourse.js"></script>
+    <script>
+
+        axios.get('http://127.0.0.1:8081/getexam', {
+            params: {
+                cid: JSON.parse(window.localStorage.getItem('_course')).id
+            }
+        })
+            .then(function (response) {
+                app.exam = response.data;
+                app.exam.forEach(e => {
+                    e.start_date = new Date(e.start_date);
+                    e.end_date = new Date(e.end_date);
+                });
+            })
+            .catch(function (error) {
+            });
+            let maxId = 0;
+        axios.get('http://127.0.0.1:8081/exams')
+            .then(function (response) {
+               maxId = response.data.page.totalElements;
+            })
+            .catch(function (error) {
+            });
+    </script>
 </body>
 
 </html>

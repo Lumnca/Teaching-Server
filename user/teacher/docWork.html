@@ -92,21 +92,16 @@
                     <el-table :data="docWorks" style="width: 100%" :default-sort="{prop: 'date', order: 'descending'}">
                         <el-table-column prop="name" label="名称" sortable>
                         </el-table-column>
-                        <el-table-column  label="截止日期" sortable>
+                        <el-table-column label="截止日期" sortable>
                             <template slot-scope="scope">
-                               {{dateFormat(scope.row.date,1)}} - {{dateFormat(scope.row.date,0)}}
+                                {{dateFormat(scope.row.date,1)}} - {{dateFormat(scope.row.date,0)}}
                             </template>
                         </el-table-column>
                         <el-table-column prop="file_name" label="文件名称" sortable>
                         </el-table-column>
-                        <el-table-column label="文件">
-                            <template slot-scope="scope">
-                                <span v-for="f in  scope.row.file_url">{{f.name}}</span>
-                            </template>
-                        </el-table-column>
                         <el-table-column sortable label="状态">
                             <template slot-scope="scope">
-                                <el-tag type="success" v-if="scope.row.state">可用</el-tag>
+                                <el-tag type="success" v-if="scope.row.date.getTime()>new Date().getTime()">可用</el-tag>
                                 <el-tag type="danger" v-else>不可用</el-tag>
                             </template>
                         </el-table-column>
@@ -142,10 +137,7 @@
                                 <el-time-picker placeholder="选择时间" v-model="docWork.date" style="width: 100%;">
                                 </el-time-picker>
                             </el-col>
-
                             <div style="float:left;padding:16px 32px;">
-
-
                                 <el-upload class="upload-demo" drag action="http://127.0.0.1:8081/upload"
                                     name="uploadFile" :on-remove="handleRemove" :before-remove="beforeRemove"
                                     :on-success="handleAvatarSuccess" :file-list="docWork.file">
@@ -160,7 +152,7 @@
                     </el-form>
                     <span slot="footer" class="dialog-footer">
                         <el-button @click="dialogFormVisible7 = false">取 消</el-button>
-                        <el-button type="primary" @click="dialogFormVisible7 = false">确 定</el-button>
+                        <el-button type="primary" @click="saveFileDoc(docWork)">确 定</el-button>
                     </span>
                 </el-dialog>
             </el-container>
@@ -168,7 +160,7 @@
     </div>
     <script src="../assets/js/courseDatas/teacourse.js"></script>
     <script>
-
+        var maxCid = 0;
         axios.get('http://127.0.0.1:8081/getfilework', {
             params: {
                 cid: JSON.parse(window.localStorage.getItem('_course')).id
@@ -184,6 +176,15 @@
             .catch(function (error) {
                 alert("失败!");
             });
+
+        axios.get('http://127.0.0.1:8081/fileworks')
+            .then(function (response) {  
+                maxCid = response.data.page.totalElements;  
+            })
+            .catch(function (error) {
+            });  
+
+
     </script>
 </body>
 
