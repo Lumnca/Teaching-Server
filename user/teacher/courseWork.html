@@ -88,12 +88,12 @@
                         </el-table-column>
                         <el-table-column label="起始日期" width="250">
                             <template slot-scope="scope">
-                                {{dateFormat(scope.row.start_date,1)}} - {{dateFormat(scope.row.start_time,0)}}
+                                {{dateFormat(scope.row.start_date,1)}} - {{dateFormat(scope.row.start_date,0)}}
                             </template>
                         </el-table-column>
                         <el-table-column label="结束日期" width="250">
                             <template slot-scope="scope">
-                                {{dateFormat(scope.row.end_date,1)}} - {{dateFormat(scope.row.end_time,0)}}
+                                {{dateFormat(scope.row.end_date,1)}} - {{dateFormat(scope.row.end_date,0)}}
                             </template>
                         </el-table-column>
                         <el-table-column prop="info" label="备注" width="450">
@@ -101,7 +101,7 @@
                         <el-table-column label="状态">
                             <template slot-scope="scope">
                                 <el-tag
-                                    v-if="scope.row.start_time.getTime() < new Date().getTime() && scope.row.end_time.getTime() > new Date().getTime() "
+                                    v-if="scope.row.start_date.getTime() < new Date().getTime() && scope.row.end_date.getTime() > new Date().getTime() "
                                     type="success">可用</el-tag>
                                 <el-tag v-else type="danger">不可用</el-tag>
                             </template>
@@ -135,7 +135,7 @@
                                 <el-col class="line" :span="2" style="text-align:center">-------
                                 </el-col>
                                 <el-col :span="11">
-                                    <el-time-picker placeholder="选择时间" v-model="ruleForm2.start_time"
+                                    <el-time-picker placeholder="选择时间" v-model="ruleForm2.start_date"
                                         style="width: 100%;"></el-time-picker>
                                 </el-col>
                             </el-form-item>
@@ -147,7 +147,7 @@
                                 <el-col class="line" :span="2" style="text-align:center">--------
                                 </el-col>
                                 <el-col :span="11">
-                                    <el-time-picker placeholder="选择时间" v-model="ruleForm2.end_time"
+                                    <el-time-picker placeholder="选择时间" v-model="ruleForm2.end_date"
                                         style="width: 100%;"></el-time-picker>
                                 </el-col>
                             </el-form-item>
@@ -183,9 +183,7 @@
             .then(function (response) {
                 app.test = response.data;
                 app.test.forEach(e=> {
-                    e.start_time = new Date(e.start_time);
                     e.start_date = new Date(e.start_date);
-                    e.end_time = new Date(e.end_time);
                     e.end_date = new Date(e.end_date);
                 });
             })

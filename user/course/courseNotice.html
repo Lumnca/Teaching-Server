@@ -10,16 +10,11 @@
     <!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
     <!-- Css files -->
-    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/css/jquery.mmenu.css" rel="stylesheet">
-    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
-    <link href="../assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
-    <link href="../assets/css/style.min.css" rel="stylesheet">
-    <link href="../assets/css/add-ons.min.css" rel="stylesheet">
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     <style>
         @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
 
@@ -44,16 +39,27 @@
 <body>
     <div id="app">
         <el-container style=" border: 1px solid #eee">
-            <el-header style="text-align: right; font-size: 12px">
-                <el-dropdown>
-                    <span style="margin-right: 15px;font-size: 20px;"><i class="el-icon-user"></i> {{user}}</span>
-
-                    <el-dropdown-menu slot="dropdown">
-                        <a v-for="item in userOptions.order" :href="item.href" class="noline">
-                            <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
-                        </a>
-                    </el-dropdown-menu>
-                </el-dropdown>
+            <el-header style="font-size: 12px">
+                <el-row :gutter="20">
+                    <el-col :span="22">
+                        <div style="text-align: center;color: #77837d;">
+                            <h3><i class="el-icon-eleme"></i> {{name}}</h3>
+                        </div>
+                    </el-col>
+                    <el-col :span="2">
+                        <div>
+                            <el-dropdown>
+                                <span style="font-size: 20px;margin-left: 60px;"><i
+                                        class="el-icon-user"></i>{{user}}</span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                                        <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                                    </a>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </el-col>
+                </el-row>
 
             </el-header>
         </el-container>
@@ -80,11 +86,10 @@
                 <el-main>
                     <div style=" background-color: rgb(228, 231, 238); font-size: 18px; padding: 10px 20px">
                         <div>
-                            欢迎大家选修算法设计与分析MOOC课程！
-                            屈老师的算法设计与分析课程深受学生喜爱。本课程是算法设计与分析对基础篇。通过十周的课程，介绍算法设计与分析的基础知识，并为大家详细讲解分治策略、动态规划、贪心法、以及回溯与分支限界法等算法设计方法以及相应的算法分析技术。相信大家经过学习一定会受益匪浅！
+                            {{showdata}}
                         </div>
                         <div style="text-align:right">
-                            2018年03月01日 19:41
+
                         </div>
                     </div>
 
@@ -94,6 +99,15 @@
     </div>
     <script src="../assets/js/courseDatas/courseInfo.js"></script>
     <script>
+        let id = JSON.parse(window.localStorage.getItem('_course')).id;
+        axios.get('http://127.0.0.1:8081/wares/' + id)
+            .then(function (response) {
+                
+                app.showdata = response.data.notice;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     </script>
 </body>
 

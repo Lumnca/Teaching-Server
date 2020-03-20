@@ -6,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>视频播放</title>
-    <link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet" />
+    <link href="../assets/css/video-js.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
-    <script src="https://vjs.zencdn.net/7.6.6/video.js"></script>
-    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+    <script src="../assets/js/video.js"></script>
+    <script src="../assets/js/videojs-ie8.min.js"></script>
 
     <style>
         @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
@@ -156,11 +156,11 @@
 
 
         <el-dialog title="提示" :visible.sync="drawer3" width="30%" center>
-            
+
             <div style="margin-top: 24px;" v-for="(que,i) in test">
-                <h5>{{i+1}}.为何不八极崩按上次你发丝念佛牛飞飞？  <span v-if="que.showD==1"><i class="el-icon-check"></i>答案正确！</span>
+                <h5>{{i+1}}.为何不八极崩按上次你发丝念佛牛飞飞？ <span v-if="que.showD==1"><i class="el-icon-check"></i>答案正确！</span>
                     <span v-else-if="que.showD==0"><i class="el-icon-close"></i>答案错误！</span>
-                </h5> 
+                </h5>
                 <br><br>
                 <el-radio-group v-model="que.value">
                     <el-radio v-for="o in que.options" :label="o"></el-radio>
@@ -172,9 +172,6 @@
                 <el-button type="primary" @click="testSumbit()">确 定</el-button>
             </span>
         </el-dialog>
-
-
-
     </div>
     <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
     <script>
@@ -204,24 +201,25 @@
         ];
         var test = [
             {
-                title : '法师和覅是茬蔬菜还哈好是都很低速？',
-                options : ['A0','B5','C7','D9'],
-                ansewr : 'A0',
-                value : ''
+                title: '法师和覅是茬蔬菜还哈好是都很低速？',
+                options: ['A0', 'B5', 'C7', 'D9'],
+                ansewr: 'A0',
+                value: ''
             },
             {
-                title : '法师和覅是茬蔬菜还哈好是都很低速？',
-                options : ['&a','^a','*A','$A'],
-                ansewr : '^a',
-                value : ''
+                title: '法师和覅是茬蔬菜还哈好是都很低速？',
+                options: ['&a', '^a', '*A', '$A'],
+                ansewr: '^a',
+                value: ''
             }
         ];
-        test.forEach((e)=>{
+        test.forEach((e) => {
             e.showD = -1;
         });
         var app = new Vue({
             el: '#app',
             data: {
+                play: '',
                 count: 5,
                 activeNames: 0,
                 drawer: false,
@@ -229,8 +227,8 @@
                 drawer3: false,
                 huifu: huifu,
                 tip: '',
-                test :test,
-                showD : -1,
+                test: test,
+                showD: -1,
                 info: {
                     browser: getBrower(),
                     platform: getPlatform(),
@@ -254,7 +252,7 @@
                     desc: '',
                     isAck: false,
                     isAckName: '',
-                    ansewr : ''
+                    ansewr: ''
                 },
                 user: {
                     name: "Lumnca"
@@ -268,12 +266,12 @@
                 handleChange() {
 
                 },
-                play() {
+                playx() {
                     console.log("------");
                 },
                 palyNext() {
                     console.log("开始播放下一个");
-                    player.src("../assets/video/demo2.mp4");
+                    this.player.src("../assets/video/demo2.mp4");
                 },
                 show() {
                     if (this.showData.visibility == "hidden") {
@@ -313,26 +311,29 @@
                     this.form.isAckName = item;
                     this.tip = "回复" + item;
                 },
-                testSumbit(){
+                testSumbit() {
                     this.test.forEach(e => {
-                        if(e.value==e.ansewr){
+                        if (e.value == e.ansewr) {
                             e.showD = 1;
                         }
-                        else{
+                        else {
                             e.showD = 0;
                         }
                     });
                 },
-                returnC(){
+                returnC() {
                     window.location.href = "courseware.html";
                 }
-            }
+            },
+            mounted() {
+                this.player = videojs('my-player');
+                this.player.ready(function () {
+                    console.log("Yes");
+                });
+
+            },
         });
 
-        var player = videojs('my-player');
-        player.ready(function () {
-            console.log("Yes");
-        });
 
         //1获取浏览器名称和版本
         function getBrower() {

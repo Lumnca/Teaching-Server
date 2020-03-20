@@ -50,7 +50,7 @@ var _c = new Vue({
         },
         //课程
         openCourse(course){
-            window.localStorage.setItem('courseName',course);
+            window.localStorage.setItem('_course',JSON.stringify(course));
             window.location.href="showCourse.html";
         },
         initRequset(url,id){

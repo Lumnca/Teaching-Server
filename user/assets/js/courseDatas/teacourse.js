@@ -428,7 +428,7 @@ var app = new Vue({
             name: 'XXX',
             type: 'public',
             start_date: new Date(2020, 10, 5),
-            start_time: new Date(2020, 10, 5, 12, 12, 12),
+            start_date: new Date(2020, 10, 5, 12, 12, 12),
             is_cost: false,
             course_icon: ['科技', '技术'],
             other: '基本',
@@ -445,9 +445,6 @@ var app = new Vue({
                 { required: true, message: '请输入', trigger: 'change' }
             ],
             start_date: [
-                { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-            ],
-            start_time: [
                 { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
             ],
             course_icon: [
@@ -721,15 +718,13 @@ var app = new Vue({
         },
         updateWorkInfo(data) {
             this.dialogFormVisible5 = false;
-            data.start_time = new Date(this.dateFormat(data.start_date, 1) + " " + this.dateFormat(data.start_time, 0));
-            data.end_time = new Date(this.dateFormat(data.end_date, 1) + " " + this.dateFormat(data.end_time, 0));
-
-            if (data.end_time.getTime() < data.start_time.getTime()) {
+          
+            if (data.end_date.getTime() < data.start_date.getTime()) {
                 this.$message({
                     message: '起始日期比结束日期大，已重置结束日期！',
                     type: 'warning'
                 });
-                data.end_time = new Date(this.dateFormat(data.start_date, 1) + " " + this.dateFormat(data.start_time, 0));
+                data.end_date = new Date(this.dateFormat(data.start_date, 1) + " " + this.dateFormat(data.start_date, 0));
             }
 
             axios.put('http://127.0.0.1:8081/works/' + data.id, data)
@@ -825,9 +820,9 @@ var app = new Vue({
                 id: max_Id + 1,
                 cid: JSON.parse(window.localStorage.getItem('_course')).id,
                 start_date: app.dateFormat(new Date(), 1),
-                start_time: app.dateFormat(new Date(), 1),
+                start_date: app.dateFormat(new Date(), 1),
                 end_date: app.dateFormat(new Date(), 1),
-                end_time: app.dateFormat(new Date(), 1),
+                end_date: app.dateFormat(new Date(), 1),
                 info: '无',
                 name: '新建作业名',
                 work: ''
