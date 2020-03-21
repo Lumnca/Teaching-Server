@@ -124,7 +124,7 @@
                 <el-dialog title="作业提交" :visible.sync="dialogFormVisible7" width="30%">
                     <el-form :model="docWork" label-width="80px">
                         <el-form-item label="文件名">
-                            <el-input v-model="docWork.file[0].name"></el-input>
+                            <el-input v-model="docWork.file_name"></el-input>
                         </el-form-item>
 
                         <el-form-item label="文件提交">
@@ -133,9 +133,9 @@
                             <div style="float:left;padding:16px 32px;">
 
 
-                                <el-upload class="upload-demo" drag action="http://127.0.0.1:8080/upload"
+                                <el-upload class="upload-demo" drag action="http://127.0.0.1:8081/upload"
                                     name="uploadFile" :on-remove="handleRemove" :before-remove="beforeRemove"
-                                    :on-success="handleAvatarSuccess" :file-list="docWork.file">
+                                    :on-success="handleAvatarSuccess" :file-list="docWork.file_url">
                                     <i class="el-icon-upload"></i>
                                     <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                                     <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -147,7 +147,7 @@
                     </el-form>
                     <span slot="footer" class="dialog-footer">
                         <el-button @click="dialogFormVisible7 = false">取 消</el-button>
-                        <el-button type="primary" @click="dialogFormVisible7 = false">确 定</el-button>
+                        <el-button type="primary" @click="submit(docWork)">确 定</el-button>
                     </span>
                 </el-dialog>
             </el-container>
@@ -161,16 +161,23 @@
             }
         })
             .then(function (response) {
-                console.log(response.data);
-                app.docWorks  = response.data;
+                app.docWorks = response.data;
                 app.docWorks.forEach(e => {
-                     e.file_url = JSON.parse(e.file_url);
+                    e.file_url = JSON.parse(e.file_url);
                 });
             })
             .catch(function (error) {
                 console.log(error);
             });
-    
+        var  maxId = 0;
+        axios.get('http://127.0.0.1:8081/submit')
+            .then(function (response) {
+                maxId = response.data.page.totalElements;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
     </script>
 </body>
 

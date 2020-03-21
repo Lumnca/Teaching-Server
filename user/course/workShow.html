@@ -84,11 +84,20 @@
                 <p>单选</p>
                 <el-row>
                     <el-col v-for="(item,i) in danxuan" :span="4">
-                        <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
-                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
-                                    class="fa fa-check"></i></span>
+
+                        <div v-if="!disabled">
+                            <div v-if="item.select=='default'" class="grid-content ">{{i+1}}</div>
+                            <div v-else class="grid-content" style="color: green"><span><i
+                                        class="fa fa-check"></i></span>
+                            </div>
                         </div>
-                        <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
+
+                        <div v-else>
+                            <div v-if="item.type == 1" class="grid-content" style="color: red"><span><i
+                                        class="fa  fa-times"></i></span></div>
+                            <div v-else class="grid-content" style="color: green"><span><i
+                                        class="fa fa-check"></i></span>
+                            </div>
                         </div>
                     </el-col>
                 </el-row>
@@ -96,11 +105,19 @@
                 <p>多选</p>
                 <el-row>
                     <el-col v-for="(item,i) in duoxuan" :span="4">
-                        <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
-                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
-                                    class="fa fa-check"></i></span>
+                        <div v-if="!disabled">
+                            <div v-if="item.select.length==0" class="grid-content ">{{i+1}}</div>
+
+                            <div v-else class="grid-content" style="color: green"><span><i
+                                        class="fa fa-check"></i></span>
+                            </div>
                         </div>
-                        <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
+                        <div v-else>
+                            <div v-if="item.type == 1" class="grid-content" style="color: red"><span><i
+                                        class="fa  fa-times"></i></span></div>
+                            <div v-else class="grid-content" style="color: green"><span><i
+                                        class="fa fa-check"></i></span>
+                            </div>
                         </div>
                     </el-col>
                 </el-row>
@@ -108,11 +125,18 @@
                 <p>填空</p>
                 <el-row>
                     <el-col v-for="(item,i) in tiankong" :span="4">
-                        <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
-                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
-                                    class="fa fa-check"></i></span>
+                        <div v-if="!disabled">
+                            <div v-if="item.input==''" class="grid-content ">{{i+1}}</div>
+                            <div v-else class="grid-content" style="color: green"><span><i
+                                        class="fa fa-check"></i></span>
+                            </div>
                         </div>
-                        <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
+                        <div v-else>
+                            <div v-if="item.type == 1" class="grid-content" style="color: red"><span><i
+                                        class="fa  fa-times"></i></span></div>
+                            <div v-else class="grid-content" style="color: green"><span><i
+                                        class="fa fa-check"></i></span>
+                            </div>
                         </div>
                     </el-col>
                 </el-row>
@@ -120,19 +144,27 @@
                 <p>主观</p>
                 <el-row>
                     <el-col v-for="(item,i) in zhuguan" :span="4">
-                        <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
-                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
-                                    class="fa fa-check"></i></span>
+                        <div v-if="!disabled">
+                            <div v-if="item.input==''" class="grid-content ">{{i+1}}</div>
+                            <div v-else class="grid-content" style="color: green"><span><i
+                                        class="fa fa-check"></i></span>
+                            </div>
                         </div>
-                        <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
+                        <div v-else>
+                            <div v-if="item.type == 1" class="grid-content" style="color: red"><span><i
+                                        class="fa  fa-times"></i></span></div>
+                            <div v-else class="grid-content" style="color: green"><span><i
+                                        class="fa fa-check"></i></span>
+                            </div>
                         </div>
                     </el-col>
                 </el-row>
                 <el-divider></el-divider>
                 <div>
-                    {{write}}
+                    <h3>总分:{{score}}</h3>
+                    <p style="font-size:16px;">提交时间:{{worktime}}</hp>
                 </div>
-                <div><a href="workAndTest.html">退出作业</a></div>
+                <div style="font-size:18px;"><a href="workAndTest.html">退出作业</a></div>
             </el-aside>
             <el-container>
                 <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;text-align: center">
@@ -198,7 +230,7 @@
                             </div>
                         </div>
                     </div>
-                    <el-button type="primary" @click="computedScore()">提交</el-button>
+                    <el-button :disabled="disabled" type="primary" @click="computedScore()">提交</el-button>
                 </el-main>
             </el-container>
         </el-container>
@@ -208,7 +240,14 @@
 <script src="../assets/js/courseDatas/courseInfo.js"></script>
 <script>
     var works = JSON.parse(JSON.parse(window.localStorage.getItem('_work')).work);
-
+    var maxId = 0;
+    axios.get('http://127.0.0.1:8081/submit')
+        .then(function (response) {
+            maxId = response.data.page.totalElements;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 
     axios.get('http://127.0.0.1:8081/sumbitwork', {
         params: {
@@ -232,17 +271,19 @@
             }
             else {
                 let body = JSON.parse(response.data.body);
-                app.danxuan = body .danxuan;
-                app.duoxuan = body .duoxuan;
-                app.tiankong = body .tiankong;
-                app.zhuguan =body .zhuguan;
+                app.danxuan = body.danxuan;
+                app.duoxuan = body.duoxuan;
+                app.tiankong = body.tiankong;
+                app.zhuguan = body.zhuguan;
+                app.score = response.data.score;
+                app.worktime = response.data.date;
                 app.disabled = true;
+                app.computedScore();
             }
         })
         .catch(function (error) {
             console.log(error);
         });
-
 </script>
 
 </html>

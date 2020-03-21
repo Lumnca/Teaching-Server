@@ -223,14 +223,15 @@ var app = new Vue({
         },
         docWorks: [],
         docWork: {
-            name: '文案作业一',
-            date: '2020/02/09 12:00',
-            file: 'first.doc',
-            state: true,
-            date1: '',
-            date2: ''
+            name: '',
+            file_url: [],
+            start_date : '',
+            end_date : '',
+            id : ''
         },
-        dialogFormVisible7: false
+        dialogFormVisible7: false,
+        score : 0,
+        worktime : ''
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -248,98 +249,110 @@ var app = new Vue({
             var dxMistake = 0;
             var zgMistake = 0;
             var sxMistake = 0;
-            this.answer.forEach((item) => {
-                if (item.type == 'dx') {
-                    for (let index = 0; index < this.danxuan.length; index++) {
 
-                        if (app.danxuan[index].select == item.value[index]) {
-                            score += item.score;
-                            console.log("d YES");
-                        }
-                        else {
-                            dxMistake++;
-                            app.danxuan[index].type = 1;
-                        }
-                    }
-                }
-                else if (item.type == 'sx') {
-                    for (let index = 0; index < this.duoxuan.length; index++) {
-                        if (app.duoxuan[index].select.toString() == item.value[index].toString()) {
-                            score += item.score;
-                            console.log("s YES");
-                        }
-                        else {
-                            sxMistake++;
-                            app.duoxuan[index].type = 1;
-                        }
-                    }
-                }
-                else if (item.type == 'tk') {
-                    for (let index = 0; index < this.tiankong.length; index++) {
-                        if (app.tiankong[index].input.trim() == item.value[index]) {
-                            score += item.score;
-                            console.log("t YES");
-                        }
-                        else {
-                            tkMistake++;
-                            app.tiankong[index].type = 1;
-                        }
-                    }
+
+            for (let index = 0; index < this.danxuan.length; index++) {
+                let d = this.danxuan[index];
+                if (d.select == d.answer) {
+                    score += d.score;
                 }
                 else {
-                    for (let index = 0; index < this.zhuguan.length; index++) {
-                        if (app.zhuguan[index].input.trim() == item.value[index]) {
-                            score += item.score;
-                            console.log("z YES");
-                        }
-                        else {
-                            zgMistake++;
-                            app.zhuguan[index].type = 1;
-                        }
-                    }
+                    dxMistake++;
+                    d.type = 1;
                 }
-            });
-
-            app.disabled = true;
-
-            let submit = {
-                id : 1,
-                wid : JSON.parse(window.localStorage.getItem('_work')).id,
-                cid : JSON.parse(window.localStorage.getItem('_work')).cid,
-                uid : JSON.parse(window.localStorage.getItem('_user')).id,
-                type : 1,
-                date : app.dateFormat(new Date()),
-                other : '',
-                body : JSON.stringify(works),
-                score : score,
-                state : 1
-
             }
 
-            axios.post('http://127.0.0.1:8081/submit',submit)
-                .then(function (response) {
-                    app.$message({
-                        type: 'success',
-                        message: '提交成功！'
+
+            for (let index = 0; index < this.duoxuan.length; index++) {
+                let d = this.duoxuan[index];
+                d.select.sort();
+                d.answer.sort();
+                if (d.select.toString() == d.answer.toString()) {
+                    score += d.score;
+                }
+                else {
+                    sxMistake++;
+                    d.type = 1;
+                }
+
+            }
+            for (let index = 0; index < this.tiankong.length; index++) {
+                let d = this.tiankong[index];
+                if (d.input.trim() == d.answer) {
+                    score += d.score;
+                }
+                else {
+                    tkMistake++;
+                    d.type = 1;
+                }
+            }
+
+
+            for (let index = 0; index < this.zhuguan.length; index++) {
+                let d = this.zhuguan[index];
+                if (d.input.trim() == d.answer) {
+                    score += d.score;
+                }
+                else {
+                    zgMistake++;
+                    d.type = 1;
+                }
+            }
+            let body = {
+                danxuan : app.danxuan,
+                duoxuan : app.duoxuan,
+                tiankong : app.tiankong,
+                zhuguan : app.zhuguan
+            }
+            if (!app.disabled) {
+                let submit = {
+                    id: maxId+1,
+                    wid: JSON.parse(window.localStorage.getItem('_work')).id,
+                    cid: JSON.parse(window.localStorage.getItem('_work')).cid,
+                    uid: JSON.parse(window.localStorage.getItem('_user')).id,
+                    type: 1,
+                    date: app.dateFormat(new Date()),
+                    other: '',
+                    body: JSON.stringify(body),
+                    score: score,
+                    state: 1
+                }
+
+                axios.post('http://127.0.0.1:8081/submit', submit)
+                    .then(function (response) {
+                        app.$message({
+                            type: 'success',
+                            message: '提交成功！'
+                        });
+                    })
+                    .catch(function (error) {
+                        console.log(error);
                     });
-                    console.log(response.data);
-                })
-                .catch(function (error) {
-                    console.log(error);
+
+
+                this.$notify({
+                    title: '提示',
+                    message: '选择题错误个数: ' + (dxMistake + sxMistake) + '  填空题错误个数: ' + tkMistake + ' 主观题错误个数: ' + zgMistake + '  最后得分:' + score,
+                    duration: 0
                 });
+            }
 
-
-            this.$notify({
-                title: '提示',
-                message: '选择题错误个数: ' + (dxMistake + sxMistake) + '  填空题错误个数: ' + tkMistake + ' 主观题错误个数: ' + zgMistake + '  最后得分:' + score,
-                duration: 0
-            });
-
-
+            app.disabled = true;
         },
         write_work(work) {
-            window.localStorage.setItem("_work", JSON.stringify(work));
-            window.location.href = "workShow.html";
+            if(work.start_date.getTime()<new Date().getTime()&&work.end_date.getTime()>new Date().getTime()){
+                window.localStorage.setItem("_work", JSON.stringify(work));
+                window.location.href = "workShow.html";
+            }
+            else{
+                if(work.start_date.getTime()>new Date().getTime()){
+                    this.$message.error('提交时间未到');
+                }
+                if(work.end_date.getTime()<new Date().getTime()){
+                    this.$message.error('提交时间已过');
+                }
+            }
+           
         },
         edit_work(work) {
             console.log(JSON.stringify(work));
@@ -378,8 +391,8 @@ var app = new Vue({
                 });
         },
         handleAvatarSuccess(res, file) {
-            this.docWork.file.splice(0, 1);
-            this.docWork.file.push({
+            this.docWork.file_url.splice(0, 1);
+            this.docWork.file_url.push({
                 name: file.name,
                 url: file.name
             });
@@ -392,55 +405,44 @@ var app = new Vue({
             this.dialogFormVisible7 = true;
             this.docWork = data;
         },
+        submit(data){
+            let body = {
+                name : data.file_name,
+                file : data.file_url[0].url
+            }
+
+            let docS = {
+                id: maxId+2,
+                wid: data.id,
+                cid: data.cid,
+                uid: JSON.parse(window.localStorage.getItem('_user')).id,
+                type: 2,
+                date: app.dateFormat(new Date()),
+                other: '',
+                body: JSON.stringify(body),
+                score: 0,
+                state: 1
+            }
+
+            axios.post('http://127.0.0.1:8081/submit',docS)
+            .then(function (response) {
+                app.$message({
+                    message: '作业上传成功！',
+                    type: 'success'
+                });
+                app.dialogFormVisible7 = false;
+            })
+            .catch(function (error) {
+                console.log(error);
+                app.dialogFormVisible7 = false;
+            });
+
+        },
         dateFormat(date) {
             return date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() + " " + (date.getHours() > 9 ? date.getHours() : '0' + date.getHours()) + ":" + (date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes()) + ":" + (date.getSeconds() > 9 ? date.getSeconds() : '0' + date.getSeconds());
         },
     },
     computed: {
-        write: function () {
-            let i = 0;
-            this.danxuan.forEach((item) => {
-                if (item.select != 'default') {
-                    item.type = 0;
-                    i++;
-                }
-                else {
-                    item.type = -1;
-                }
-            });
-            this.duoxuan.forEach((item) => {
-                if (item.select.length != 0) {
-                    item.type = 0;
-                    i++;
-                }
-                else {
-                    item.type = -1;
-                }
-            });
-            this.tiankong.forEach((item) => {
-                if (item.input.length > 0) {
-                    item.type = 0;
-                    i++;
-                }
-                else {
-                    item.type = -1;
-                }
-            });
-            this.zhuguan.forEach((item) => {
-                if (item.input.length > 0) {
-                    item.type = 0;
-                    i++;
-                }
-                else {
-                    item.type = -1;
-                }
-            });
-            return "完成度:" + i + "/" + (this.danxuan.length + this.tiankong.length + this.duoxuan.length + this.zhuguan.length);
-        },
-        countDown: function () {
-
-
-        }
     },
 });
 

@@ -87,32 +87,30 @@
                 <el-main>
 
                     <el-table :data="test" border style="width: 100%">
-                        <el-table-column prop="name" label="名称" width="250">
+                        <el-table-column prop="name" label="名称" width="200">
                         </el-table-column>
-                        <el-table-column label="起始日期" width="250">
+                        <el-table-column label="起始日期" >
                             <template slot-scope="scope">
-                               {{dateFormat(scope.row.start_date)}}      
+                                {{dateFormat(scope.row.start_date)}}
                             </template>
                         </el-table-column>
-                        <el-table-column prop="end_date" label="结束日期" width="250">
+                        <el-table-column prop="end_date" label="结束日期">
                             <template slot-scope="scope">
-                            {{dateFormat(scope.row.end_date)}}   
+                                {{dateFormat(scope.row.end_date)}}
                             </template>
-                        </el-table-column>
-                        <el-table-column prop="score" label="分数" width="200">
                         </el-table-column>
                         <el-table-column prop="info" label="备注" width="200">
                         </el-table-column>
                         <el-table-column label="状态" width="200">
                             <template slot-scope="scope">
-                                <el-tag v-if="scope.row.state==1" type="success">已提交</el-tag>
-                                <el-tag v-else type="danger">未提交</el-tag>
+                                <el-tag v-if="scope.row.start_date.getTime()<new Date().getTime()&&scope.row.end_date.getTime()>new Date().getTime()" type="success">可提交</el-tag>
+                                <el-tag v-else type="danger">不可提交</el-tag>
                             </template>
                         </el-table-column>
                         <el-table-column label="操作" width="250">
                             <template slot-scope="scope">
                                 <el-button type="button" size="small" @click="write_work(scope.row)">查看</el-button>
-                                <el-button type="button" size="small" @click="edit_work(item)">编辑</el-button>
+                                <el-button type="button" size="small" >查看提交</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -131,8 +129,10 @@
             .then(function (response) {
                 app.test = response.data;
                 app.test.forEach(e => {
+
                     e.start_date = new Date(e.start_date);
                     e.end_date = new Date(e.end_date);
+                   
                 });
             })
             .catch(function (error) {
