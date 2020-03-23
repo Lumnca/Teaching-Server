@@ -231,7 +231,15 @@ var app = new Vue({
         },
         dialogFormVisible7: false,
         score : 0,
-        worktime : ''
+        worktime : '',
+        dialogFormVisible : false,
+        submitform : {
+            body : {
+                name : '',
+                file : ''
+            },
+            date : ''
+        }
     },
     methods: {
         handleOpen(key, keyPath) {
@@ -411,36 +419,90 @@ var app = new Vue({
                 file : data.file_url[0].url
             }
 
-            let docS = {
-                id: maxId+2,
-                wid: data.id,
-                cid: data.cid,
-                uid: JSON.parse(window.localStorage.getItem('_user')).id,
-                type: 2,
-                date: app.dateFormat(new Date()),
-                other: '',
-                body: JSON.stringify(body),
-                score: 0,
-                state: 1
-            }
-
-            axios.post('http://127.0.0.1:8081/submit',docS)
-            .then(function (response) {
-                app.$message({
-                    message: '作业上传成功！',
-                    type: 'success'
-                });
-                app.dialogFormVisible7 = false;
+            axios.get('http://127.0.0.1:8081/submitfiledate',{
+                params : {
+                    wid : data.id,
+                    uid : JSON.parse(window.localStorage.getItem("_user")).id
+                }
             })
+            .then(function (response) {
+                if(response.data!=''&&response.data!=undefined&&response.data!={}){
+                    response.data.date = app.dateFormat(new Date());
+                    response.data.body =  JSON.stringify(body);
+
+                    axios.put('http://127.0.0.1:8081/submit/'+response.data.id,response.data)
+                    .then(function (response) {
+                        app.$message({
+                            message: '作业重新上传成功！',
+                            type: 'success'
+                        });
+                        app.dialogFormVisible7 = false;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        app.dialogFormVisible7 = false;
+                    });
+                }
+                else{
+                   
+        
+                    let docS = {
+                        id: maxId+2,
+                        wid: data.id,
+                        cid: data.cid,
+                        uid: JSON.parse(window.localStorage.getItem('_user')).id,
+                        type: 2,
+                        date: app.dateFormat(new Date()),
+                        other: '',
+                        body: JSON.stringify(body),
+                        score: 0,
+                        state: 1
+                    }
+        
+                    axios.post('http://127.0.0.1:8081/submit',docS)
+                    .then(function (response) {
+                        app.$message({
+                            message: '作业上传成功！',
+                            type: 'success'
+                        });
+                        app.dialogFormVisible7 = false;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        app.dialogFormVisible7 = false;
+                    });
+                }
+            })
+
             .catch(function (error) {
-                console.log(error);
                 app.dialogFormVisible7 = false;
+                console.log(error);
             });
+            
+          
 
         },
         dateFormat(date) {
             return date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() + " " + (date.getHours() > 9 ? date.getHours() : '0' + date.getHours()) + ":" + (date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes()) + ":" + (date.getSeconds() > 9 ? date.getSeconds() : '0' + date.getSeconds());
         },
+        showSubmit(docWork){
+            this.dialogFormVisible = true;
+            axios.get('http://127.0.0.1:8081/submitfiledate',{
+                params : {
+                    wid : docWork.id,
+                    uid : JSON.parse(window.localStorage.getItem("_user")).id
+                }
+            })
+            .then(function (response) {
+                if(response.data!=''&&response.data!=undefined&&response.data!={}){
+                    app.submitform = response.data;
+                    app.submitform.body = JSON.parse(app.submitform.body);
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
     },
     computed: {
     },
