@@ -10,11 +10,17 @@
     <!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
     <!-- Css files -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
+    <!-- Css files -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/jquery.mmenu.css" rel="stylesheet">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     <style>
         @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
 
@@ -79,11 +85,20 @@
                 <p>单选</p>
                 <el-row>
                     <el-col v-for="(item,i) in danxuan" :span="4">
-                        <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
-                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
-                                    class="fa fa-check"></i></span>
+
+                        <div v-if="!disabled">
+                            <div v-if="item.select=='default'" class="grid-content ">{{i+1}}</div>
+                            <div v-else class="grid-content" style="color: green"><span><i
+                                        class="fa fa-check"></i></span>
+                            </div>
                         </div>
-                        <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
+
+                        <div v-else>
+                            <div v-if="item.type == 1" class="grid-content" style="color: red"><span><i
+                                        class="fa  fa-times"></i></span></div>
+                            <div v-else class="grid-content" style="color: green"><span><i
+                                        class="fa fa-check"></i></span>
+                            </div>
                         </div>
                     </el-col>
                 </el-row>
@@ -91,11 +106,19 @@
                 <p>多选</p>
                 <el-row>
                     <el-col v-for="(item,i) in duoxuan" :span="4">
-                        <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
-                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
-                                    class="fa fa-check"></i></span>
+                        <div v-if="!disabled">
+                            <div v-if="item.select.length==0" class="grid-content ">{{i+1}}</div>
+
+                            <div v-else class="grid-content" style="color: green"><span><i
+                                        class="fa fa-check"></i></span>
+                            </div>
                         </div>
-                        <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
+                        <div v-else>
+                            <div v-if="item.type == 1" class="grid-content" style="color: red"><span><i
+                                        class="fa  fa-times"></i></span></div>
+                            <div v-else class="grid-content" style="color: green"><span><i
+                                        class="fa fa-check"></i></span>
+                            </div>
                         </div>
                     </el-col>
                 </el-row>
@@ -103,11 +126,18 @@
                 <p>填空</p>
                 <el-row>
                     <el-col v-for="(item,i) in tiankong" :span="4">
-                        <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
-                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
-                                    class="fa fa-check"></i></span>
+                        <div v-if="!disabled">
+                            <div v-if="item.input==''" class="grid-content ">{{i+1}}</div>
+                            <div v-else class="grid-content" style="color: green"><span><i
+                                        class="fa fa-check"></i></span>
+                            </div>
                         </div>
-                        <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
+                        <div v-else>
+                            <div v-if="item.type == 1" class="grid-content" style="color: red"><span><i
+                                        class="fa  fa-times"></i></span></div>
+                            <div v-else class="grid-content" style="color: green"><span><i
+                                        class="fa fa-check"></i></span>
+                            </div>
                         </div>
                     </el-col>
                 </el-row>
@@ -115,24 +145,29 @@
                 <p>主观</p>
                 <el-row>
                     <el-col v-for="(item,i) in zhuguan" :span="4">
-                        <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
-                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
-                                    class="fa fa-check"></i></span>
+                        <div v-if="!disabled">
+                            <div v-if="item.input==''" class="grid-content ">{{i+1}}</div>
+                            <div v-else class="grid-content" style="color: green"><span><i
+                                        class="fa fa-check"></i></span>
+                            </div>
                         </div>
-                        <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
+                        <div v-else>
+                            <div v-if="item.type == 1" class="grid-content" style="color: red"><span><i
+                                        class="fa  fa-times"></i></span></div>
+                            <div v-else class="grid-content" style="color: green"><span><i
+                                        class="fa fa-check"></i></span>
+                            </div>
                         </div>
                     </el-col>
                 </el-row>
                 <el-divider></el-divider>
-                <div>
-                    {{write}}
-                </div>
+
             </el-aside>
             <el-container>
                 <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;text-align: center">
-                    <span><i class="el-icon-edit"></i> {{current.test}}</span>
+                    <span><i class="el-icon-edit"></i> {{name}}</span>
 
-                    <span v-if="current.state!=0" style="float:right;font-size: 20px;"><i class="fa fa-clock-o"></i> <b
+                    <span v-if="true" style="float:right;font-size: 20px;"><i class="fa fa-clock-o"></i> <b
                             style="color: #1ccfcf;">{{time}}</b></span>
                     <span v-else style="float:right;font-size: 20px;"><i class="fa fa-clock-o"></i> <b
                             style="color: #1ccfcf;">-- : -- : --</b></span>
@@ -199,7 +234,7 @@
                             </div>
                         </div>
                     </div>
-                    <el-button type="primary" @click="computedScore()">提交</el-button>
+                    <el-button type="primary" @click=" examsubmit()">结束并提交</el-button>
 
                 </el-main>
             </el-container>
@@ -207,21 +242,75 @@
     </div>
     <script src="../assets/js/courseDatas/courseInfo.js"></script>
     <script>
-        axios.get('http://127.0.0.1:8080/delete', {
-            params: {
-                file: file.name
+        var works = JSON.parse(app.examdata);
+
+
+        var time = new Date(JSON.parse(window.localStorage.getItem('_exam')).end_date).getTime() -
+            new Date(JSON.parse(window.localStorage.getItem('_exam')).start_date).getTime();
+
+
+        var time = time / 1000;
+
+         var  h = Math.floor(time / 3600);
+         var  m = Math.floor((time%3600)/60);
+         var  s = (time%3600)%60;
+        
+          
+
+        var timeformat = (h>9? h:'0'+h) + ":"+(m>9? m:'0'+m) +":"+(s>9? s:'0'+s);
+     
+        var timer = setInterval(() => {
+            var hh = parseInt(timeformat.split(':')[0]);
+            var mm = parseInt(timeformat.split(':')[1]);
+            var ss = parseInt(timeformat.split(':')[2]);
+            if (ss > 0) {
+                ss -= 1;
             }
-        })
-            .then(function (response) {
-                app.$message({
-                    type: 'success',
-                    message: response.data
-                });
-                console.log(response.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            else {
+                if (mm > 0) {
+                    ss = 59;
+                    mm -= 1;
+
+                }
+                else {
+                    if (hh > 0) {
+                        ss = 59;
+                        mm = 59;
+                        hh -= 1;
+                    }
+                }
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            if (ss < 10) {
+                ss = '0' + ss;
+            }
+            if (hh < 10) {
+                hh = '0' + hh;
+            }
+            app.time = hh + ':' + mm + ':' + ss;
+            timeformat = app.time;
+            if (hh == 0 && mm == 0 && ss == 0) {
+                app.time = '- -:- -:- -';
+                clearInterval(timer);
+                app.disabled = true;
+            }
+        }, 1000);
+
+        if (works.danxuan == undefined) {
+            works.danxuan = [];
+            works.duoxuan = [];
+            works.tiankong = [];
+            works.zhuguan = [];
+        }
+
+        app.danxuan = works.danxuan;
+        app.duoxuan = works.duoxuan;
+        app.tiankong = works.tiankong;
+        app.zhuguan = works.zhuguan;
+
+
     </script>
 </body>
 

@@ -198,11 +198,7 @@ var app = new Vue({
         activeNames: ['1'],
         showdata: '',
         test: [],
-        exam: [
-            { title: '考试一', start: '2019-8-7', end: '2019-12-7', info: '其他', state: 0, score: 87 },
-            { title: '考试二', start: '2019-9-7', end: '2019-12-7', info: '其他', state: 1, score: 0 },
-            { title: '考试三', start: '2019-9-7', end: '2019-12-7', info: '其他', state: -1, score: 0 }
-        ],
+        exam: [],
         radio: '1',
         danxuan: danxuan,
         duoxuan: duoxuan,
@@ -212,6 +208,7 @@ var app = new Vue({
         disabled: false,
         time: '00:10:10',
         wares: [],
+        examdata : JSON.parse(window.localStorage.getItem('_exam')).exam || '',
         talk: [
             { name: 'Lumnca', info: '抗击疫情，我们每个人都有责任，社会还需要继续发展，我们需要做的，就是注意好个人卫生，待在家里！等春天到来，万物复苏！', number: 84, date: '2019/12/21 20:12' },
             { name: 'Kay', info: '抗击疫情，我们每个人都有责任，社会还需要继续发展，我们需要做的，就是注意好个人卫生，待在家里！等春天到来，万物复苏！', number: 45, date: '2019/12/24 04:23' },
@@ -366,7 +363,7 @@ var app = new Vue({
             console.log(JSON.stringify(work));
         },
         write_exam(work) {
-            window.localStorage.setItem("_exam", work);
+            window.localStorage.setItem("_exam", JSON.stringify(work));
             window.location.href = "testShow.html";
         },
         edit_exam(work) {
@@ -502,54 +499,31 @@ var app = new Vue({
             .catch(function (error) {
                 console.log(error);
             });
+        },
+        examsubmit(){
+            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+                this.$message({
+                  type: 'success',
+                  message: '删除成功!'
+                });
+              }).catch(() => {
+                this.$message({
+                  type: 'info',
+                  message: '已取消删除'
+                });          
+              });
         }
     },
     computed: {
     },
 });
 
-var time = app.time;
-var hh = parseInt(time.split(':')[0]);
-var mm = parseInt(time.split(':')[1]);
-var ss = parseInt(time.split(':')[2]);
-var timer = setInterval(() => {
-    var hh = parseInt(time.split(':')[0]);
-    var mm = parseInt(time.split(':')[1]);
-    var ss = parseInt(time.split(':')[2]);
-    if (ss > 0) {
-        ss -= 1;
-    }
-    else {
-        if (mm > 0) {
-            ss = 59;
-            mm -= 1;
 
-        }
-        else {
-            if (hh > 0) {
-                ss = 59;
-                mm = 59;
-                hh -= 1;
-            }
-        }
-    }
-    if (mm < 10) {
-        mm = '0' + mm;
-    }
-    if (ss < 10) {
-        ss = '0' + ss;
-    }
-    if (hh < 10) {
-        hh = '0' + hh;
-    }
-    app.time = hh + ':' + mm + ':' + ss;
-    time = app.time;
-    if (hh == 0 && mm == 0 && ss == 0) {
-        app.time = '- -:- -:- -';
-        clearInterval(timer);
-        app.disabled = true;
-    }
-}, 1000);
+
 
 
 
