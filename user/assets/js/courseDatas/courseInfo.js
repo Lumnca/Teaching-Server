@@ -208,7 +208,7 @@ var app = new Vue({
         disabled: false,
         time: '00:10:10',
         wares: [],
-        examdata : JSON.parse(window.localStorage.getItem('_exam')).exam || '',
+        examdata :   window.localStorage.getItem('_exam')? JSON.parse(window.localStorage.getItem('_exam')).exam :'',
         talk: [
             { name: 'Lumnca', info: '抗击疫情，我们每个人都有责任，社会还需要继续发展，我们需要做的，就是注意好个人卫生，待在家里！等春天到来，万物复苏！', number: 84, date: '2019/12/21 20:12' },
             { name: 'Kay', info: '抗击疫情，我们每个人都有责任，社会还需要继续发展，我们需要做的，就是注意好个人卫生，待在家里！等春天到来，万物复苏！', number: 45, date: '2019/12/24 04:23' },
@@ -359,6 +359,11 @@ var app = new Vue({
             }
            
         },
+        show_work(work){
+           
+            window.localStorage.setItem("_work", JSON.stringify(work));
+            window.location.href = "workShow.html";
+        },
         edit_work(work) {
             console.log(JSON.stringify(work));
         },
@@ -501,20 +506,111 @@ var app = new Vue({
             });
         },
         examsubmit(){
-            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            var score = 0;
+            var tkMistake = 0;
+            var dxMistake = 0;
+            var zgMistake = 0;
+            var sxMistake = 0;
+
+            this.$confirm('提交考试，只允许提交一次！, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
               }).then(() => {
-                this.$message({
-                  type: 'success',
-                  message: '删除成功!'
-                });
+
+                for (let index = 0; index < app.danxuan.length; index++) {
+                    let d = app.danxuan[index];
+                    if (d.select == d.answer) {
+                        score += d.score;
+                    }
+                    else {
+                        dxMistake++;
+                        d.type = 1;
+                    }
+                }
+    
+                for (let index = 0; index < app.duoxuan.length; index++) {
+                    let d = app.duoxuan[index];
+                    d.select.sort();
+                    d.answer.sort();
+                    if (d.select.toString() == d.answer.toString()) {
+                        score += d.score;
+                    }
+                    else {
+                        sxMistake++;
+                        d.type = 1;
+                    }
+    
+                }
+                for (let index = 0; index < app.tiankong.length; index++) {
+                    let d = app.tiankong[index];
+                    if (d.input.trim() == d.answer) {
+                        score += d.score;
+                    }
+                    else {
+                        tkMistake++;
+                        d.type = 1;
+                    }
+                }
+    
+                for (let index = 0; index < app.zhuguan.length; index++) {
+                    let d = app.zhuguan[index];
+                    if (d.input.trim() == d.answer) {
+                        score += d.score;
+                    }
+                    else {
+                        zgMistake++;
+                        d.type = 1;
+                    }
+                }
+                let body = {
+                    danxuan : app.danxuan,
+                    duoxuan : app.duoxuan,
+                    tiankong : app.tiankong,
+                    zhuguan : app.zhuguan
+                }
+                
+                if (!app.disabled) {
+                   
+                    let submit = {
+                        id: maxId+1,
+                        eid: JSON.parse(window.localStorage.getItem('_exam')).id,
+                        cid: JSON.parse(window.localStorage.getItem('_exam')).cid,
+                        uid: JSON.parse(window.localStorage.getItem('_user')).id,
+                        date: app.dateFormat(new Date()),
+                        other: '',
+                        submit: JSON.stringify(body),
+                        score: score,
+                        state: 1
+                    }
+            
+                    axios.post('http://127.0.0.1:8081/examsubmit', submit)
+                        .then(function (response) {
+                            app.$message({
+                                type: 'success',
+                                message: '提交成功！'
+                            });
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+    
+
+                        app.$notify({
+                        title: '提示',
+                        message: '选择题错误个数: ' + (dxMistake + sxMistake) + '  填空题错误个数: ' + tkMistake + ' 主观题错误个数: ' + zgMistake + '  最后得分:' + score,
+                        duration: 0
+                    });
+                }
+
+                app.disabled = true;
               }).catch(() => {
-                this.$message({
+
+                app.$message({
                   type: 'info',
                   message: '已取消删除'
-                });          
+                }); 
+
               });
         }
     },

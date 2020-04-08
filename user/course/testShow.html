@@ -161,7 +161,8 @@
                     </el-col>
                 </el-row>
                 <el-divider></el-divider>
-
+                <h2>总分:{{score}}</h2>
+                <p>提交时间：{{worktime}}</p>
             </el-aside>
             <el-container>
                 <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;text-align: center">
@@ -234,7 +235,7 @@
                             </div>
                         </div>
                     </div>
-                    <el-button type="primary" @click=" examsubmit()">结束并提交</el-button>
+                    <el-button type="primary" @click=" examsubmit()" :disabled="disabled">结束并提交</el-button>
 
                 </el-main>
             </el-container>
@@ -248,14 +249,46 @@
         var time = new Date(JSON.parse(window.localStorage.getItem('_exam')).end_date).getTime() -
             new Date(JSON.parse(window.localStorage.getItem('_exam')).start_date).getTime();
 
-
+        var maxId = 0;
         var time = time / 1000;
 
          var  h = Math.floor(time / 3600);
          var  m = Math.floor((time%3600)/60);
          var  s = (time%3600)%60;
         
-          
+         axios.get('http://127.0.0.1:8081/examsubmit')
+            .then(function (response) {
+                maxId = response.data.page.totalElements;
+            })
+            .catch(function (error) {
+              
+            });
+
+            axios.get('http://127.0.0.1:8081/submitexams',{
+                params : {
+                    uid : JSON.parse(window.localStorage.getItem('_user')).id,
+                    eid :JSON.parse(window.localStorage.getItem('_exam')).id,
+                }
+            })
+            .then(function (response) {
+               console.log(response.data);
+               if(response.data!=''&&response.data!=null){
+                    let e = JSON.parse(response.data.submit);
+                    app.danxuan = e.danxuan;
+                    app.duoxuan = e.duoxuan;
+                    app.tiankong = e.tiankong;
+                    app.zhuguan = e.zhuguan;
+                    app.disabled = true;
+                    app.score = response.data.score;
+                    app.worktime = response.data.date;
+               }
+               else{
+                   
+               }
+            })
+            .catch(function (error) {
+              
+            });
 
         var timeformat = (h>9? h:'0'+h) + ":"+(m>9? m:'0'+m) +":"+(s>9? s:'0'+s);
      

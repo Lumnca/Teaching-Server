@@ -263,11 +263,23 @@
                     works.tiankong = [];
                     works.zhuguan = [];
                 }
-
+                let st = new Date(JSON.parse(window.localStorage.getItem('_work')).start_date);
+                let et = new Date(JSON.parse(window.localStorage.getItem('_work')).end_date);
                 app.danxuan = works.danxuan;
                 app.duoxuan = works.duoxuan;
                 app.tiankong = works.tiankong;
                 app.zhuguan = works.zhuguan;
+
+                if (st.getTime() < new Date().getTime() && et.getTime() > new Date().getTime()) {
+
+                }
+                else {
+                    app.$message({
+                        message: '提交日期已过！',
+                        type: 'info'
+                    });
+                    app.disabled = true;
+                }
             }
             else {
                 let body = JSON.parse(response.data.body);
