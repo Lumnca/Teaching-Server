@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>课程总览</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
+    <style>
+        @import url("https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css");
+
+        .el-header {
+            background-color: rgb(24, 22, 22);
+            color: rgb(250, 246, 246);
+            text-align: center;
+            line-height: 60px;
+        }
+
+        .el-footer {
+            background-color: #444444;
+            color: #eeeeee;
+            text-align: center;
+            padding: 80px 40px;
+        }
+
+        .el-aside {
+            background-color: rgb(143, 171, 202);
+            color: #333;
+            text-align: center;
+            line-height: 200px;
+        }
+
+        .el-main {
+            background-color: #E9EEF3;
+            color: #333;
+
+        }
+
+        body>.el-container {
+            margin-bottom: 40px;
+        }
+
+        .el-container:nth-child(5) .el-aside,
+        .el-container:nth-child(6) .el-aside {
+            line-height: 260px;
+        }
+
+        .el-container:nth-child(7) .el-aside {
+            line-height: 320px;
+        }
+
+        .el-carousel__item h3 {
+            color: #475669;
+            font-size: 14px;
+            opacity: 0.75;
+            line-height: 150px;
+            margin: 0;
+        }
+
+        .el-carousel__item:nth-child(2n) {
+            background-color: #99a9bf;
+        }
+
+        .el-carousel__item:nth-child(2n+1) {
+            background-color: #d3dce6;
+        }
+
+        .cou:hover {
+            background: #03439c;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>
+                <el-row :gutter="20">
+                    <el-col :span="4">
+                        <div style="float:left;">
+                            <el-button type="text" @click="rehref('index.html')"><span style="font-size:32px;"><i
+                                        class="el-icon-platform-eleme"></i>LStuly</span></el-button>
+                        </div>
+                    </el-col>
+                    <el-col :span="13">
+                        <div>
+                            广告招商位
+                        </div>
+                    </el-col>
+                    <el-col :span="5">
+                        <el-input v-model="search" placeholder="输入关键字搜索" />
+                    </el-col>
+                    <el-col :span="1" style="margin-left:-25px;">
+                        <el-button icon="el-icon-search" circle></el-button>
+                    </el-col>
+                    <el-col :span="1" style="float:right;">
+                        <div class="grid-content bg-purple" v-if="islogin">
+                            <el-dropdown>
+                                <el-avatar :size="60" src="https://empty">
+                                    <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+                                </el-avatar>
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item>{{user.name}}</el-dropdown-item>
+                                    <el-dropdown-item>
+                                        <el-button type="text" @click="rehref('../index.html')"><span><i
+                                                    class="el-icon-suitcase"></i>用户中心</span></el-button>
+                                    </el-dropdown-item>
+                                    <el-dropdown-item>
+                                        <el-button type="text" @click="out()"><span><i
+                                                    class="el-icon-back"></i>登出</span></el-button>
+                                    </el-dropdown-item>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                        <div v-else>
+                            <el-button type="text" @click="centerDialogVisible = true"><i
+                                    class="el-icon-user-solid"></i> {{isLoginCheck}} </el-button>
+
+
+                            <el-dialog title="登录" :visible.sync="centerDialogVisible" width="30%" center>
+
+                                <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm"
+                                    label-width="100px" class="demo-loginForm">
+
+                                    <el-form-item label="账号" prop="id">
+                                        <el-input type="text" v-model="loginForm.id" autocomplete="off"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="密码" prop="pass">
+                                        <el-input type="password" v-model="loginForm.pass" autocomplete="off">
+                                        </el-input>
+                                    </el-form-item>
+
+                                    <div class="block" style="padding:48px;">
+                                        <span class="demonstration">人机验证,请将滑块拉到<b> {{loginForm.result}} </b></span>
+                                        <el-slider v-model="loginForm.number" :step="1" :max="10" :min=0 show-stops>
+                                        </el-slider>
+                                    </div>
+
+
+                                    <el-form-item>
+                                        <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
+                                        <el-button @click="resetForm('loginForm')">重置</el-button>
+
+                                        <span style="margin:16px 54px;font-size: 16px;"><a href="#">忘记密码?</a> | <a
+                                                href="#">注册账号</a></span>
+                                    </el-form-item>
+                                </el-form>
+
+                            </el-dialog>
+                        </div>
+                    </el-col>
+                </el-row>
+
+            </el-header>
+            <el-container>
+
+                <el-container>
+                    <el-main>
+                        <el-row :gutter="20">
+                            <el-col :span="4">
+                                <div class="grid-content bg-purple">&nbsp;</div>
+                            </el-col>
+                            <el-col :span="8">
+                                <div class="grid-content bg-purple">
+                                    <img width="480"
+                                        src="https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLCHvdhyHOkh3cFHA8FRwm6R8TGM5I7ib0icuqubCQL1iavRvhYp392u6BM0fCKhmBOic5E/356">
+                                </div>
+                            </el-col>
+                            <el-col :span="8">
+                                <div class="grid-content bg-purple">
+                                    <h2>Unity3D（U3D）从零打造王者荣耀 - 钻石班</h2>
+                                    <div style="font: size 14px;color:rgb(170, 161, 161)">
+                                        <span>699 人参与 | 好评度:4.8 | 收藏<i class="el-icon-star-on"></i> | 评论<i
+                                                class="el-icon-s-comment"></i> </span>
+
+
+                                    </div>
+                                    <div
+                                        style="box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);color: red;font-size: 30px;padding: 10px 20px;margin-top: 10px;">
+                                        ￥2889
+                                    </div>
+                                    <div style="margin-top:60px;">
+                                        <el-button type="primary">报名参与</el-button>
+                                        <el-button>咨 询</el-button>
+                                    </div>
+                                </div>
+                            </el-col>
+                            <el-col :span="4">
+                                <div class="grid-content bg-purple">&nbsp;</div>
+                            </el-col>
+                        </el-row>
+
+                        <el-row :gutter="20">
+                            <el-col :span="4">
+                                <div class="grid-content bg-purple">&nbsp;</div>
+                            </el-col>
+                            <el-col :span="12" style="background-color: rgb(243, 245, 247)">
+                                <el-tabs v-model="ac">
+                                    <el-tab-pane label="课程概述" name="info">
+                                        <p>老师介绍</p>
+                                        <div class="demo-type">
+                                            <el-avatar :size="80" src="../assets/img/avatar2.jpg">
+                                                <img
+                                                    src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+                                            </el-avatar>
+                                            <h2>Kay</h2>
+                                            <p>简 介 : 9年游戏开发，客户端主程序，同时涉猎AR、VR。将“专业游戏20年”作为自身...</p>
+                                            <h2>课程说明</h2>
+                                            <p>XXXXXXXXXXXXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                XXXXXXXXXXXXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                XXXXXXXXXXXXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                XXXXXXXXXXXXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                            </p>
+                                            <h2>课程截图</h2>
+                                            <img
+                                                src="https://10.url.cn/qqke_course_info/ajNVdqHZLLDf9hJUicVRK6mRKaz2kibmkdMT4bHObgSHjjnGzr3BAlYPyfjdtfQ5S5FjzM1xhS8SE/">
+                                        </div>
+                                    </el-tab-pane>
+                                    <el-tab-pane label="目录" name="title">
+
+                                        <div>
+                                            <h2>1.XXXX</h2>
+                                            <div
+                                                style="box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);margin: 8px 16px;padding: 10px 20px;">
+                                                <span><i class="el-icon-video-camera-solid"></i> XXXXXXXCOAJOJCOI</span>
+                                            </div>
+                                            <div
+                                                style="box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);margin: 8px 16px;padding: 10px 20px;">
+                                                <span><i class="el-icon-video-camera-solid"></i> XXXXXXXCOAJOJCOI</span>
+                                            </div>
+                                            <div
+                                                style="box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);margin: 8px 16px;padding: 10px 20px;">
+                                                <span><i class="el-icon-video-camera-solid"></i> XXXXXXXCOAJOJCOI</span>
+                                            </div>
+                                            <div
+                                                style="box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);margin: 8px 16px;padding: 10px 20px;">
+                                                <span><i class="el-icon-video-camera-solid"></i> XXXXXXXCOAJOJCOI</span>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <h2>2.XXXX</h2>
+                                            <div
+                                                style="box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);margin: 8px 16px;padding: 10px 20px;">
+                                                <span><i class="el-icon-video-camera-solid"></i> XXXXXXXCOAJOJCOI</span>
+                                            </div>
+                                            <div
+                                                style="box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);margin: 8px 16px;padding: 10px 20px;">
+                                                <span><i class="el-icon-video-camera-solid"></i> XXXXXXXCOAJOJCOI</span>
+                                            </div>
+
+                                        </div>
+
+                                        <div>
+                                            <h2>3.XXXX</h2>
+                                            <div
+                                                style="box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);margin: 8px 16px;padding: 10px 20px;">
+                                                <span><i class="el-icon-video-camera-solid"></i> XXXXXXXCOAJOJCOI</span>
+                                            </div>
+                                        </div>
+                                    </el-tab-pane>
+                                </el-tabs>
+                            </el-col>
+                            <el-col :span="4" style="background-color: rgb(224, 229, 233);margin: 4px;">
+                                <el-row>
+                                    <el-col :span="8">
+                                        <img src=" https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+                                            width="60">
+                                    </el-col>
+                                    <el-col :span="16" style="color: rgb(28, 101, 185);line-height: 60px;">
+                                        李云祥
+                                    </el-col>
+                                </el-row>
+
+                                <el-row style="color: rgb(28, 101, 185);line-height: 60px;">
+                                    <el-col :span="12">
+                                        课程数 : 24
+                                    </el-col>
+                                    <el-col :span="12">
+                                        学习人数 : 84442
+                                    </el-col>
+                                </el-row>
+
+                                <el-divider></el-divider>
+
+                                <h5>联系方式</h5>
+
+                                <span class="el-icon-phone"
+                                    style="color: rgb(16, 66, 230);line-height: 60px;">13281101201</span>
+                            </el-col>
+                            <el-col :span="4">
+                                <div class="grid-content bg-purple">&nbsp;</div>
+                            </el-col>
+                        </el-row>
+
+                    </el-main>
+                    <el-footer>
+                        Copyright © 2020 Tencent. All Rights Reserved.
+                        <br>
+                        XXXX有限公司 版权所有
+                    </el-footer>
+                </el-container>
+            </el-container>
+        </el-container>
+    </div>
+</body>
+<script src="../assets/js/courseShop/index.js"></script>
+<script>
+    app.loginForm.result = Math.floor(Math.random() * 9 + 1);
+</script>
+
+</html>

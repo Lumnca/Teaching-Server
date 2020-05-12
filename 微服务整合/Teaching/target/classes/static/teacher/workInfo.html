@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>查看提交</title>
+    <!-- Import google fonts - Heading first/ text second -->
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
+    <!-- Css files -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/jquery.mmenu.css" rel="stylesheet">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+    <link href="../assets/css/style.min.css" rel="stylesheet">
+    <link href="../assets/css/add-ons.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <style>
+        @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
+
+        .el-header {
+            background-color: #B3C0D1;
+            color: #333;
+            line-height: 60px;
+        }
+
+        .el-aside {
+            color: #3c1dca;
+        }
+
+        .noline:hover {
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+</head>
+
+<body>
+    <div id="app">
+        <el-container style=" border: 1px solid #eee">
+            <el-header style="text-align: right; font-size: 12px">
+                <el-row :gutter="20">
+                    <el-col :span="22">
+                        <div style="text-align: center;color: #77837d;">
+                            <h3><i class="el-icon-eleme"></i> {{name}}</h3>
+                        </div>
+                    </el-col>
+                    <el-col :span="2">
+                        <div>
+                            <el-dropdown>
+                                <span style="font-size: 20px;margin-left: 60px;"><i
+                                        class="el-icon-user"></i>{{user}}</span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                                        <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                                    </a>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </el-col>
+                </el-row>
+
+            </el-header>
+        </el-container>
+        <el-container style="height: 800px; border: 1px solid #eee">
+            <el-aside width="300px" style="background-color: rgb(238, 241, 246)">
+                <img src="https://edu-image.nosdn.127.net/E60240E3F15C33023E8BE744985C91D3.jpg?imageView&thumbnail=510y288&quality=100"
+                    width="296">
+                <el-menu :default-openeds="['']">
+                    <el-submenu v-for="(list,i) in course.infoList" :index="i.toString()">
+                        <template slot="title"><i :class="list.icon"></i>{{list.title}}</template>
+                        <el-menu-item-group v-for="(item,index) in list.children">
+                            <a class="noline" :href="item.href">
+                                <el-menu-item :index="item.title">{{item.title}}</el-menu-item>
+                            </a>
+                        </el-menu-item-group>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
+            <el-container>
+                <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;">
+                    <span><i class="el-icon-edit"></i> 查看提交</span>
+                </el-header>
+                <hr>
+                <el-main>
+
+                    <el-table :data="test" border style="width: 100%">
+                        <el-table-column label="题型作业提交">
+                            <el-table-column prop="title" label="名称" width="250" sortable>
+                            </el-table-column>
+                            <el-table-column prop="start" label="起始日期" width="250" sortable>
+                            </el-table-column>
+                            <el-table-column prop="end" label="结束日期" width="250" sortable>
+                            </el-table-column>
+                            <el-table-column prop="info" label="备注" width="200">
+                            </el-table-column>
+                            <el-table-column label="状态" width="200" sortable>
+                                <template slot-scope="scope">
+                                    <el-tag v-if="scope.row.state==-1" type="success">提交中</el-tag>
+                                    <el-tag v-else type="danger">已截止</el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="submit" label="提交数" width="200" sortable>
+                            </el-table-column>
+                            <el-table-column label="操作" width="250">
+                                <template slot-scope="scope">
+                                    <el-button type="button" size="small" @click="showSumbit(item)">查看</el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table-column>
+
+
+
+                    </el-table>
+                    <br><br>
+                    <el-table :data="docWorks" border style="width: 100%">
+                        <el-table-column label="文档作业提交">
+                            <el-table-column prop="name" label="名称" width="250" sortable>
+                            </el-table-column>
+                            <el-table-column prop="date1" label="起始日期" width="250" sortable>
+                            </el-table-column>
+                            <el-table-column prop="date2" label="结束日期" width="250" sortable>
+                            </el-table-column>
+                            <el-table-column prop="info" label="备注" width="200">
+                            </el-table-column>
+                            <el-table-column label="状态" width="200" sortable>
+                                <template slot-scope="scope">
+                                    <el-tag v-if="scope.row.state==-1" type="success">提交中</el-tag>
+                                    <el-tag v-else type="danger">已截止</el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="submit" label="提交数" width="200" sortable>
+                            </el-table-column>
+                            <el-table-column label="操作" width="250">
+                                <template slot-scope="scope">
+                                    <el-button type="button" size="small" @click="showDocSumbit(scope)">查看</el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table-column>
+
+
+
+                    </el-table>
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+    <script src="../assets/js/courseDatas/teacourse.js"></script>
+    <script>
+        app.docWorks = [
+            {
+                name: '文案作业一',
+                date: '2020/02/09 12:00',
+                file: [{ name: 'xx.doc', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
+                state: true,
+                date1: '',
+                date2: '',
+                state: 1,
+                submit: 12
+            },
+            {
+                name: '文案作业二',
+                date: '2020/02/12 16:00',
+                file: [{ name: 'xx.docx', url: '../assets/img/logo1.png' }],
+                state: false,
+                date1: '',
+                date2: '',
+                state: -1,
+                submit: 21
+            }
+        ]
+    </script>
+</body>
+
+</html>

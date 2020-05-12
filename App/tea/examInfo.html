@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>考试题目</title>
+    <!-- Import google fonts - Heading first/ text second -->
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
+    <!-- Css files -->
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <style>
+        @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
+
+        .el-header {
+            background-color: #B3C0D1;
+            color: #333;
+            line-height: 60px;
+        }
+
+        .el-aside {
+            color: #3c1dca;
+        }
+
+        .noline:hover {
+            text-decoration: none;
+        }
+
+        .grid-content {
+            height: 48px;
+            margin: 4px;
+            background: #ffffff;
+            ;
+            color: #000000;
+            padding: 13px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+    </style>
+
+</head>
+</head>
+
+<body>
+    <div id="app">
+        <el-container style=" border: 1px solid #eee">
+            <el-header style="text-align: right; font-size: 12px">
+                <el-row :gutter="20">
+                    <el-col :span="22">
+                        <div style="text-align: center;color: #77837d;">
+                            <h3><i class="el-icon-eleme"></i> {{name}}</h3>
+                        </div>
+                    </el-col>
+                    <el-col :span="2">
+                        <div>
+                            <el-dropdown>
+                                <span style="font-size: 20px;margin-left: 60px;"><i
+                                        class="el-icon-user"></i>{{user}}</span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                                        <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                                    </a>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </el-col>
+                </el-row>
+
+            </el-header>
+        </el-container>
+        <el-container style="height: 1000px; border: 1px solid #eee">
+            <el-aside width="300px" style="background-color: rgb(136, 151, 177)">
+                <p style="font-size:16px;">单选 {{danxuan.length}}个共{{danxuanAllScore}}分</p>
+                <el-row>
+                    <el-col v-for="(item,i) in danxuan" :span="4">
+                        <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
+                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
+                                    class="fa fa-check"></i></span>
+                        </div>
+                        <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+                <p style="font-size:16px;">多选 {{duoxuan.length}}个共{{duoxuanAllScore}}分</p>
+                <el-row>
+                    <el-col v-for="(item,i) in duoxuan" :span="4">
+                        <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
+                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
+                                    class="fa fa-check"></i></span>
+                        </div>
+                        <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+                <p>填空 {{tiankong.length}}个共{{tiankongAllScore}}分</p>
+                <el-row>
+                    <el-col v-for="(item,i) in tiankong" :span="4">
+                        <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
+                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
+                                    class="fa fa-check"></i></span>
+                        </div>
+                        <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+                <p>主观 {{zhuguan.length}}个共{{zhuguanAllScore}}分</p>
+                <el-row>
+                    <el-col v-for="(item,i) in zhuguan" :span="4">
+                        <div v-if="item.type==-1" class="grid-content ">{{i+1}}</div>
+                        <div v-else-if="item.type==0" class="grid-content" style="color: green"><span><i
+                                    class="fa fa-check"></i></span>
+                        </div>
+                        <div v-else class="grid-content" style="color: red"><span><i class="fa  fa-times"></i></span>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+                <div>
+                    {{write}}
+                </div>
+                <div><a href="exam.html">退出编辑</a></div>
+            </el-aside>
+            <el-container>
+                <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;text-align: center">
+                    <span><i class="el-icon-edit"></i> {{current.exam.name}} (总分:{{ AllScore }})</span>
+                </el-header>
+                <hr>
+                <el-main>
+                    <div>
+                        <div style="margin: 16px;">
+                            <h4><b>单选题</b> </h4>
+                        </div>
+                        <el-divider></el-divider>
+                        <div v-for="(item,i) in danxuan">
+                            <div><span>{{i+1}}.</span>{{item.title}} ({{item.score}}分)</div>
+                            <div style="margin-top: 16px">
+                                <el-radio :disabled="disabled" v-for="(option,j) in item.options" v-model="item.select"
+                                    :label="j">{{option}}
+                                </el-radio>
+                                <span>
+                                    <el-button type="button" size="small" @click="editTestDanXuan(item)"><span
+                                            class=" el-icon-edit-outline"></span> 编辑</el-button>
+                                    <el-button type="button" size="small" @click="delDanXuan(i)"><span
+                                            class="el-icon-delete"></span>删除</el-button>
+
+
+                                    <el-dialog title="题目修改" :visible.sync="dialogFormVisible">
+                                        <el-form :model="selectTest">
+                                            <el-form-item label="题目">
+                                                <el-input v-model="selectTest.title" autocomplete="off"></el-input>
+                                            </el-form-item>
+                                            <el-form-item v-for="(item,index) in selectTest.options"
+                                                :label="'选项'+(index+1)">
+                                                <el-input v-model="selectTest.options[index]" type="text"></el-input>
+                                            </el-form-item>
+
+                                            <el-form-item label="答案">
+                                                <el-select v-model="selectTest.answer" placeholder="">
+                                                    <el-option v-for="(item,index) in selectTest.options" :label="item"
+                                                        :value="index"></el-option>
+                                                </el-select>
+                                            </el-form-item>
+                                            <div class="block">
+                                                <span class="demonstration">分数: {{selectTest.score}}</span>
+                                                <el-slider v-model="selectTest.score" :step="1" :max="10" show-stops>
+                                                </el-slider>
+                                            </div>
+                                        </el-form>
+                                        <div slot="footer" class="dialog-footer">
+                                            <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                            <el-button type="primary" @click="setTest()">确 定</el-button>
+                                        </div>
+                                    </el-dialog>
+                                </span>
+                            </div>
+                            <el-divider></el-divider>
+                        </div>
+                        <div>
+                            <el-button type="button" size="small" @click="addTestDanXuan()"><span
+                                    class="el-icon-circle-plus-outline"></span> 添加</el-button>
+                        </div>
+                    </div>
+
+
+
+
+                    <div>
+                        <div style="margin: 16px;">
+                            <h4><b>多选题</b> </h4>
+                        </div>
+                        <el-divider></el-divider>
+                        <div v-for="(item,i) in duoxuan">
+                            <div><span>{{i+1}}.</span>{{item.title}} ({{item.score}}分)</div>
+                            <div style="margin-top: 16px">
+                                <el-checkbox-group v-model="item.select" :disabled="disabled">
+                                    <el-checkbox v-for="option in item.options" :label="option"></el-checkbox>
+                                </el-checkbox-group>
+                                <br><br>
+                                <span style="margin-left: 16px">
+                                    <el-button type="button" size="small" @click="editTestDuoXuan(item)"><span
+                                            class="el-icon-edit-outline"></span> 编辑</el-button>
+                                    <el-button type="button" size="small" @click=""><span class="el-icon-delete"></span>
+                                        删除</el-button>
+                                </span>
+                                <el-dialog title="题目修改" :visible.sync="dialogFormVisible2">
+                                    <el-form :model="item">
+                                        <el-form-item label="题目">
+                                            <el-input v-model="item.title" autocomplete="off"></el-input>
+                                        </el-form-item>
+                                        <el-form-item v-for="(option,index) in item.options" :label="'选项'+(index+1)">
+                                            <el-input v-model="item.options[index]" type="text"></el-input>
+                                        </el-form-item>
+
+                                        <el-form-item label="答案">
+                                            <el-checkbox-group v-model="item.answer">
+                                                <el-checkbox v-for="(option,index) in item.options" :label="option"
+                                                    :name="option"></el-checkbox>
+                                            </el-checkbox-group>
+                                        </el-form-item>
+                                        <div class="block">
+                                            <span class="demonstration">分数: {{item.score}}</span>
+                                            <el-slider v-model="item.score" :step="1" :max="10" show-stops>
+                                            </el-slider>
+                                        </div>
+                                    </el-form>
+                                    <div slot="footer" class="dialog-footer">
+                                        <el-button @click="dialogFormVisible2 = false">取 消</el-button>
+                                        <el-button type="primary" @click="dialogFormVisible2 = false">确 定</el-button>
+                                    </div>
+                                </el-dialog>
+                            </div>
+                            <el-divider></el-divider>
+
+                        </div>
+                        <div>
+                            <el-button type="button" size="small" @click="addTestDuoXuan()"><span
+                                    class="el-icon-circle-plus-outline"></span> 添加</el-button>
+                        </div>
+                    </div>
+                    <div>
+
+                        <div style="margin: 16px;">
+                            <h4><b>填空题</b> </h4>
+                        </div>
+                        <el-divider></el-divider>
+                        <div v-for="(item,i) in tiankong">
+                            <div><span>{{i+1}}.</span>{{item.title}} ({{item.score}}分)</div>
+                            <div style="margin-top: 16px">
+                                <el-input :disabled="disabled" v-model="item.input" placeholder="请输入内容"></el-input>
+
+                            </div>
+
+                            <br><br>
+                            <span style="margin-left: 16px">
+                                <el-button type="button" size="small" @click="editTestTianKong(item)"><span
+                                        class="el-icon-edit-outline"></span> 编辑</el-button>
+                                <el-button type="button" size="small" @click=""><span class="el-icon-delete"></span> 删除
+                                </el-button>
+                            </span>
+                            <el-divider></el-divider>
+                        </div>
+
+                        <div style="margin-top: 16px;">
+                            <el-button type="button" size="small" @click="tiankong.push( {
+                                title: '题目主干信息',
+                                input: '',
+                                score : 4,
+                                type: -1, 
+                                standard : [],
+                                auto : false
+                            })"><span class="el-icon-circle-plus-outline"></span> 添加</el-button>
+                        </div>
+
+                        <el-dialog title="题目修改" :visible.sync="dialogFormVisible3">
+                            <el-form :model="selectTestTianKong">
+                                <el-form-item label="题目">
+                                    <el-input v-model="selectTestTianKong.title" autocomplete="off"></el-input>
+                                </el-form-item>
+
+                                <el-form-item label="答案">
+                                    <el-input v-model="selectTestTianKong.answer" autocomplete="off"></el-input>
+                                </el-form-item>
+                                <el-form-item label="自动评分">
+                                    <el-switch v-model="selectTestTianKong.auto"></el-switch>
+                                </el-form-item>
+                                <el-form-item label="判断标准" v-if="selectTestTianKong.auto">
+                                    <el-checkbox-group v-model="selectTestTianKong.standard">
+                                        <el-checkbox label="包含" name="1"></el-checkbox>
+                                        <el-checkbox label="一致" name="2"></el-checkbox>
+                                        <el-checkbox label="忽略标点符号" name="3"></el-checkbox>
+                                        <el-checkbox label="忽略大小写" name="4"></el-checkbox>
+                                    </el-checkbox-group>
+                                </el-form-item>
+                                <div class="block">
+                                    <span class="demonstration">分数: {{selectTestTianKong.score}}</span>
+                                    <el-slider v-model="selectTestTianKong.score" :step="1" :max="100" show-stops>
+                                    </el-slider>
+                                </div>
+                            </el-form>
+                            <div slot="footer" class="dialog-footer">
+                                <el-button @click="dialogFormVisible3 = false">取 消</el-button>
+                                <el-button type="primary" @click="dialogFormVisible3 = false">确 定</el-button>
+                            </div>
+                        </el-dialog>
+
+
+                        <div>
+                            <div style="margin: 16px;">
+                                <h4><b>主观题</b> </h4>
+                            </div>
+                            <el-divider></el-divider>
+                            <div v-for="(item,i) in zhuguan">
+                                <div><span>{{i+1}}.</span>{{item.title}} ({{item.score}}分)</div>
+                                <div style="margin-top: 16px">
+                                    <el-input type="textarea" :rows="3" placeholder="请输入内容" :disabled="disabled"
+                                        v-model="item.input">
+                                    </el-input>
+                                </div>
+
+                                <br><br>
+                                <span style="margin-left: 16px">
+                                    <el-button type="button" size="small" @click="editTestZhuGuan(item)"><span
+                                            class="el-icon-edit-outline"></span> 编辑</el-button>
+                                    <el-button type="button" size="small" @click=""><span class="el-icon-delete"></span>
+                                        删除</el-button>
+                                </span>
+                                <el-divider></el-divider>
+                            </div>
+                            <el-dialog title="题目修改" :visible.sync="dialogFormVisible4">
+                                <el-form :model="selectTestZhuGuan">
+                                    <el-form-item label="题目">
+                                        <el-input v-model="selectTestZhuGuan.title" autocomplete="off"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="答案">
+                                        <el-input v-model="selectTestZhuGuan.answer" autocomplete="off"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="自动评分">
+                                        <el-switch v-model="selectTestZhuGuan.auto"></el-switch>
+                                    </el-form-item>
+                                    <el-form-item label="判断标准" v-if="selectTestZhuGuan.auto">
+                                        <el-checkbox-group v-model="selectTestZhuGuan.standard">
+                                            <el-checkbox label="包含" name="1"></el-checkbox>
+                                            <el-checkbox label="一致" name="2"></el-checkbox>
+                                            <el-checkbox label="忽略标点符号" name="3"></el-checkbox>
+                                            <el-checkbox label="忽略大小写" name="4"></el-checkbox>
+                                        </el-checkbox-group>
+                                    </el-form-item>
+                                    <div class="block">
+                                        <span class="demonstration">分数: {{selectTestZhuGuan.score}}</span>
+                                        <el-slider v-model="selectTestZhuGuan.score" :step="1" :max="100" show-stops>
+                                        </el-slider>
+                                    </div>
+                                </el-form>
+                                <div slot="footer" class="dialog-footer">
+                                    <el-button @click="dialogFormVisible4 = false">取 消</el-button>
+                                    <el-button type="primary" @click="dialogFormVisible4 = false">确 定</el-button>
+                                </div>
+                            </el-dialog>
+                            <div style="margin-top: 16px;">
+
+                                <el-button type="button" size="small" @click="zhuguan.push( {
+                                        title: '题目主干信息',
+                                        input: '',
+                                        score : 4,
+                                        type: -1, 
+                                        standard : [],
+                                        auto : false
+                                    })"><span class="el-icon-circle-plus-outline"></span> 添加</el-button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <br><br>
+                    <el-button type="primary" @click="saveExam()">提交</el-button>
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+
+</body>
+<script src="../assets/js/courseDatas/teacourse.js"></script>
+<script>
+    var works = JSON.parse(app.current.exam.exam);
+    if (works.danxuan == undefined) {
+        works.danxuan = [];
+        works.duoxuan = [];
+        works.tiankong = [];
+        works.zhuguan = [];
+    }
+
+    app.danxuan = works.danxuan;
+    app.duoxuan = works.duoxuan;
+    app.tiankong = works.tiankong;
+    app.zhuguan = works.zhuguan;
+</script>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>课程公告</title>
+    <!-- Import google fonts - Heading first/ text second -->
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
+    <!-- Css files -->
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <style>
+        @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
+
+        .el-header {
+            background-color: #B3C0D1;
+            color: #333;
+            line-height: 60px;
+        }
+
+        .el-aside {
+            color: #3c1dca;
+        }
+
+        .noline:hover {
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+</head>
+
+<body>
+    <div id="app">
+        <el-container style=" border: 1px solid #eee">
+            <el-header style="font-size: 12px">
+                <el-row :gutter="20">
+                    <el-col :span="22">
+                        <div style="text-align: center;color: #77837d;">
+                            <h3><i class="el-icon-eleme"></i> {{name}}</h3>
+                        </div>
+                    </el-col>
+                    <el-col :span="2">
+                        <div>
+                            <el-dropdown>
+                                <span style="font-size: 20px;margin-left: 60px;"><i
+                                        class="el-icon-user"></i>{{user}}</span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                                        <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                                    </a>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </el-col>
+                </el-row>
+
+            </el-header>
+        </el-container>
+        <el-container style="height: 800px; border: 1px solid #eee">
+            <el-aside width="300px" style="background-color: rgb(238, 241, 246)">
+                <img src="https://edu-image.nosdn.127.net/E60240E3F15C33023E8BE744985C91D3.jpg?imageView&thumbnail=510y288&quality=100"
+                    width="296">
+                <el-menu :default-openeds="['']">
+                    <el-submenu v-for="(list,i) in course.infoList" :index="i.toString()">
+                        <template slot="title"><i :class="list.icon"></i>{{list.title}}</template>
+                        <el-menu-item-group v-for="(item,index) in list.children">
+                            <a class="noline" :href="item.href">
+                                <el-menu-item :index="item.title">{{item.title}}</el-menu-item>
+                            </a>
+                        </el-menu-item-group>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
+            <el-container>
+                <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;">
+                    <span><i class="el-icon-bell"></i> 公告</span>
+                </el-header>
+                <hr>
+                <el-main>
+                    <div style=" background-color: rgb(228, 231, 238); font-size: 18px; padding: 10px 20px">
+                        <div>
+                            {{showdata}}
+                        </div>
+                        <div style="text-align:right">
+
+                        </div>
+                    </div>
+
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+    <script src="../assets/js/courseDatas/courseInfo.js"></script>
+    <script>
+        let id = JSON.parse(window.localStorage.getItem('_course')).id;
+        axios.get('http://127.0.0.1:8081/wares/' + id)
+            .then(function (response) {
+                
+                app.showdata = response.data.notice;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    </script>
+</body>
+
+</html>

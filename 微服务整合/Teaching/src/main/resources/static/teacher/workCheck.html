@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>查重分析</title>
+    <!-- Import google fonts - Heading first/ text second -->
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
+    <!-- Css files -->
+    <script src="../assets/js/echarts.js"></script>
+    <script src="../assets/js/echarts.min.js"></script>
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
+
+        .el-header {
+            background-color: #B3C0D1;
+            color: #333;
+            line-height: 60px;
+        }
+
+        .el-aside {
+            color: #3c1dca;
+        }
+
+        .noline:hover {
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+</head>
+
+<body>
+    <div id="app">
+        <el-container style=" border: 1px solid #eee">
+            <el-header style="text-align: right; font-size: 12px">
+                <el-row :gutter="20">
+                    <el-col :span="22">
+                        <div style="text-align: center;color: #77837d;">
+                            <h3><i class="el-icon-eleme"></i> {{name}}</h3>
+                        </div>
+                    </el-col>
+                    <el-col :span="2">
+                        <div>
+                            <el-dropdown>
+                                <span style="font-size: 20px;margin-left: 60px;"><i
+                                        class="el-icon-user"></i>{{user}}</span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                                        <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                                    </a>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </el-col>
+                </el-row>
+            </el-header>
+        </el-container>
+        <el-container style="height: 800px; border: 1px solid #eee">
+            <el-aside width="300px" style="background-color: rgb(238, 241, 246)">
+                <img src="https://edu-image.nosdn.127.net/E60240E3F15C33023E8BE744985C91D3.jpg?imageView&thumbnail=510y288&quality=100"
+                    width="296">
+                <el-menu :default-openeds="['']">
+                    <el-submenu v-for="(list,i) in course.infoList" :index="i.toString()">
+                        <template slot="title"><i :class="list.icon"></i>{{list.title}}</template>
+                        <el-menu-item-group v-for="(item,index) in list.children">
+                            <a class="noline" :href="item.href">
+                                <el-menu-item :index="item.title">{{item.title}}</el-menu-item>
+                            </a>
+                        </el-menu-item-group>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
+            <el-container>
+                <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;">
+                    <span><i class="el-icon-s-data"></i> 查重分析</span>
+                </el-header>
+                <hr>
+                <el-main>
+                    <el-table
+                        :data="workRate.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+                        highlight-current-row @current-change="handleSelectionChange" style="width: 100%">
+                        <el-table-column type="selection" width="55">
+                        </el-table-column>
+                        <el-table-column property="name" label="姓名" width="120" sortable>
+                        </el-table-column>
+                        <el-table-column :label="'最高重复率>='+Math.floor(filterRate*100)+'%'" width="150">
+                            <template slot-scope="scope">
+                                <span>{{scope.row.rate*100}}%</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column property="rename" label="与最高重复者的姓名" width="250" sortable>
+                        </el-table-column>
+                        <el-table-column align="right" width="300">
+                            <template slot="header" slot-scope="scope">
+                                <el-input v-model="search" size="mini" placeholder="输入名字搜索" />
+                            </template>
+                            <template slot-scope="scope">
+                                <el-button @click="handleEdit(scope.$index, scope.row)">查看</el-button>
+                                <el-button type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <div style="margin-top: 20px">
+                        <el-input-number v-model="filterRate" :min="0" :max="1" label="描述文字" :step="0.01">
+                        </el-input-number>
+                        <el-tooltip class="item" effect="dark" content="修改查询参数" placement="top">
+                            <el-button @click="updateRate()" type="info">过滤</el-button>
+                        </el-tooltip>
+                        <el-tooltip class="item" effect="dark" content="更改排序规则" placement="top">
+                            <el-button @click="rateSort()" type="info">{{sortBut}}</el-button>
+                        </el-tooltip>
+                    </div>
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+    <script src="../assets/js/courseDatas/teacourse.js"></script>
+    <script>
+
+        app.workRate = [
+            { name: 'R1', rate: 0.87, rename: 'R4' },
+            { name: 'R2', rate: 0.51, rename: 'R3' },
+            { name: 'R3', rate: 0.84, rename: 'R2' },
+            { name: 'R4', rate: 0.63, rename: 'R1' },
+            { name: 'R5', rate: 0.51, rename: 'R2' }
+        ];
+
+        var data = [
+            { name: 'R1', rate: 0.87, rename: 'R4' },
+            { name: 'R2', rate: 0.51, rename: 'R3' },
+            { name: 'R3', rate: 0.84, rename: 'R2' },
+            { name: 'R4', rate: 0.63, rename: 'R1' },
+            { name: 'R5', rate: 0.51, rename: 'R2' },
+            { name: 'R6', rate: 0.27, rename: 'R5' },
+            { name: 'R7', rate: 0.51, rename: 'R10' },
+            { name: 'R8', rate: 0.41, rename: 'R9' },
+            { name: 'R9', rate: 0.23, rename: 'R7' },
+            { name: 'R10', rate: 0.33, rename: 'R8' }
+        ];
+    </script>
+</body>
+
+</html>

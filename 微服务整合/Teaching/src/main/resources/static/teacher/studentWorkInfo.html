@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>查看提交</title>
+    <!-- Import google fonts - Heading first/ text second -->
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
+    <!-- Css files -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/jquery.mmenu.css" rel="stylesheet">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+    <link href="../assets/css/style.min.css" rel="stylesheet">
+    <link href="../assets/css/add-ons.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
+
+        .el-header {
+            background-color: #B3C0D1;
+            color: #333;
+            line-height: 60px;
+        }
+
+        .el-aside {
+            color: #3c1dca;
+        }
+
+        .noline:hover {
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+</head>
+
+<body>
+    <div id="app">
+        <el-container style=" border: 1px solid #eee">
+            <el-header style="text-align: right; font-size: 12px">
+                <el-row :gutter="20">
+                    <el-col :span="22">
+                        <div style="text-align: center;color: #77837d;">
+                            <h3><i class="el-icon-eleme"></i> {{name}}</h3>
+                        </div>
+                    </el-col>
+                    <el-col :span="2">
+                        <div>
+                            <el-dropdown>
+                                <span style="font-size: 20px;margin-left: 60px;"><i
+                                        class="el-icon-user"></i>{{user}}</span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                                        <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                                    </a>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </el-col>
+                </el-row>
+
+            </el-header>
+        </el-container>
+        <el-container style="height: 800px; border: 1px solid #eee">
+            <el-aside width="300px" style="background-color: rgb(238, 241, 246)">
+                <img src="https://edu-image.nosdn.127.net/E60240E3F15C33023E8BE744985C91D3.jpg?imageView&thumbnail=510y288&quality=100"
+                    width="296">
+                <el-menu :default-openeds="['']">
+                    <el-submenu v-for="(list,i) in course.infoList" :index="i.toString()">
+                        <template slot="title"><i :class="list.icon"></i>{{list.title}}</template>
+                        <el-menu-item-group v-for="(item,index) in list.children">
+                            <a class="noline" :href="item.href">
+                                <el-menu-item :index="item.title">{{item.title}}</el-menu-item>
+                            </a>
+                        </el-menu-item-group>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
+            <el-container>
+                <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;">
+                    <span><i class="el-icon-edit"></i> 查看提交</span>
+                </el-header>
+                <hr>
+                <el-main>
+                    <div>
+                        <el-table ref="multipleTable" :data="workInfo" highlight-current-row
+                            @current-change="handleSelectionChange" style="width: 100%">
+                            <el-table-column type="selection" width="55">
+                            </el-table-column>
+                            <el-table-column property="name" label="姓名" width="120" sortable>
+                            </el-table-column>
+                            <el-table-column property="date" label="提交日期" width="150" sortable>
+                            </el-table-column>
+                            <el-table-column property="auto" label="还需修改" width="150" sortable>
+                            </el-table-column>
+                            <el-table-column property="score" label="分数" width="150" sortable>
+                            </el-table-column>
+                            <el-table-column property="check" label="检测" width="150" sortable>
+                            </el-table-column>
+                            <el-table-column fixed="right" label="操作">
+                                <template slot-scope="scope">
+                                    <el-button @click="" type="el-button" size="small">查看</el-button>
+                                    <el-button @click="deleteStuWork(scope.$index)" type="el-button" size="small">删除
+                                    </el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                        <div style="margin-top: 20px">
+                            <el-tooltip class="item" effect="dark" content="分析作业情况，正确率以及及格率等" placement="top">
+                                <el-button @click="">分析</el-button>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="将选中的作业进行查重" placement="top">
+                                <el-button @click="">查重</el-button>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="计算平均分，总分" placement="top">
+                                <el-button @click="">计算</el-button>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="未定义" placement="top">
+                                <el-button @click="">高级</el-button>
+                            </el-tooltip>
+                            <el-button @click="toggleSelection()">取消选择</el-button>
+                        </div>
+                    </div>
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+    <script src="../assets/js/courseDatas/teacourse.js"></script>
+    <script>
+        app.workInfo = [
+            {
+                name: 'ZML',
+                date: '2018/8/9 12:14',
+                score: 75,
+                auto: true ? '是' : '否',
+                check: 'X',
+                repeat: ''
+            },
+            {
+                name: 'KAX',
+                date: '2018/10/9 12:14',
+                score: 71,
+                auto: true ? '是' : '否',
+                check: 'Z',
+                repeat: ''
+            }
+        ]
+    </script>
+</body>
+
+</html>

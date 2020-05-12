@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>添加课件</title>
+    <!-- Import google fonts - Heading first/ text second -->
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
+    <!-- Css files -->
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <style>
+        @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
+
+        .el-header {
+            background-color: #B3C0D1;
+            color: #333;
+            line-height: 60px;
+        }
+
+        .el-aside {
+            color: #3c1dca;
+        }
+
+        .noline:hover {
+            text-decoration: none;
+        }
+
+        .upload-demo input {
+            visibility: hidden;
+        }
+    </style>
+
+</head>
+</head>
+
+<body>
+    <div id="app">
+        <el-container style=" border: 1px solid #eee">
+            <el-header style="font-size: 12px">
+                <el-row :gutter="20">
+                    <el-col :span="22">
+                        <div style="text-align: center;color: #77837d;">
+                            <h3><i class="el-icon-eleme"></i> {{name}}</h3>
+                        </div>
+                    </el-col>
+                    <el-col :span="2">
+                        <div>
+                            <el-dropdown>
+                                <span style="font-size: 20px;margin-left: 60px;"><i
+                                        class="el-icon-user"></i>{{user}}</span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                                        <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                                    </a>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </el-col>
+                </el-row>
+
+            </el-header>
+        </el-container>
+        <el-container style="height: 800px; border: 1px solid #eee">
+            <el-aside width="300px" style="background-color: rgb(238, 241, 246)">
+                <img src="https://edu-image.nosdn.127.net/E60240E3F15C33023E8BE744985C91D3.jpg?imageView&thumbnail=510y288&quality=100"
+                    width="296">
+                <el-menu :default-openeds="['']">
+                    <el-submenu v-for="(list,i) in course.infoList" :index="i.toString()">
+                        <template slot="title"><i :class="list.icon"></i>{{list.title}}</template>
+                        <el-menu-item-group v-for="(item,index) in list.children">
+                            <a class="noline" :href="item.href">
+                                <el-menu-item :index="item.title">{{item.title}}</el-menu-item>
+                            </a>
+                        </el-menu-item-group>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
+            <el-container>
+                <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;">
+                    <span><i class="el-icon-reading"></i> 课件</span>
+                </el-header>
+                <hr>
+                <el-main>
+                    <el-col :span="24">
+                        <h4>课程概况</h4>
+                        <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen"
+                            @close="handleClose" background-color="#545c64">
+
+                            <el-submenu v-for="(item,index) in wares" :index="index.toString()">
+                                <template slot="title">
+                                    <i class="el-icon-menu"></i>
+                                    <span>{{item.label}}</span>
+                                </template>
+
+                                <el-menu-item-group v-for="(ch,index) in item.children">
+                                    <el-menu-item :index="ch.name">
+                                        {{ch.label}}
+                                        <span style="float: right;">
+                                            &nbsp;
+                                            视频文件:{{ch.viedo == ''? '无':ch.viedo}}
+                                            &nbsp;
+                                            <el-tooltip content="添加视频" placement="top">
+                                                <el-button size="mini"><i class=" fa fa-video-camera"
+                                                        @click="addViedo(ch,1)"></i></el-button>
+                                            </el-tooltip>
+                                            &nbsp;
+                                            PDF文件:{{ch.pdf == ''? '无': ch.pdf}}
+                                            &nbsp;
+                                            <el-tooltip content="添加PDF文档" placement="top">
+                                                <el-button size="mini"  @click="addViedo(ch,2)"><i class="fa fa-file"></i>
+                                        </span></el-button>
+                                        </el-tooltip>
+                                    </el-menu-item>
+                                </el-menu-item-group>
+
+                            </el-submenu>
+
+
+                        </el-menu>
+                    </el-col>
+                    <el-dialog title="文件上传" :visible.sync="dialogFormVisible7" width="30%">
+                        <el-form :model="ware" label-width="80px">
+                            <el-form-item label="视频文件">
+                                <div style="float:left;padding:16px 32px;">
+                                    <el-upload class="upload-demo" drag action="http://127.0.0.1:8081/upload"
+                                        name="uploadFile" :on-remove="handleRemove" :before-remove="beforeRemove"
+                                        :on-success="handleAvatarSuccessWareViedo" :file-list="ware.fileList">
+                                        <i class="el-icon-upload"></i>
+                                        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                                        <div class="el-upload__tip" slot="tip">只能上传mp4/avi文件，且不超过1G</div>
+                                    </el-upload>
+                                </div>
+                            </el-form-item>
+
+                        </el-form>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button @click="dialogFormVisible7 = false">取 消</el-button>
+                            <el-button type="primary" @click="dialogFormVisible7 = false">确 定</el-button>
+                        </span>
+                    </el-dialog>
+
+                    <el-dialog title="文件上传" :visible.sync="dialogFormVisible9" width="30%">
+                        <el-form :model="ware" label-width="80px">
+                            <el-form-item label="PDF文件">
+                                <div style="float:left;padding:16px 32px;">
+                                    <el-upload class="upload-demo" drag action="http://127.0.0.1:8081/upload"
+                                        name="uploadFile" :on-remove="handleRemove" :before-remove="beforeRemove"
+                                        :on-success="handleAvatarSuccessWarePDF" :file-list="ware.fileList">
+                                        <i class="el-icon-upload"></i>
+                                        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                                        <div class="el-upload__tip" slot="tip">只能上传pdf文件</div>
+                                    </el-upload>
+                                </div>
+                            </el-form-item>
+
+                        </el-form>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button @click="dialogFormVisible9 = false">取 消</el-button>
+                            <el-button type="primary" @click="dialogFormVisible9 = false">确 定</el-button>
+                        </span>
+                    </el-dialog>
+                </el-main>
+                <el-footer>
+                    <div style="margin:10px 20px;">
+                        <el-button @click="saveWare(wares)" type="primary">
+                            保存上传的文件
+                        </el-button>
+                    </div>
+                </el-footer>
+            </el-container>
+        </el-container>
+    </div>
+    <script src="../assets/js/courseDatas/teacourse.js"></script>
+    <script>
+        app.initRequest();
+    </script>
+</body>
+
+</html>

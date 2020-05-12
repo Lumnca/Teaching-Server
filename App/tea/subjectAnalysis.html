@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>题目分析</title>
+    <!-- Import google fonts - Heading first/ text second -->
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico" type="image/x-icon" />
+    <!-- Css files -->
+    <script src="../assets/js/echarts.js"></script>
+    <script src="../assets/js/echarts.min.js"></script>
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
+
+        .el-header {
+            background-color: #B3C0D1;
+            color: #333;
+            line-height: 60px;
+        }
+
+        .el-aside {
+            color: #3c1dca;
+        }
+
+        .noline:hover {
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+</head>
+
+<body>
+    <div id="app">
+        <el-container style=" border: 1px solid #eee">
+            <el-header style="text-align: right; font-size: 12px">
+                <el-row :gutter="20">
+                    <el-col :span="22">
+                        <div style="text-align: center;color: #77837d;">
+                            <h3><i class="el-icon-eleme"></i> {{name}}</h3>
+                        </div>
+                    </el-col>
+                    <el-col :span="2">
+                        <div>
+                            <el-dropdown>
+                                <span style="font-size: 20px;margin-left: 60px;"><i
+                                        class="el-icon-user"></i>{{user}}</span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <a v-for="item in userOptions.order" :href="item.href" class="noline">
+                                        <el-dropdown-item><i :class="item.icon"></i>{{item.title}}</el-dropdown-item>
+                                    </a>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </el-col>
+                </el-row>
+
+            </el-header>
+        </el-container>
+        <el-container style="height: 800px; border: 1px solid #eee">
+            <el-aside width="300px" style="background-color: rgb(238, 241, 246)">
+                <img src="https://edu-image.nosdn.127.net/E60240E3F15C33023E8BE744985C91D3.jpg?imageView&thumbnail=510y288&quality=100"
+                    width="296">
+                <el-menu :default-openeds="['']">
+                    <el-submenu v-for="(list,i) in course.infoList" :index="i.toString()">
+                        <template slot="title"><i :class="list.icon"></i>{{list.title}}</template>
+                        <el-menu-item-group v-for="(item,index) in list.children">
+                            <a class="noline" :href="item.href">
+                                <el-menu-item :index="item.title">{{item.title}}</el-menu-item>
+                            </a>
+                        </el-menu-item-group>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
+            <el-container>
+                <el-header style=" background-color: rgb(240, 241, 243); font-size: 18px;">
+                    <span><i class="el-icon-s-data"></i> 题目分析 </span>
+                </el-header>
+                <hr>
+                <el-main>
+                    <h2>单选</h2>
+                    <el-collapse accordion>
+
+                        <el-collapse-item v-for="(dx,i) in danxuan">
+                            <template slot="title">
+                                {{i+1}}.{{dx.title}}<span
+                                    style="margin-left:80px;color:red;">正确率:{{Math.floor(((subjectData.danxuan[i][answer[0].value[i]]/sumbitNumber.danxuan[i])*100))}}%</span>
+                            </template>
+                            <div v-for="(o1,ii1) in dx.options" style="font-size:18px;">
+                                <span>选项{{ii1+1}} : {{o1}} </span>
+                                <span style="color:#3c1dca;margin-left: 40px;">
+                                    选择人数:{{subjectData.danxuan[i][ii1]}}({{(subjectData.danxuan[i][ii1]/sumbitNumber.danxuan[i]*100).toFixed(1)}}%)</span>
+                                <span v-if="ii1==answer[0].value[i]" style="color:#10e62c;margin-left: 10px;"> 正确答案<i
+                                        class="el-icon-check"></i></span>
+                            </div>
+                        </el-collapse-item>
+
+
+                    </el-collapse>
+                    <h2>多选</h2>
+                    <el-collapse accordion>
+
+                        <el-collapse-item v-for="(dx,i) in duoxuan">
+                            <template slot="title">
+                                {{i+1}}.{{dx.title}}<span
+                                    style="margin-left:80px;color:red;">正确率:{{subjectData.duoxuan[i][5]/subjectData.duoxuan[i][6]*100}}%</span>
+                            </template>
+                            <div v-for="(o1,ii1) in dx.options" style="font-size:18px;">
+                                <span>选项{{ii1+1}} : {{o1}} </span>
+                                <span style="color:#3c1dca;margin-left: 40px;">
+                                    选择人数:{{subjectData.duoxuan[i][ii1]}}({{(subjectData.duoxuan[i][ii1]/sumbitNumber.duoxuan[i]*100).toFixed(1)}}%)</span>
+                                <span v-if="answer[1].value[i].indexOf(o1)!=-1"
+                                    style="color:#10e62c;margin-left: 10px;"> 正确答案<i class="el-icon-check"></i></span>
+                            </div>
+                        </el-collapse-item>
+
+                    </el-collapse>
+                </el-main>
+
+            </el-container>
+        </el-container>
+    </div>
+    <script src="../assets/js/courseDatas/teacourse.js"></script>
+    <script>
+        app.subjectData = {
+            danxuan: [
+                [9, 12, 9, 22],
+                [10, 11, 20, 10],
+                [5, 19, 5, 25],
+                [40, 2, 22, 6],
+                [8, 8, 21, 12],
+                [13, 8, 7, 22],
+                [9, 8, 33, 0],
+                [1, 1, 1, 47]
+            ],
+            duoxuan: [
+                [25, 34, 21, 12, 35, 25, 60]
+            ]
+        };
+        app.sumbitNumber = {
+            danxuan: [],
+            duoxuan: []
+        }
+        app.subjectData.danxuan.forEach(e => {
+            let sum = 0;
+            for (let index = 0; index < e.length; index++) {
+                sum += e[index];
+            }
+            app.sumbitNumber.danxuan.push(sum);
+        });
+        app.subjectData.duoxuan.forEach(e => {
+            let sum = 0;
+            for (let index = 0; index < 5; index++) {
+                sum += e[index];
+            }
+            app.sumbitNumber.duoxuan.push(sum);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    	<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <title>收件箱</title>		
+		<!-- Import google fonts - Heading first/ text second -->
+        <!--[if lt IE 9]>
+			<link href="http://fonts.useso.com/css?family=Open+Sans:400" rel="stylesheet" type="text/css" />
+			<link href="http://fonts.useso.com/css?family=Open+Sans:700" rel="stylesheet" type="text/css" />
+			<link href="http://fonts.useso.com/css?family=Droid+Sans:400" rel="stylesheet" type="text/css" />
+			<link href="http://fonts.useso.com/css?family=Droid+Sans:700" rel="stylesheet" type="text/css" />
+		<![endif]-->
+		<!-- Favicon and touch icons -->
+		<link rel="shortcut icon" href="assets/ico/favicon.ico" type="image/x-icon" /> 
+	    <!-- Css files -->
+	    <link href="assets/css/bootstrap.min.css" rel="stylesheet">		
+		<link href="assets/css/jquery.mmenu.css" rel="stylesheet">		
+		<link href="assets/css/font-awesome.min.css" rel="stylesheet">
+		<link href="assets/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet">	  
+	    <link href="assets/css/style.min.css" rel="stylesheet">
+		<link href="assets/css/add-ons.min.css" rel="stylesheet">	
+	    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	
+		<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+        <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+        <style>
+            @import url("https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css");
+        </style>
+	</head>
+</head>
+
+<body>
+	<div class="navbar" role="navigation">	
+		<div class="container-fluid">		
+			<ul class="nav navbar-nav navbar-actions navbar-left">
+				<li class="visible-md visible-lg"><a href="#" id="main-menu-toggle"><i class="fa fa-th-large"></i></a></li>
+				<li class="visible-xs visible-sm"><a href="#" id="sidebar-menu"><i class="fa fa-navicon"></i></a></li>			
+			</ul>			
+			<form class="navbar-form navbar-left">
+				<button type="submit" class="fa fa-search"></button>
+				<input type="text" class="form-control" placeholder="搜索..."></a>
+			</form>
+	        <ul class="nav navbar-nav navbar-right">
+                <!--短息消息模块-->
+				<li class="dropdown visible-md visible-lg" id="app1">
+	        		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope-o"></i><span class="badge">{{message.length}}</span></a>
+	        		<ul class="dropdown-menu">
+						<li class="dropdown-menu-header">
+							<strong>信息</strong>
+						</li>
+						<li class="avatar" v-for="item in message">
+							<a href="#">
+								<img class="avatar" src="assets/img/avatar1.jpg">
+								<div>{{item.title}}</div>
+								<small>{{item.date}}</small>
+								<span class="label label-info">NEW</span>
+							</a>
+						</li>
+						<li class="dropdown-menu-footer text-center">
+							<a href="#">查看所有信息</a>
+						</li>	
+	        		</ul>
+                  </li>
+                <!--系统通知模块-->
+				<li class="dropdown visible-md visible-lg" id="app2">
+	        		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell-o"></i><span class="badge">{{message.length}}</span></a>
+	        		<ul class="dropdown-menu">
+						<li class="dropdown-menu-header">
+							<strong>系统通知</strong>
+						</li>							
+                        <li class="clearfix" v-for="item in message">
+							<i class="fa" v-bind:class="item.icon"></i> 
+                            <a href="page-activity.html" class="notification-user"> {{item.title}} </a> 
+                            <span class="notification-action"> 详细查看 </span> 
+                            <a href="page-activity.html" class="notification-link"> {{item.info}}</a>
+                        </li>
+						<li class="dropdown-menu-footer text-center">
+							<a href="page-activity.html">查看所有信息</a>
+						</li>
+	        		</ul>
+                  </li>
+                  <!--应用信息模块-->
+				<li class="dropdown visible-md visible-lg"id="app3" >
+					 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-th"></i></a>					
+					<ul class="dropdown-menu update-menu" role="menu">
+						<li v-for="item in appInfo"><a v-bind:href="item.href" ><i class="fa" v-bind:class="item.icon"></i> {{item.title}} </a></li>
+					</ul>
+                </li>
+                <!--用户信息模块-->
+				<li class="dropdown visible-md visible-lg"id="app4">
+	        		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="user-avatar" :src="imgurl" alt="fail">{{name}}</a>
+	        		<ul class="dropdown-menu">
+						<li class="dropdown-menu-header">
+							<strong>Account</strong>
+						</li>						
+						<li v-for="item in appInfo"><a v-bind:href="item.href"><i class="fa" v-bind:class="item.icon"></i> {{item.title}} <span class="label" v-bind:class="item.style">{{item.number}}</span></a></li>
+						<li class="divider"></li>						
+						<li><a href="index.html"><i class="fa fa-sign-out"></i>返回主界面</a></li>	
+	        		</ul>
+	      		</li>
+				<li><a href="index.html"><i class="fa fa-power-off"></i></a></li>
+			</ul>	
+		</div>		
+	</div>
+	<!-- end: Header -->
+	
+	<div class="container-fluid content">
+	
+		<div class="row">
+				
+			<!-- start: Main Menu -->
+			<div class="container-fluid content">
+				<div class="row">		
+					<!-- 左侧菜单栏 -->
+					<div class="sidebar ">
+						<div class="sidebar-collapse" id="app5">
+							<div class="sidebar-header t-center">
+								<span><img class="text-logo" src="assets/img/logo1.png"><i class="fa fa-space-shuttle fa-3x blue"></i></span>
+							</div>									
+							<div class="sidebar-menu">						
+								<ul class="nav nav-sidebar">
+									<li v-for="item in functions">
+										<a v-bind:href="item.href"><i class="fa" v-bind:class="item.icon"></i><span class="text">{{item.title}}</span> <span class="fa fa-angle-down pull-right"></span></a>
+										<ul  class="nav sub" v-if="item.childen.length > 0">
+											<li v-for="ch in item.childen"><a v-bind:href="ch.href"><i class="fa" v-bind:class="ch.icon"></i><span class="text"> {{ch.title}}  </span></a></li>
+										</ul>	
+									</li>
+								</ul>
+							</div>					
+						</div>
+						<div class="sidebar-footer">					
+							<div class="sidebar-brand">
+								Lumnca
+							</div>
+							<ul class="sidebar-terms">
+								<li><a href="#">版本</a></li>
+								<li><a href="#">更新</a></li>
+								<li><a href="#">帮助</a></li>
+								<li><a href="#">关于</a></li>
+							</ul>
+						</div>	
+				</div>
+			</div>		
+			<!-- end: Main Menu -->	
+		<!-- start: Content -->
+		<div class="main "  id="app">
+		
+			<div class="row">
+				<div class="col-lg-12">
+					<h3 class="page-header"><i class="fa fa-inbox"></i>用户信息</h3>
+					<ol class="breadcrumb">
+						<li><i class="fa fa-home"></i><a href="index.html">主页</a></li>
+						<li><i class="fa fa-inbox"></i>信息</li>
+						<li><i class="fa fa-envelope"></i><a href="#">收件箱</a></li>					
+					</ol>
+				</div>
+			</div>		
+			<div class="row inbox">		
+				<div class="col-md-3">	
+					<div class="panel panel-default">                                                                                                                           				<div class="panel-body inbox-menu">			
+							<a href="compose.html" class="btn btn-danger btn-block">Compose</a>
+							<ul>
+								<li v-for="item in inbox">
+									<a   v-bind:href="item.href">{{item.title}}<span class="label"  v-bind:class="item.label">{{item.number}}</span></a>
+								</li>		
+							</ul>
+						</div>	
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-body contacts">
+							<a href="page-inbox.html#" class="btn btn-primary btn-block"> + Contact</a>
+							<ul>
+								<li><span class="label label-danger"></span> Sarah Hiltser</li>
+								<li><span class="label label-default"></span> Stephano Odo</li>
+								<li><span class="label label-success"></span> Malras</li>
+								<li><span class="label label-success"></span> Derbi Mondro</li>
+								<li><span class="label label-warning"></span> Jessy Doe</li>
+								<li><span class="label label-default"></span> Gerry</li>
+								<li><span class="label label-success"></span> Kevin</li>
+								<li><span class="label label-danger"></span> Carlina Minfa</li>
+							</ul>
+						</div>
+					</div>			
+				</div><!--/.col-->
+				
+				<div class="col-md-9">
+					
+					<div class="panel panel-default">
+						
+						<div class="panel-body">
+							<!--按钮组定义-->
+							<span class="btn-group">
+							  	<button v-for="(item,index) in button" class="btn" v-bind:class="item.style" @click="showChose(index)">
+									<span class="fa" v-bind:class="item.icon"></span>
+								</button>
+							</span>
+
+							<span class="btn-group pull-right">
+								<button @click="fullbackPage" class="btn btn-default"><span class="fa fa-chevron-left"></span></button>
+								<button class="btn btn-default"> {{start}}  ~  {{end}}</button>
+							  	<button @click="forwardPage" class="btn btn-default"><span class="fa fa-chevron-right"></span></button>
+								<button class="btn btn-default"><span class="fa"> 总数:{{message.length}}</span></button>
+								<button class="btn btn-default" @click="minus"><span class="fa  fa-minus"> </span></button>
+								<button class="btn btn-default"><span> 每页大小:{{pageLength}}</span></button>
+								<button class="btn btn-default" @click="plus"><span class="fa  fa-plus"> </span></button>
+								
+							</span>
+
+							<ul class="messages-list">
+
+								<li class="unread" v-for="(item,index) in message" v-if="(index <= (end-1) && index >= (start-1))&&item.flag===true">
+									<a href="message.html" @click="isRead(index)">
+										<div class="header">
+											<span class="action"><i class="fa  fa-user"></i></span> 
+											<span class="from">{{item.name}}</span>
+											<span class="date"><span class="fa" v-bind:class="item.icon"><span class="badge" v-if="item.isRead===false">new</span></span> {{item.date}}</span>
+										</div>
+										<div class="title">
+											<span class="action"><i class="fa " v-bind:class="item.type"></i></span>
+											{{item.title}}
+										</div>	
+										<div class="description">
+											{{item.info}}
+										</div>
+									</a>		
+								</li>
+
+							</ul>
+							
+						</div>	
+						
+					</div>	
+					
+				</div><!--/.col-->	
+						
+			</div><!--/row-->
+					
+		</div>
+		<!-- end: Content -->
+		<br><br><br>
+		
+	
+	<div class="clearfix"></div>
+	
+		
+	<!-- start: JavaScript-->
+	<!--[if !IE]>-->
+
+			<script src="assets/js/jquery-2.1.1.min.js"></script>
+
+	<!--<![endif]-->
+
+	<!--[if IE]>
+
+                <script src="assets/js/jquery-1.11.1.min.js"></script>
+
+                <![endif]-->
+
+	<!--[if !IE]>-->
+
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='assets/js/jquery-2.1.1.min.js'>"+"<"+"/script>");
+		</script>
+
+	<!--<![endif]-->
+
+	<!--[if IE]>
+	
+		<script type="text/javascript">
+	 	window.jQuery || document.write("<script src='assets/js/jquery-1.11.1.min.js'>"+"<"+"/script>");
+		</script>
+		
+	<![endif]-->
+	<script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>	
+	
+	
+	<!-- page scripts -->
+	<script src="assets/plugins/jquery-ui/js/jquery-ui-1.10.4.min.js"></script>
+	<script src="assets/plugins/autosize/jquery.autosize.min.js"></script>
+	<script src="assets/plugins/placeholder/jquery.placeholder.min.js"></script>
+	
+	<!-- theme scripts -->
+	<script src="assets/js/SmoothScroll.js"></script>
+	<script src="assets/js/jquery.mmenu.min.js"></script>
+	<script src="assets/js/core.min.js"></script>
+	
+	<!-- inline scripts related to this page -->
+	<script src="assets/js/index.js"></script>
+	<script src="assets/js/message.js"></script>
+	<!-- end: JavaScript-->
+</body>
+</html>

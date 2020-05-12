@@ -1,0 +1,21 @@
+server:
+  port: 8762
+spring:
+  application:
+    name: Zuul
+  http:
+    multipart:
+      max-file-size: 200Mb
+      max-request-size: 2500Mb
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+management:
+  security:
+    enabled: false
+zuul:
+  ribbon-isolation-strategy: thread
+  thread-pool:
+    use-separate-thread-pools: true
+    thread-pool-key-prefix: Server-

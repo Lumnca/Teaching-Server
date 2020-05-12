@@ -1,0 +1,24 @@
+server:
+  port: 8761
+spring:
+  application:
+    name: Server1
+security:
+  basic:
+    enabled: true
+  user:
+    name: user
+    password: 123
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    metadata-map:
+      name : Eureka服务器1
+      author : Lumnca
+      data : 2019/8/22
+      iden : ADMIN
+
