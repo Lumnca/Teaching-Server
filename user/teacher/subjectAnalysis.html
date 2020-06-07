@@ -117,7 +117,7 @@
                                 <span>选项{{ii1+1}} : {{o1}} </span>
                                 <span style="color:#3c1dca;margin-left: 40px;">
                                     选择人数:{{subjectData.duoxuan[i][ii1]}}({{(subjectData.duoxuan[i][ii1]/sumbitNumber.duoxuan[i]*100).toFixed(1)}}%)</span>
-                                <span v-if="answer[1].value[i].indexOf(o1)!=-1"
+                                <span v-if="dx.answer.indexOf(o1)!=-1"
                                     style="color:#10e62c;margin-left: 10px;"> 正确答案<i class="el-icon-check"></i></span>
                             </div>
                         </el-collapse-item>
@@ -163,6 +163,10 @@
             }
             app.sumbitNumber.duoxuan.push(sum);
         });
+        var s1 = JSON.parse(window.localStorage.getItem('_work')).work;
+        app.danxuan = JSON.parse(s1).danxuan;
+        var s2 = JSON.parse(window.localStorage.getItem('_work')).work;
+        app.duoxuan = JSON.parse(s2).duoxuan;
     </script>
 </body>
 

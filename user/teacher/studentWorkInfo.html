@@ -115,16 +115,16 @@
                         </el-table>
                         <div style="margin-top: 20px">
                             <el-tooltip class="item" effect="dark" content="分析作业情况，正确率以及及格率等" placement="top">
-                                <el-button @click="">分析</el-button>
+                                <el-button @click="reurl('subjectAnalysis.html')">分析</el-button>
                             </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="将选中的作业进行查重" placement="top">
-                                <el-button @click="">查重</el-button>
+                                <el-button @click="reurl('subjectInfo.html')">统计</el-button>
                             </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="计算平均分，总分" placement="top">
-                                <el-button @click="">计算</el-button>
+                                <el-button  @click="reurl('subjectInfo.html')">计算</el-button>
                             </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="未定义" placement="top">
-                                <el-button @click="">高级</el-button>
+                                <el-button  @click="reurl('subjectInfo.html')">高级</el-button>
                             </el-tooltip>
                             <el-button @click="toggleSelection()">取消选择</el-button>
                         </div>

@@ -208,7 +208,7 @@
                                 <span style="margin-left: 16px">
                                     <el-button type="button" size="small" @click="editTestDuoXuan(item)"><span
                                             class="el-icon-edit-outline"></span> 编辑</el-button>
-                                    <el-button type="button" size="small" @click=""><span class="el-icon-delete"></span>
+                                    <el-button type="button" size="small" @click="delDX(i)"><span class="el-icon-delete"></span>
                                         删除</el-button>
                                 </span>
                                 <el-dialog title="题目修改" :visible.sync="dialogFormVisible2">
@@ -263,7 +263,7 @@
                             <span style="margin-left: 16px">
                                 <el-button type="button" size="small" @click="editTestTianKong(item)"><span
                                         class="el-icon-edit-outline"></span> 编辑</el-button>
-                                <el-button type="button" size="small" @click=""><span class="el-icon-delete"></span> 删除
+                                <el-button type="button" size="small" @click="delTK(i)"><span class="el-icon-delete"></span> 删除
                                 </el-button>
                             </span>
                             <el-divider></el-divider>
@@ -330,7 +330,7 @@
                                 <span style="margin-left: 16px">
                                     <el-button type="button" size="small" @click="editTestZhuGuan(item)"><span
                                             class="el-icon-edit-outline"></span> 编辑</el-button>
-                                    <el-button type="button" size="small" @click=""><span class="el-icon-delete"></span>
+                                    <el-button type="button" size="small" @click="delZG(i)"><span class="el-icon-delete"></span>
                                         删除</el-button>
                                 </span>
                                 <el-divider></el-divider>

@@ -489,13 +489,16 @@ var app = new Vue({
         },
         showSubmit(docWork){
             this.dialogFormVisible = true;
-            axios.get('http://127.0.0.1:8081/submitfiledate',{
+            app.submitform.body = docWork.file_url[0];
+            app.submitform.date = docWork.date;
+            /*axios.get('http://127.0.0.1:8081/submitfiledate',{
                 params : {
                     wid : docWork.id,
                     uid : JSON.parse(window.localStorage.getItem("_user")).id
                 }
             })
             .then(function (response) {
+                app.submitform.body = docWork.file_url;
                 if(response.data!=''&&response.data!=undefined&&response.data!={}){
                     app.submitform = response.data;
                     app.submitform.body = JSON.parse(app.submitform.body);
@@ -503,7 +506,7 @@ var app = new Vue({
             })
             .catch(function (error) {
                 console.log(error);
-            });
+            });*/
         },
         examsubmit(){
             var score = 0;

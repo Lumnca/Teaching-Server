@@ -92,7 +92,7 @@
 
                     <el-table :data="test" border style="width: 100%">
                         <el-table-column label="题型作业提交">
-                            <el-table-column prop="title" label="名称" width="250" sortable>
+                            <el-table-column prop="name" label="名称" width="250" sortable>
                             </el-table-column>
                             <el-table-column prop="start" label="起始日期" width="250" sortable>
                             </el-table-column>
@@ -173,6 +173,16 @@
                 date2: '',
                 state: -1,
                 submit: 21
+            }
+        ],
+        app.test = [
+            {
+                name : '第一次作业',
+                start : '2020-6-5 12:00',
+                end : '2020-6-9 12:00',
+                info : '备注',
+                state : 1,
+                submit: 2
             }
         ]
     </script>

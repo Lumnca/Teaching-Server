@@ -885,6 +885,15 @@ var app = new Vue({
         delDanXuan(index) {
             this.danxuan.splice(index, 1);
         },
+        delDX(index) {
+            this.duoxuan.splice(index, 1);
+        },
+        delTK(index) {
+            this.tiankong.splice(index, 1);
+        },
+        delZG(index) {
+            this.zhuguan.splice(index, 1);
+        },
         saveWork(data) {
             let work = {
                 danxuan: app.danxuan,
@@ -1229,6 +1238,9 @@ var app = new Vue({
                 .catch(function (error) {
                     return null;
                 });
+        },
+        reurl(url){
+            window.location.href = url; 
         }
     },
     computed: {

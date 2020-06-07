@@ -130,7 +130,7 @@
                                     :on-success="handleAvatarSuccess" :file-list="docWork.file_url">
                                     <i class="el-icon-upload"></i>
                                     <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                                    <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+                                    <div class="el-upload__tip" slot="tip">只能上传文档文件，且不超过100MB</div>
                                 </el-upload>
                             </div>
 
@@ -149,7 +149,7 @@
                             {{submitform.body.name}}
                         </el-form-item>
                         <el-form-item label="提交文件:">
-                            {{submitform.body.file}} <a href="#">下载该文件</a>
+                            {{submitform.body.file_url}} <a :href="'http://127.0.0.1:8081/public/'+submitform.body.name">下载该文件</a>
                         </el-form-item>
                         <el-form-item label="提交状态">
                             <el-tag v-if="submitform.body.file!=''" type="success">已提交</el-tag>
@@ -160,7 +160,7 @@
                         </el-form-item>
 
                         <br>
-                        <a href="#">下载作业文件</a>
+                        <a :href="'http://127.0.0.1:8081/public/'+submitform.body.name">下载作业文件</a>
                     </el-form>
                     <div slot="footer" class="dialog-footer">
                         <el-button @click="dialogFormVisible = false">取 消</el-button>
